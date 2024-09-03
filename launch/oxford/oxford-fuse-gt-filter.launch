@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<launch>
+    <include file="$(find odom_convert)/launch/odom_to_tf_oxford.launch" />
+    <include file="$(find graph_map_lamide)/launch/oxford_fuser_gt_filter.launch" >
+        <arg name="ndt_om" value="true" />
+        <arg name="only_static" value="false" />
+        <arg name="map_directory" value="<path to maps>/january-experiment/" />
+    </include>
+    <node pkg="tf" type="static_transform_publisher" name="v2bl_broadcaster" args="0 0 0 0 -3.14 0 base_link velodyne_left 100" />
+    <node pkg="rviz" type="rviz" name="lamide_rviz" args="-d <path to code>/src/lamide/rviz/lamide-fuser-lamide-oxford.rviz" />
+</launch>

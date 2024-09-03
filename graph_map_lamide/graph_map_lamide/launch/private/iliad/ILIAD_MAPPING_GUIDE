@@ -1,0 +1,18 @@
+ILIAD examples:
+      2D mapping with laser scanner on cititruck
+	/graph_map/launch/examples/2d_fuser_oru_example.launch - replace robot1 to deploy on different robots
+
+      3D mapping with Velodyne-32E scanner on bt truck
+      	 graph_map/launch/private/orkla/mapping_orkla_bt.launch
+
+      3D mapping with velodyne-16 on cititruck
+      	 graph_map/graph_map/launch/private/iliad/mapping_citi_velo16.launch
+
+The launch files can be used for any robot in the iliad project, replace robot_id to match the desired robot.
+
+
+
+
+After mapping is completed, save the ndt and occupancy map map using the commandd: /graph_node/save_map "{}", defeault output folder is /graph_map/maps/.
+
+

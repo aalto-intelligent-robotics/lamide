@@ -1,0 +1,13 @@
+services:
+  app:
+    image: lamide:latest
+    build: .
+    environment:
+      - DISPLAY=${DISPLAY}
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - /change/to/project/dir:/change/to/project/dir
+    network_mode: host
+    stdin_open: true
+    tty: true
+    container_name: lamide

@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<launch>
+    <!-- launch-prefix="gdb -ex run \\-\\-args" -->
+    <include file="$(find kitti_publisher)/launch/kitti_publisher.launch">
+        <arg name="rate" value="1" />
+        <arg name="sequence" value="01" />
+        <arg name="sleep" value="0" />
+        <arg name="wait_mode" value="true" />
+    </include>
+    <include file="$(find odom_convert)/launch/odom_to_tf_kitti.launch" />
+
+    <include file="$(find graph_map_lamide)/launch/kitti_fuser_gt.launch">
+        <arg name="ndt_om" value="true" />
+        <arg name="only_static" value="false" />
+        <arg name="map_directory" value="<path to maps>/icra-kitti-dev/" />
+        <arg name="map_prefix" value="01_om" />
+        <arg name="cluster_update" value="false" />
+        <arg name="request_scans" value="true" />
+        <arg name="scan_service" value="/kitti_publisher/publish" />
+    </include>
+
+    <node pkg="rviz" type="rviz" name="lamide_rviz" args="-d <path to code>/src/lamide/rviz/lamide-fuser-lamide-kitti.rviz" />
+</launch>

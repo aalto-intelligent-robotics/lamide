@@ -1,0 +1,95 @@
+<launch>
+    <arg name="bag" />
+    <param name="use_sim_time" value="true" />
+    <node pkg="rosbag" type="play" name="rosbag_play" args="-r 0.3 -s 1 --clock $(arg bag)" />
+
+    <node pkg="adaptive_clustering" name="adaptive_clustering" type="adaptive_clustering">
+        <remap from="velodyne_points" to="velodyne_pointcloud" />
+        <param name="print_fps" value="true" />
+        <param name="sensor_model" value="HDL-32E" />
+        <param name="z_axis_min" value="0.3" />
+        <param name="z_axis_max" value="2.8" />
+    </node>
+
+    <rosparam command="load" file="$(find bayes_people_tracker)/config/amot.yaml" />
+    <node pkg="bayes_people_tracker" type="bayes_people_tracker" name="bayes_people_tracker" output="screen" respawn="false">
+        <param name="base_link" type="string" value="velodyne" />
+        <param name="target_frame" type="string" value="world" />
+    </node>
+
+    <node pkg="graph_map" type="graph_map_fuser_node" name="graph_node" output="screen">
+        <param name="renderGTmap" value="false" />
+        <param name="gt_topic" value="/vmc_navserver/state" />
+        <param name="initPoseFromGT" value="false" />
+
+        <param name="map_type" value="ndt_map" />
+        <param name="registration_type" value="ndt_d2d_reg" />
+
+        <param name="use_submap" value="false" />
+        <param name="interchange_radius" value="10" />
+        <param name="compound_radius" value="0" />
+
+        <param name="enable_registration" value="true" />
+        <param name="registration_2D" value="true   " />
+        <param name="enable_mapping" value="true" />
+
+        <param name="check_consistency" value="true" />
+        <param name="tf_pose_frame" value="" />
+
+        <param name="matchLaser" value="false" />
+        <param name="points_topic" value="/velodyne_pointcloud" />
+
+        <param name="useOdometry" value="true" />
+        <param name="odometry_topic" value="/odom" />
+        <param name="use_tf_listener" value="false" />
+
+        <param name="max_translation_norm" value="0.5" />
+        <param name="max_rotation_norm" value="0.2" />
+
+        <param name="size_x_meters" value="400" />
+        <param name="size_y_meters" value="400" />
+        <param name="size_z_meters" value="12" />
+
+        <param name="resolution" value="0.6" />
+        <param name="multires" value="true" />
+
+        <param name="sensor_range" value="130." />
+        <param name="min_laser_range" value="1.0" />
+
+        <param name="sensor_pose_x" value="0.0" />
+        <param name="sensor_pose_y" value="0.0" />
+        <param name="sensor_pose_z" value="2.0" />
+        <param name="sensor_pose_t" value="0.0" />
+        <param name="sensor_offset_t" value="0.0" />
+
+        <param name="pose_init_x" value="0.0" />
+        <param name="pose_init_y" value="0.0" />
+        <param name="pose_init_t" value="2.125" />
+
+        <param name="map_directory" value="$(find graph_map)/maps" />
+
+        <param name="visualize" value="true" />
+        <param name="plot_marker" value="point" />
+
+        <param name="use_keyframe" value="true" />
+        <param name="min_keyframe_dist" value="0.5" />
+        <param name="min_keyframe_rot_deg" value="5.0" />
+    </node>
+
+    <!--
+      <node pkg="octomap_server" type="octomap_server_node" name="octomap_server">
+      <remap from="cloud_in" to="velodyne_pointcloud"/>
+      <param name="frame_id" value="world"/>
+      <param name="resolution" value="0.1"/>
+      <param name="pointcloud_max_z" value="5"/>
+      </node>
+  -->
+
+    <!--
+      <node pkg="tf" type="static_transform_publisher" name="world_to_odom" args="0 0 0 0 0 0 1 world odom 100" />
+      <node pkg="tf" type="static_transform_publisher" name="odom_to_base_link" args="0 0 0 0 0 0 1 odom base_link 100" />
+      <node pkg="tf" type="static_transform_publisher" name="base_link_velodyne" args="0 0 0 0 0 0 1 base_link velodyne 100" />
+  -->
+
+    <node pkg="rviz" type="rviz" name="rviz" args="-d $(find graph_map)/launch/3d.rviz" />
+</launch>

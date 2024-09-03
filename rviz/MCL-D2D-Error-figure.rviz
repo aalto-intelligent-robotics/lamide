@@ -1,0 +1,815 @@
+Panels:
+  - Class: rviz/Displays
+    Help Height: 78
+    Name: Displays
+    Property Tree Widget:
+      Expanded:
+        - /Global Options1
+        - /Status1
+        - /Odometry1
+        - /Odometry1/Shape1
+        - /Odometry2/Shape1
+      Splitter Ratio: 0.5576407313346863
+    Tree Height: 363
+  - Class: rviz/Selection
+    Name: Selection
+  - Class: rviz/Tool Properties
+    Expanded:
+      - /2D Pose Estimate1
+      - /2D Nav Goal1
+      - /Publish Point1
+    Name: Tool Properties
+    Splitter Ratio: 0.5886790156364441
+  - Class: rviz/Views
+    Expanded:
+      - /Current View1
+      - /Current View1/Focal Point1
+    Name: Views
+    Splitter Ratio: 0.5
+  - Class: rviz/Time
+    Experimental: false
+    Name: Time
+    SyncMode: 0
+    SyncSource: ""
+Preferences:
+  PromptSaveOnExit: true
+Toolbars:
+  toolButtonStyle: 2
+Visualization Manager:
+  Class: ""
+  Displays:
+    - Alpha: 0.5
+      Cell Size: 10
+      Class: rviz/Grid
+      Color: 160; 160; 164
+      Enabled: true
+      Line Style:
+        Line Width: 0.029999999329447746
+        Value: Lines
+      Name: Grid
+      Normal Cell Count: 0
+      Offset:
+        X: 0
+        Y: 0
+        Z: 0
+      Plane: XY
+      Plane Cell Count: 1000
+      Reference Frame: <Fixed Frame>
+      Value: true
+    - Alpha: 1
+      Cell Size: 100
+      Class: rviz/Grid
+      Color: 114; 159; 207
+      Enabled: true
+      Line Style:
+        Line Width: 0.029999999329447746
+        Value: Lines
+      Name: Grid
+      Normal Cell Count: 0
+      Offset:
+        X: -50
+        Y: -50
+        Z: 0
+      Plane: XY
+      Plane Cell Count: 100
+      Reference Frame: <Fixed Frame>
+      Value: true
+    - Alpha: 0.5
+      Cell Size: 1000
+      Class: rviz/Grid
+      Color: 255; 255; 0
+      Enabled: true
+      Line Style:
+        Line Width: 0.029999999329447746
+        Value: Lines
+      Name: Grid
+      Normal Cell Count: 0
+      Offset:
+        X: -500
+        Y: -500
+        Z: 0
+      Plane: XY
+      Plane Cell Count: 10
+      Reference Frame: <Fixed Frame>
+      Value: true
+    - Class: rviz/TF
+      Enabled: true
+      Frame Timeout: 15
+      Frames:
+        All Enabled: true
+        CurrentNode:
+          Value: true
+        map:
+          Value: true
+        submap_node0:
+          Value: true
+        submap_node1:
+          Value: true
+        submap_node10:
+          Value: true
+        submap_node100:
+          Value: true
+        submap_node101:
+          Value: true
+        submap_node102:
+          Value: true
+        submap_node103:
+          Value: true
+        submap_node104:
+          Value: true
+        submap_node105:
+          Value: true
+        submap_node106:
+          Value: true
+        submap_node107:
+          Value: true
+        submap_node108:
+          Value: true
+        submap_node109:
+          Value: true
+        submap_node11:
+          Value: true
+        submap_node110:
+          Value: true
+        submap_node111:
+          Value: true
+        submap_node112:
+          Value: true
+        submap_node113:
+          Value: true
+        submap_node114:
+          Value: true
+        submap_node115:
+          Value: true
+        submap_node116:
+          Value: true
+        submap_node117:
+          Value: true
+        submap_node118:
+          Value: true
+        submap_node119:
+          Value: true
+        submap_node12:
+          Value: true
+        submap_node120:
+          Value: true
+        submap_node121:
+          Value: true
+        submap_node122:
+          Value: true
+        submap_node123:
+          Value: true
+        submap_node124:
+          Value: true
+        submap_node125:
+          Value: true
+        submap_node126:
+          Value: true
+        submap_node127:
+          Value: true
+        submap_node128:
+          Value: true
+        submap_node129:
+          Value: true
+        submap_node13:
+          Value: true
+        submap_node130:
+          Value: true
+        submap_node131:
+          Value: true
+        submap_node132:
+          Value: true
+        submap_node133:
+          Value: true
+        submap_node134:
+          Value: true
+        submap_node135:
+          Value: true
+        submap_node136:
+          Value: true
+        submap_node137:
+          Value: true
+        submap_node138:
+          Value: true
+        submap_node139:
+          Value: true
+        submap_node14:
+          Value: true
+        submap_node140:
+          Value: true
+        submap_node141:
+          Value: true
+        submap_node142:
+          Value: true
+        submap_node143:
+          Value: true
+        submap_node144:
+          Value: true
+        submap_node145:
+          Value: true
+        submap_node146:
+          Value: true
+        submap_node147:
+          Value: true
+        submap_node148:
+          Value: true
+        submap_node149:
+          Value: true
+        submap_node15:
+          Value: true
+        submap_node150:
+          Value: true
+        submap_node151:
+          Value: true
+        submap_node152:
+          Value: true
+        submap_node153:
+          Value: true
+        submap_node16:
+          Value: true
+        submap_node17:
+          Value: true
+        submap_node18:
+          Value: true
+        submap_node19:
+          Value: true
+        submap_node2:
+          Value: true
+        submap_node20:
+          Value: true
+        submap_node21:
+          Value: true
+        submap_node22:
+          Value: true
+        submap_node23:
+          Value: true
+        submap_node24:
+          Value: true
+        submap_node25:
+          Value: true
+        submap_node26:
+          Value: true
+        submap_node27:
+          Value: true
+        submap_node28:
+          Value: true
+        submap_node29:
+          Value: true
+        submap_node3:
+          Value: true
+        submap_node30:
+          Value: true
+        submap_node31:
+          Value: true
+        submap_node32:
+          Value: true
+        submap_node33:
+          Value: true
+        submap_node34:
+          Value: true
+        submap_node35:
+          Value: true
+        submap_node36:
+          Value: true
+        submap_node37:
+          Value: true
+        submap_node38:
+          Value: true
+        submap_node39:
+          Value: true
+        submap_node4:
+          Value: true
+        submap_node40:
+          Value: true
+        submap_node41:
+          Value: true
+        submap_node42:
+          Value: true
+        submap_node43:
+          Value: true
+        submap_node44:
+          Value: true
+        submap_node45:
+          Value: true
+        submap_node46:
+          Value: true
+        submap_node47:
+          Value: true
+        submap_node48:
+          Value: true
+        submap_node49:
+          Value: true
+        submap_node5:
+          Value: true
+        submap_node50:
+          Value: true
+        submap_node51:
+          Value: true
+        submap_node52:
+          Value: true
+        submap_node53:
+          Value: true
+        submap_node54:
+          Value: true
+        submap_node55:
+          Value: true
+        submap_node56:
+          Value: true
+        submap_node57:
+          Value: true
+        submap_node58:
+          Value: true
+        submap_node59:
+          Value: true
+        submap_node6:
+          Value: true
+        submap_node60:
+          Value: true
+        submap_node61:
+          Value: true
+        submap_node62:
+          Value: true
+        submap_node63:
+          Value: true
+        submap_node64:
+          Value: true
+        submap_node65:
+          Value: true
+        submap_node66:
+          Value: true
+        submap_node67:
+          Value: true
+        submap_node68:
+          Value: true
+        submap_node69:
+          Value: true
+        submap_node7:
+          Value: true
+        submap_node70:
+          Value: true
+        submap_node71:
+          Value: true
+        submap_node72:
+          Value: true
+        submap_node73:
+          Value: true
+        submap_node74:
+          Value: true
+        submap_node75:
+          Value: true
+        submap_node76:
+          Value: true
+        submap_node77:
+          Value: true
+        submap_node78:
+          Value: true
+        submap_node79:
+          Value: true
+        submap_node8:
+          Value: true
+        submap_node80:
+          Value: true
+        submap_node81:
+          Value: true
+        submap_node82:
+          Value: true
+        submap_node83:
+          Value: true
+        submap_node84:
+          Value: true
+        submap_node85:
+          Value: true
+        submap_node86:
+          Value: true
+        submap_node87:
+          Value: true
+        submap_node88:
+          Value: true
+        submap_node89:
+          Value: true
+        submap_node9:
+          Value: true
+        submap_node90:
+          Value: true
+        submap_node91:
+          Value: true
+        submap_node92:
+          Value: true
+        submap_node93:
+          Value: true
+        submap_node94:
+          Value: true
+        submap_node95:
+          Value: true
+        submap_node96:
+          Value: true
+        submap_node97:
+          Value: true
+        submap_node98:
+          Value: true
+        submap_node99:
+          Value: true
+        world:
+          Value: true
+      Marker Scale: 1
+      Name: TF
+      Show Arrows: true
+      Show Axes: true
+      Show Names: true
+      Tree:
+        world:
+          map:
+            {}
+          submap_node0:
+            CurrentNode:
+              {}
+            submap_node1:
+              submap_node2:
+                submap_node3:
+                  submap_node4:
+                    submap_node5:
+                      submap_node6:
+                        submap_node7:
+                          submap_node8:
+                            submap_node10:
+                              submap_node11:
+                                submap_node12:
+                                  submap_node13:
+                                    submap_node14:
+                                      submap_node15:
+                                        submap_node16:
+                                          submap_node17:
+                                            submap_node18:
+                                              submap_node19:
+                                                submap_node20:
+                                                  submap_node21:
+                                                    submap_node22:
+                                                      submap_node23:
+                                                        submap_node24:
+                                                          submap_node25:
+                                                            submap_node26:
+                                                              submap_node27:
+                                                                submap_node28:
+                                                                  submap_node29:
+                                                                    submap_node30:
+                                                                      submap_node31:
+                                                                        submap_node32:
+                                                                          submap_node33:
+                                                                            submap_node34:
+                                                                              submap_node35:
+                                                                                submap_node36:
+                                                                                  submap_node37:
+                                                                                    submap_node38:
+                                                                                      submap_node39:
+                                                                                        submap_node40:
+                                                                                          submap_node41:
+                                                                                            submap_node42:
+                                                                                              submap_node43:
+                                                                                                submap_node44:
+                                                                                                  submap_node45:
+                                                                                                    submap_node46:
+                                                                                                      {}
+                                                                                                submap_node47:
+                                                                                                  submap_node48:
+                                                                                                    submap_node49:
+                                                                                                      submap_node50:
+                                                                                                        submap_node51:
+                                                                                                          submap_node52:
+                                                                                                            {}
+                                                              submap_node53:
+                                                                submap_node54:
+                                                                  submap_node55:
+                                                                    submap_node56:
+                                                                      submap_node57:
+                                                                        submap_node58:
+                                                                          submap_node59:
+                                                                            submap_node60:
+                                                                              submap_node61:
+                                                                                submap_node62:
+                                                                                  submap_node63:
+                                                                                    submap_node64:
+                                                                                      submap_node65:
+                                                                                        submap_node66:
+                                                                                          submap_node67:
+                                                                                            submap_node68:
+                                                                                              submap_node69:
+                                                                                                submap_node70:
+                                                                                                  submap_node71:
+                                                                                                    submap_node72:
+                                                                                                      submap_node73:
+                                                                                                        submap_node74:
+                                                                                                          submap_node75:
+                                                                                                            submap_node76:
+                                                                                                              submap_node77:
+                                                                                                                submap_node78:
+                                                                                                                  submap_node79:
+                                                                                                                    submap_node80:
+                                                                                                                      submap_node81:
+                                                                                                                        submap_node82:
+                                                                                                                          submap_node83:
+                                                                                                                            submap_node84:
+                                                                                                                              submap_node85:
+                                                                                                                                submap_node86:
+                                                                                                                                  submap_node87:
+                                                                                                                                    submap_node88:
+                                                                                                                                      submap_node89:
+                                                                                                                                        submap_node90:
+                                                                                                                                          submap_node91:
+                                                                                                                                            submap_node92:
+                                                                                                                                              submap_node124:
+                                                                                                                                                submap_node125:
+                                                                                                                                                  submap_node126:
+                                                                                                                                                    submap_node127:
+                                                                                                                                                      submap_node128:
+                                                                                                                                                        submap_node129:
+                                                                                                                                                          submap_node130:
+                                                                                                                                                            submap_node131:
+                                                                                                                                                              submap_node132:
+                                                                                                                                                                submap_node133:
+                                                                                                                                                                  {}
+                                                                                                                                                        submap_node134:
+                                                                                                                                                          submap_node135:
+                                                                                                                                                            submap_node136:
+                                                                                                                                                              submap_node137:
+                                                                                                                                                                submap_node138:
+                                                                                                                                                                  submap_node139:
+                                                                                                                                                                    submap_node140:
+                                                                                                                                                                      submap_node141:
+                                                                                                                                                                        submap_node142:
+                                                                                                                                                                          submap_node143:
+                                                                                                                                                                            submap_node144:
+                                                                                                                                                                              submap_node145:
+                                                                                                                                                                                submap_node146:
+                                                                                                                                                                                  submap_node147:
+                                                                                                                                                                                    submap_node148:
+                                                                                                                                                                                      submap_node149:
+                                                                                                                                                                                        submap_node150:
+                                                                                                                                                                                          submap_node151:
+                                                                                                                                                                                            submap_node152:
+                                                                                                                                                                                              submap_node153:
+                                                                                                                                                                                                {}
+                                                                                                                                              submap_node93:
+                                                                                                                                                submap_node94:
+                                                                                                                                                  submap_node95:
+                                                                                                                                                    submap_node96:
+                                                                                                                                                      submap_node97:
+                                                                                                                                                        submap_node98:
+                                                                                                                                                          submap_node99:
+                                                                                                                                                            submap_node100:
+                                                                                                                                                              submap_node101:
+                                                                                                                                                                {}
+                                                                                                                                                              submap_node102:
+                                                                                                                                                                submap_node103:
+                                                                                                                                                                  submap_node104:
+                                                                                                                                                                    submap_node105:
+                                                                                                                                                                      submap_node106:
+                                                                                                                                                                        submap_node107:
+                                                                                                                                                                          submap_node108:
+                                                                                                                                                                            submap_node109:
+                                                                                                                                                                              submap_node110:
+                                                                                                                                                                                submap_node111:
+                                                                                                                                                                                  submap_node112:
+                                                                                                                                                                                    submap_node113:
+                                                                                                                                                                                      submap_node114:
+                                                                                                                                                                                        submap_node115:
+                                                                                                                                                                                          submap_node116:
+                                                                                                                                                                                            submap_node117:
+                                                                                                                                                                                              submap_node118:
+                                                                                                                                                                                                submap_node119:
+                                                                                                                                                                                                  submap_node120:
+                                                                                                                                                                                                    submap_node121:
+                                                                                                                                                                                                      submap_node122:
+                                                                                                                                                                                                        submap_node123:
+                                                                                                                                                                                                          {}
+                            submap_node9:
+                              {}
+      Update Interval: 0
+      Value: true
+    - Alpha: 1
+      Autocompute Intensity Bounds: true
+      Autocompute Value Bounds:
+        Max Value: 10
+        Min Value: -10
+        Value: true
+      Axis: Z
+      Channel Name: intensity
+      Class: rviz/PointCloud2
+      Color: 239; 41; 41
+      Color Transformer: FlatColor
+      Decay Time: 0
+      Enabled: true
+      Invert Rainbow: false
+      Max Color: 255; 255; 255
+      Min Color: 0; 0; 0
+      Name: PointCloud2
+      Position Transformer: XYZ
+      Queue Size: 10
+      Selectable: true
+      Size (Pixels): 3
+      Size (m): 0.05000000074505806
+      Style: Flat Squares
+      Topic: /localized_cloud
+      Unreliable: false
+      Use Fixed Frame: true
+      Use rainbow: true
+      Value: true
+    - Alpha: 1
+      Arrow Length: 0.30000001192092896
+      Axes Length: 0.30000001192092896
+      Axes Radius: 0.009999999776482582
+      Class: rviz/PoseArray
+      Color: 252; 233; 79
+      Enabled: true
+      Head Length: 0.07000000029802322
+      Head Radius: 0.029999999329447746
+      Name: PoseArray
+      Shaft Length: 0.23000000417232513
+      Shaft Radius: 0.009999999776482582
+      Shape: Arrow (Flat)
+      Topic: /ndt_mcl_localization_graph_lamide/pose_particles
+      Unreliable: false
+      Value: true
+    - Alpha: 0.5
+      Arrow Length: 0.30000001192092896
+      Axes Length: 0.30000001192092896
+      Axes Radius: 0.009999999776482582
+      Class: rviz/PoseArray
+      Color: 78; 154; 6
+      Enabled: true
+      Head Length: 0.07000000029802322
+      Head Radius: 0.029999999329447746
+      Name: PoseArray
+      Shaft Length: 0.23000000417232513
+      Shaft Radius: 0.009999999776482582
+      Shape: Arrow (Flat)
+      Topic: /graph_map_publisher/Trajectory
+      Unreliable: false
+      Value: true
+    - Alpha: 1
+      Arrow Length: 0.30000001192092896
+      Axes Length: 0.30000001192092896
+      Axes Radius: 0.009999999776482582
+      Class: rviz/PoseArray
+      Color: 255; 25; 0
+      Enabled: true
+      Head Length: 0.07000000029802322
+      Head Radius: 0.029999999329447746
+      Name: PoseArray
+      Shaft Length: 0.23000000417232513
+      Shaft Radius: 0.009999999776482582
+      Shape: Arrow (Flat)
+      Topic: /ndt_mcl_localization_graph/est_trajectory
+      Unreliable: false
+      Value: true
+    - Angle Tolerance: 0.10000000149011612
+      Class: rviz/Odometry
+      Covariance:
+        Orientation:
+          Alpha: 0.5
+          Color: 255; 255; 127
+          Color Style: Unique
+          Frame: Local
+          Offset: 1
+          Scale: 1
+          Value: true
+        Position:
+          Alpha: 0.30000001192092896
+          Color: 204; 51; 204
+          Scale: 1
+          Value: true
+        Value: true
+      Enabled: true
+      Keep: 1000
+      Name: Odometry
+      Position Tolerance: 0.10000000149011612
+      Shape:
+        Alpha: 1
+        Axes Length: 1
+        Axes Radius: 0.10000000149011612
+        Color: 255; 250; 0
+        Head Length: 0.30000001192092896
+        Head Radius: 0.20000000298023224
+        Shaft Length: 0.5
+        Shaft Radius: 0.10000000149011612
+        Value: Arrow
+      Topic: /ndt_mcl_pose
+      Unreliable: false
+      Value: true
+    - Alpha: 0.5
+      Class: ndt_rviz_lamide/NDTRGB
+      Color: 204; 51; 204
+      Enabled: true
+      History Length: 1
+      Name: NDTRGB
+      Topic: /ndt_mcl_localization_graph_lamide/NDTOmMap
+      Unreliable: false
+      Value: true
+    - Angle Tolerance: 0.10000000149011612
+      Class: rviz/Odometry
+      Covariance:
+        Orientation:
+          Alpha: 0.5
+          Color: 255; 255; 127
+          Color Style: Unique
+          Frame: Local
+          Offset: 1
+          Scale: 1
+          Value: true
+        Position:
+          Alpha: 0.30000001192092896
+          Color: 204; 51; 204
+          Scale: 1
+          Value: true
+        Value: true
+      Enabled: true
+      Keep: 1000
+      Name: Odometry
+      Position Tolerance: 0.10000000149011612
+      Shape:
+        Alpha: 1
+        Axes Length: 1
+        Axes Radius: 0.10000000149011612
+        Color: 0; 255; 0
+        Head Length: 0.30000001192092896
+        Head Radius: 0.20000000298023224
+        Shaft Length: 0.5
+        Shaft Radius: 0.10000000149011612
+        Value: Arrow
+      Topic: /gt
+      Unreliable: false
+      Value: true
+    - Alpha: 1
+      Class: ndt_rviz_lamide/NDTRGB
+      Color: 204; 51; 204
+      Enabled: false
+      History Length: 1
+      Name: NDTRGB
+      Topic: /ndt_mcl_localization_graph_lamide/local_map
+      Unreliable: false
+      Value: false
+  Enabled: true
+  Global Options:
+    Background Color: 48; 48; 48
+    Default Light: true
+    Fixed Frame: map
+    Frame Rate: 30
+  Name: root
+  Tools:
+    - Class: rviz/Interact
+      Hide Inactive Objects: true
+    - Class: rviz/MoveCamera
+    - Class: rviz/Select
+    - Class: rviz/FocusCamera
+    - Class: rviz/Measure
+    - Class: rviz/SetInitialPose
+      Theta std deviation: 0.2617993950843811
+      Topic: /initialpose
+      X std deviation: 0.5
+      Y std deviation: 0.5
+    - Class: rviz/SetGoal
+      Topic: /move_base_simple/goal
+    - Class: rviz/PublishPoint
+      Single click: true
+      Topic: /clicked_point
+  Value: true
+  Views:
+    Current:
+      Class: rviz/ThirdPersonFollower
+      Distance: 7.348692893981934
+      Enable Stereo Rendering:
+        Stereo Eye Separation: 0.05999999865889549
+        Stereo Focal Distance: 1
+        Swap Stereo Eyes: false
+        Value: false
+      Focal Point:
+        X: 0
+        Y: 0
+        Z: 0
+      Focal Shape Fixed Size: true
+      Focal Shape Size: 0.05000000074505806
+      Invert Z Axis: true
+      Name: Current View
+      Near Clip Distance: 0.009999999776482582
+      Pitch: 0.4449999928474426
+      Target Frame: base_link
+      Value: ThirdPersonFollower (rviz)
+      Yaw: 3.140000104904175
+    Saved: ~
+Window Geometry:
+  Displays:
+    collapsed: true
+  Height: 1376
+  Hide Left Dock: true
+  Hide Right Dock: true
+  QMainWindow State: 000000ff00000000fd000000040000000000000177000003d2fc0200000008fb0000001200530065006c0065006300740069006f006e00000001e10000009b0000005c00fffffffb0000001e0054006f006f006c002000500072006f007000650072007400690065007302000001ed000001df00000185000000a3fb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb000000100044006900730070006c006100790073000000003d000003d2000000c900fffffffb0000002000730065006c0065006300740069006f006e00200062007500660066006500720200000138000000aa0000023a00000294fb00000014005700690064006500530074006500720065006f02000000e6000000d2000003ee0000030bfb0000000c004b0069006e0065006300740200000186000001060000030c00000261000000010000010f000003d2fc0200000003fb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fb0000000a00560069006500770073000000003d000003d2000000a400fffffffb0000001200530065006c0065006300740069006f006e010000025a000000b200000000000000000000000200000490000000a9fc0100000001fb0000000a00560069006500770073030000004e00000080000002e10000019700000003000009bd0000003efc0100000002fb0000000800540069006d00650100000000000009bd000002eb00fffffffb0000000800540069006d00650100000000000004500000000000000000000009bd000004c200000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  Selection:
+    collapsed: false
+  Time:
+    collapsed: false
+  Tool Properties:
+    collapsed: false
+  Views:
+    collapsed: true
+  Width: 2493
+  X: 67
+  Y: 27

@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<launch>
+    <!-- tf and utils -->
+    <!-- <param name="use_sim_time" value="false" /> -->
+
+    <include file="$(find odom_convert)/launch/odom_to_tf_oxford.launch" />
+
+    <node pkg="tf" type="static_transform_publisher" name="m2w_broadcaster" args="0 0 0 0 0 0 1 world map 100" />
+
+    <!-- rviz -->
+    <!-- <node pkg="rviz" type="rviz" name="lamide_rviz" args="-d <path to code>/src/lamide/rviz/MCL-D2D-Error.rviz" /> -->
+</launch>

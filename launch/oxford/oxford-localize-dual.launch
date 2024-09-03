@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<launch>
+    <param name="use_sim_time" value="false"/>
+    <include file="$(find odom_convert)/launch/odom_to_tf.launch" />
+    <include file="$(find kitti_publisher)/launch/oxford_publisher_dual.launch">
+        <arg name="rate" value="4" />
+    </include>
+    <node pkg="rviz" type="rviz" name="lamide_rviz" args="-d <path to code>/src/lamide/rviz/MCL.rviz" />
+    <node pkg="tf" type="static_transform_publisher" name="sm2w_broadcaster" args="0 0 0 0 0 0 1 world submap_node0 100" />
+    <node pkg="tf" type="static_transform_publisher" name="m2w_broadcaster" args="0 0 0 0 0 0 1 world map 100" />
+    <include file="$(find graph_localization_lamide)/launch/oxford_loc.launch"  >
+        <arg name="map_file_path" value="<path to maps>/oxford/example_submaps_10m/ndt_map.MAP" />
+    </include>
+</launch>

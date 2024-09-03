@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<launch>
+    <!-- tf and utils -->
+    <param name="use_sim_time" value="false" />
+    <include file="$(find odom_convert)/launch/odom_to_tf_oxford.launch" />
+    <node pkg="tf" type="static_transform_publisher" name="m2w_broadcaster" args="0 0 0 0 0 0 1 world map 100" />
+
+    <!-- rviz -->
+    <node pkg="rviz" type="rviz" name="lamide_rviz" args="-d <path to code>/src/lamide/rviz/MCL-D2D-Error.rviz" />
+
+    <!-- localization -->
+
+    <!--
+    TRLD4 - ndt-om d1
+    P7HNX - ndt-om d2
+    5IDML - ndt-om d3
+    HQ7T1 - vanilla ndt
+    Z5IH9 - static
+    VFALS - div 0.8m
+    VR2UC - div 0.4m
+    PBIOZ - div 0.6m
+
+    8T2E3 - january map
+    -->
+    <include file="$(find graph_localization_lamide)/launch/oxford_loc.launch">
+        <arg name="localisation_type_name" value="ndt_mcl" />
+        <arg name="map_path" value="<path to maps>/div/" />
+        <arg name="map_file" value="VFALS_ndt_map.MAP" />
+        <arg name="log_prefix" value="VFALS_d1_nondynamic_noisy" />
+        <arg name="only_static" default="false" />
+        <arg name="filter_dynamic" default="true" />
+        <arg name="mm_tx1" value="1.0" />
+        <arg name="mm_tx2" value="0.05" />
+        <arg name="mm_ty1" value="0.05" />
+        <arg name="mm_ty2" value="0.10" />
+        <arg name="mm_tz1" value="0.05" />
+        <arg name="mm_tz2" value="0.05" />
+        <arg name="mm_rr1" value="0.0" />
+        <arg name="mm_rr2" value="0.0" />
+        <arg name="mm_rp1" value="0.0" />
+        <arg name="mm_rp2" value="0.0" />
+        <arg name="mm_ry1" value="0.005" />
+        <arg name="mm_ry2" value="0.10" />
+        <arg name="mm_off_tx" value="0.1" />
+        <arg name="mm_off_ty" value="0.1" />
+        <arg name="mm_off_tz" value="0.1" />
+        <arg name="mm_off_rr" value="0.0" />
+        <arg name="mm_off_rp" value="0.0" />
+        <arg name="mm_off_ry" value="0.1" />
+        <!-- <arg name="mm_tx1" value="1.0" />
+        <arg name="mm_tx2" value="0.01" />
+        <arg name="mm_ty1" value="0.01" />
+        <arg name="mm_ty2" value="0.05" />
+        <arg name="mm_tz1" value="0.01" />
+        <arg name="mm_tz2" value="0.01" />
+        <arg name="mm_rr1" value="0.0" />
+        <arg name="mm_rr2" value="0.0" />
+        <arg name="mm_rp1" value="0.0" />
+        <arg name="mm_rp2" value="0.0" />
+        <arg name="mm_ry1" value="0.001" />
+        <arg name="mm_ry2" value="0.05" />
+        <arg name="mm_off_tx" value="0.02" />
+        <arg name="mm_off_ty" value="0.02" />
+        <arg name="mm_off_tz" value="0.02" />
+        <arg name="mm_off_rr" value="0.0" />
+        <arg name="mm_off_rp" value="0.0" />
+        <arg name="mm_off_ry" value="0.05" /> -->
+    </include>
+</launch>

@@ -1,0 +1,86 @@
+<?xml version="1.0"?>
+<launch>
+
+    <!-- Start rosbag with launchfile-->
+
+    <!-- Absolute Path to map to be used for localization. The map needs to be built by graph_fuser package -->
+    <arg name="map_file_path" default="/home/daniel/.ros/maps/offvolvo_2017_12_01_gt=0_submap=1_sizexy=180_Z=10_intrchR=20_compR=0_res=0.4_maxSensd=130_keyF=1_d=0.1_deg=2_alpha=0_dl=1_xyzir=1_mpsu=0_mnpfg=3kmnp0.map" />
+    <arg name="rviz_enabled" default="true" />
+
+    <include file="$(find graph_map)/launch/private/VolvoVelodyneConvert.launch">
+        <arg name="min_range" value="3" />
+    </include>
+    <!-- Include visualization in rviz -->
+    <group if="$(arg rviz_enabled)">
+        <include file="$(find graph_map)/launch/visualize_graph_fuser.launch">
+            <arg name="localization" value="true" />
+            <arg name="volvo_2017_12_01" value="true" />
+        </include>
+    </group>
+    <!-- Run monte carlo localization -->
+    <node name="realtime_dl_localization" pkg="graph_localization" type="realtime_dl_localization" output="screen">
+
+        <!-- select one of the following types-->
+
+        <!-- Topic of laser scanner -->
+        <param name="points_topic" value="/velodyne_points_unwarped" />
+        <param name="calibration" value="$(find graph_map)/config/64e_utexas.yaml" />
+        <!-- pass path to graph_map (.map)-->
+        <param name="map_file" value="$(arg map_file_path)" />
+        <param name="sensor_pose_x" value="0.270054" />
+        <param name="sensor_pose_y" value="-0.000547494" />
+        <param name="sensor_pose_z" value="3.79621" />
+        <param name="sensor_pose_r" value="-0.00697922" />
+        <param name="sensor_pose_p" value="-0.00933762" />
+        <param name="sensor_pose_t" value="-3.11258 " />
+
+        <!-- Choose weather to initiate pose to pose_init_<x,y,t> or the data of /<gt_topic> -->
+        <param name="initPoseFromGT" value="true" />
+        <param name="root_tf" value="/world" />
+        <param name="base_tf" value="/odom3d" />
+        <param name="gt_tf" value="/EKF" />
+        <!--param name="mcl_tf" value="mcl_pose_est" /-->
+
+        <param name="resolution_local_factor_1" value="2.4" />
+        <param name="resolution_local_factor_2" value="2.4" />
+        <param name="resolution_local_factor_3" value="2.4" />
+
+        <param name="resolution_1" value="1.1" />
+        <param name="resolution_2" value="1.1" />
+        <param name="resolution_3" value="1.1" />
+
+        <param name="dataset" value="volvo_2017_12_01" />
+
+        <param name="min_obs_variance_1" value="0.3" />
+        <param name="min_obs_variance_2" value="0.3" />
+        <param name="min_obs_variance_3" value="0.3" />
+        <param name="min_obs_variance_4" value="0.05" />
+        <param name="min_obs_variance_5" value="0.05" />
+        <param name="min_obs_variance_6" value="0.05" />
+
+        <param name="sensor_range" value="130" />
+        <param name="check_consistency" value="true" />
+        <param name="max_rotation_norm" value="1.57" />
+        <param name="max_translation_norm" value="1.0" />
+
+        <param name="step_control" value="true" />
+        <param name="matcher_neighbours" value="2" />
+
+        <param name="gt_mockup" value="false" />
+        <param name="ms_sim_delay" value="0" />
+
+
+        <param name="itr_max" value="4" />
+        <param name="size_z_meters" value="12" />
+        <param name="enable_registration" value="true" />
+        <param name="enable_localisation" value="true" />
+        <param name="visualize" value="true" />
+
+        <param name="map_switching_method" value="closest_observation" />
+
+        <!--param name="size_z_meters" value="130" /-->
+        <param name="localisation2D" value="false" />
+    </node>
+
+
+</launch>

@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<launch>
+    <!--
+    d8 maps
+    7JL7S OM
+    XYVLJ Semi
+    XGO28 Static
+    -->
+    <include file="$(find dynamic_filter)/launch/dynamic_filter.launch" />
+    <include file="$(find graph_localization_lamide)/launch/oxford_loc.launch" >
+        <arg name="localisation_type_name" value="ndt_mcl" />
+        <arg name="map_path" value="<path to maps>/experiment2/" />
+        <arg name="map_file" value="d8_static_XGO28_ndt_map.MAP" />
+        <arg name="log_prefix" value="log-wait/d8_static_d5_combo" />
+        <arg name="only_static" value="true" />
+        <arg name="request_scans" value="true" />
+        <arg name="scan_service" value="/oxford_publisher/publish" />
+        <arg name="input_cloud_topic" value="/velodyne_points_left_static" />
+        <arg name="sensor_pose_x" default="0.0" />
+        <arg name="sensor_pose_y" default="0.0" />
+        <arg name="sensor_pose_z" default="0.0" />
+        <arg name="sensor_pose_r" default="0.0" />
+        <arg name="sensor_pose_p" default="0.0" />
+        <arg name="sensor_pose_t" default="0.0" />
+    </include>
+</launch>

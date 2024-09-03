@@ -1,0 +1,117 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="run_bag" default="false" />
+    <arg name="namespace_prefix" default="robot1" />
+
+    <!-- Include visualization in rviz -->
+    <include file="$(find graph_map)/launch/visualize_graph_fuser.launch">
+        <arg name="mapping" value="true" />
+        <arg name="oru-lab" value="true" />
+    </include>
+
+
+    <!-- start mapping node -->
+    <node pkg="graph_map" type="graph_map_fuser_node" name="graph_node" output="screen">
+
+        <!-- Choose weather to initiate pose to pose_init_<x,y,t> or the data of /<gt_topic> -->
+        <param name="initPoseFromGT" value="true" />
+        <param name="pose_init_x" value="0" />
+        <param name="pose_init_y" value="0" />
+        <param name="pose_init_t" value="0" />
+        <param name="world_link_id" value="map" />
+
+        <!-- Select mapping technique to one of the methods listed in graph_map/include/graph_factory.h -->
+        <param name="map_type" value="ndt_map" />
+
+        <!-- Select registration technique to one of the methods listed in graph_map/include/graph_factory.h -->
+        <param name="registration_type" value="ndt_d2d_reg" />
+
+
+        <!-- use local maps instead of a single map, this can improve map descriptiveness -->
+        <param name="use_submap" value="false" />
+
+        <!-- choose to disable essential parts of the software -->
+        <param name="enable_registration" value="true" />
+        <param name="registration_2D" value="true" />
+        <!-- Use fine to course ndt_cells in registration -->
+        <param name="multi-res" value="false" />
+        <param name="enable_mapping" value="true" />
+
+
+        <!-- if laser_2d is true, a 2d scanner will be used for mapping-->
+        <param name="laser_2d" value="true" />
+        <!-- Topic of laser scanner -->
+        <param name="points_topic" value="$(arg namespace_prefix)/kmo_navserver/laserscan1" />
+        <param name="output_pointcloud_topic_name" value="/fused_cloud" />
+
+        <param name="odometry_topic" value="$(arg namespace_prefix)/kmo_navserver/odom" />
+        <param name="use_odometry_message" value="false" />
+        <param name="use_tf_listener" value="true" />
+
+        <param name="odom_tf" value="/world" />
+        <param name="base_tf" value="/odom_base_link" />
+        <param name="gt_topic" value="$(arg namespace_prefix)/kmo_navserver/state" />
+
+        <!-- check if the registration pose output is similar to odometry prediction within max_translation_norm or max_rotation_norm, otherwise reject -->
+        <param name="check_consistency" value="true" />
+        <param name="max_translation_norm" value="0.4" />
+        <param name="max_rotation_norm" value="0.78539816339" />
+
+        <!-- size of map -->
+        <param name="size_x_meters" value="70" />
+        <param name="size_y_meters" value="70" />
+        <param name="size_z_meters" value="5" />
+
+        <!-- Resolution of a map, usually between 0.4 and 1.2 -->
+        <param name="resolution" value="0.5" />
+        <param name="n_neighbours" value="2" />
+
+        <!--<param name="laser_variance_z" value="0.02" /> -->
+
+        <!--range of sensor, min range can prevent self-mapping of the robot or operator of the lidar, max range can remove uncertain measurments -->
+        <param name="max_range" value="30." />
+        <param name="min_range" value="1.8" />
+
+        <!-- Specific sensor offset parameters with respect to the odometry frame -->
+        <param name="sensor_pose_x" value="0.807" />
+        <param name="sensor_pose_y" value="-0.003" />
+        <param name="sensor_pose_z" value="1.5" />
+        <param name="sensor_pose_t" value="3.14316344992" />
+        <param name="sensor_offset_t" value="0.0" />
+
+        <!-- Output directory where the map is stored -->
+        <!-- invoke rosservice call /graph_ -->
+        <param name="map_directory" value="<path to maps>" />
+
+        <param name="visualize" value="true" />
+        <param name="T_map" value="1.0" />
+
+        <!-- a minimum movement is required before fusing frames -->
+        <param name="use_keyframe" value="true" />
+        <param name="min_keyframe_dist" value="0.1" />
+        <param name="min_keyframe_rot_deg" value="1.0" />
+    </node>
+
+
+    <node pkg="octomap_server" type="octomap_server_node" name="octomap_server">
+        <remap from="cloud_in" to="/fused_cloud" />
+        <param name="frame_id" value="/map" />
+
+        <param name="resolution" value="0.1" />
+        <param name="sensor_model/max_range" value="100.0" />
+        <param name="pointcloud_max_z" value="5" />
+        <param name="pointcloud_min_z" value="0" />
+        <param name="occupancy_min_z" value="0.0" />
+        <param name="occupancy_max_z" value="2" />
+
+    </node>
+
+    <!-- start a rosbag -->
+    <group if="$(arg run_bag)">
+        <arg name="path" default="<path to code>/src/lamide/graph_map_public/graph_map/data/" />
+        <arg name="file_1" default="2018-05-18-09-55-16.bag" />
+        <node pkg="rosbag" type="play" name="player" output="screen" args="--clock -r 1.0 -q $(arg path)$(arg file_1)" />
+    </group>
+
+
+</launch>

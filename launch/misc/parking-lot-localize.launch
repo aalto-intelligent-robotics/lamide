@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<launch>
+
+    <param name="/use_sim_time" value="true"/>
+    <include file="$(find odom_convert)/launch/odom_to_tf.launch" />
+    <include file="$(find velodyne_pointcloud_oru)/launch/VLP16_points.launch"  />
+    <node pkg="rosbag" type="play" name="rosbag" args="--clock -s 9 -u 75 -r 1 <path to bags>/first-set/gimbot/parking-lot.bag" />
+    <node pkg="rviz" type="rviz" name="lamide_rviz" args="-d <path to code>/src/lamide/rviz/MCL.rviz" />
+    <node pkg="tf" type="static_transform_publisher" name="m2w_broadcaster" args="0 0 0 0 0 0 1 world map 100" />
+    <include file="$(find graph_localization_lamide)/launch/parking_lot_loc.launch"  />
+</launch>

@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<launch>
+    <include file="$(find kitti_publisher)/launch/oxford_publisher_dual.launch">
+        <arg name="rate" value="0.5" />
+    </include>
+    <include file="$(find odom_convert)/launch/odom_to_tf.launch" />
+    <include file="$(find graph_map)/launch/oxford_fuser.launch" />
+
+    <node pkg="rviz" type="rviz" name="lamide_rviz" args="-d <path to code>/src/lamide/rviz/lamide-fuser.rviz" />
+</launch>

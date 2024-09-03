@@ -1,0 +1,12 @@
+dataset=volvo_2017_12_01
+roslaunch graph_map visualize_graph_fuser.launch localization:=true $dataset:=true &
+rosrun graph_localization graph_localization_offline  --use-ref-frame --visualize --visualize-map --use_pointtype_xyzir --localization3d --map-switching-method closest_observation --n-particles 500  --tf-base-link /EKF --tf-gt-link /EKF --skip-frame 1 --z-filter-height -1000000 --base-name mcl-ndtdl --bag-file-path $BAG_LOCATION/volvo_2017_12_01/S3_merged.bagfix.bag --map-file-path /home/daniel/.ros/maps/offvolvo_2017_12_01_gt=0_submap=1_sizexy=180_Z=10_intrchR=20_compR=0_res=0.4_maxSensd=130_keyF=1_d=0.1_deg=2_alpha=0_dl=1_xyzir=1_mpsu=0_mnpfg=3kmnp0.map --data-set $dataset --velodyne-config-file  "$(rospack find ndt_fuser)/launch/64E_calibration.yaml"  --min-range 3 --max-range 130 --localisation-algorithm-name ukf_reg --registration-type-name ndt_dl_reg --key-frame-update --keyframe-min-distance 0.1 --keyframe-min-rot-deg 100 --resolution-local-factor 3.0 --min-observation-variance 0.3 0.3 0.3 0.05 0.05 0.05 --max-nb-iters 4  #--visualize-map # --resolutions 2.5 2.5 2.5
+#
+#--visualize --visualize-map
+
+
+
+#--save-results
+# --forceSIR
+# --localisation-algorithm-name reg_localisation_type (Default)
+#

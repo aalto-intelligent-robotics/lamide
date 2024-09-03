@@ -1,0 +1,28 @@
+<!-- -*- mode: XML -*- -->
+<!-- rostest of reading Velodyne VLP16 PCAP files -->
+
+<launch>
+
+  <!-- start driver with example PCAP file -->
+  <node pkg="velodyne_driver" type="velodyne_node" name="velodyne_node">
+    <param name="model" value="VLP16"/>
+    <param name="pcap" value="$(find velodyne_pointcloud_oru)/tests/vlp16.pcap"/>
+  </node>
+
+  <!-- start cloud node with test calibration file -->
+  <node pkg="velodyne_pointcloud_oru" type="cloud_node_oru" name="cloud_node_oru">
+    <param name="calibration"
+           value="$(find velodyne_pointcloud_oru)/params/VLP16db.yaml"/>
+  </node>
+
+  <!-- verify PointCloud2 publication rate -->
+  <test test-name="cloud_node_vlp16_hz_test" pkg="rostest"
+        type="hztest" name="hztest_cloud_node_vlp16">
+    <param name="hz" value="10.0" />
+    <param name="hzerror" value="1.0" />
+    <param name="test_duration" value="5.0" />    
+    <param name="topic" value="velodyne_points" />  
+    <param name="wait_time" value="2.0" />  
+  </test>
+
+</launch>

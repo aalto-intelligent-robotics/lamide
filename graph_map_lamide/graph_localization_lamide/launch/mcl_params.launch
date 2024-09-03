@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="mm_tx1" default="100.0" />
+    <arg name="mm_tx2" default="000.5" />
+    <arg name="mm_ty1" default="000.5" />
+    <arg name="mm_ty2" default="100.0" />
+    <arg name="mm_tz1" default="000.05" />
+    <arg name="mm_tz2" default="000.05" />
+    <arg name="mm_rr1" default="000.0" />
+    <arg name="mm_rr2" default="000.0" />
+    <arg name="mm_rp1" default="000.0" />
+    <arg name="mm_rp2" default="000.0" />
+    <arg name="mm_ry1" default="000.5" />
+    <arg name="mm_ry2" default="100.0" />
+    <arg name="mm_off_tx" default="000.2" />
+    <arg name="mm_off_ty" default="000.2" />
+    <arg name="mm_off_tz" default="000.1" />
+    <arg name="mm_off_rr" default="000.0" />
+    <arg name="mm_off_rp" default="000.0" />
+    <arg name="mm_off_ry" default="000.1" />
+</launch>

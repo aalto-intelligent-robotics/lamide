@@ -1,0 +1,131 @@
+<?xml version="1.0"?>
+<launch>
+
+    <!-- Start rosbag with launchfile-->
+    <arg name="run_bag" default="false" />
+    <!-- Absolute Path to map to be used for localization. The map needs to be built by graph_fuser package -->
+    <arg name="map_file_path" default="<path to maps>/parking-lot/v1/ndt_map.MAP" />
+    <arg name="robot_id" default="robot1" />
+
+    <!-- Include visualization in rviz -->
+    <!-- <include file="$(find graph_map)/launch/visualize_graph_fuser.launch" >
+  <arg name="localization" value="true" />
+  <arg name="oru-lab" value="true" />
+</include> -->
+    <!-- Run monte carlo localization -->
+    <node name="ndt_mcl_localization_graph" pkg="graph_localization" type="ndt_mcl_localization_graph" output="screen">
+
+        <!-- if laser_2d is true, a 2d scanner will be used for mapping-->
+        <param name="laser_2d" value="false" />
+        <!-- Topic of laser scanner -->
+        <param name="points_topic" value="/velodyne_points" />
+        <param name="PointCloud" value="true" />
+        <param name="Velodyne" value="false" />
+        <param name="input_cloud_topic" value="/velodyne_points" />
+
+        <!-- pass path to graph_map (.map)-->
+        <param name="map_file" value="$(arg map_file_path)" />
+        <!-- G/01 LiDAR x 0.175 m
+        G/01 LiDAR y 0.025 m
+        G/01 LiDAR z 0.48 m
+        G/01 LiDAR φ −0.017 rad (roll)
+        G/01 LiDAR θ −0.012 rad (pitch)
+        G/01 LiDAR ψ −0.04 rad (yaw)-->
+        <param name="sensor_pose_x" value="0.175" />
+        <param name="sensor_pose_y" value="0.025" />
+        <param name="sensor_pose_z" value="0.48" />
+        <param name="sensor_pose_r" value="-0.017" />
+        <param name="sensor_pose_p" value="-0.012" />
+        <param name="sensor_pose_t" value="-0.04" />
+        <param name="sensor_offset_t" value="0.0" />
+        <param name="gt_topic" value="/$(arg robot_id)/kmo_navserver/state" />
+
+        <!-- Choose weather to initiate pose to pose_init_<x,y,t> or the data of /<gt_topic> -->
+        <param name="initPoseFromGT" value="false" />
+        <param name="pose_init_x" value="0" />
+        <param name="pose_init_y" value="0" />
+        <param name="pose_init_t" value="0" />
+        <param name="use_tf_listener" value="true" />
+        <!-- world frame id -->
+        <param name="root_tf" value="/map" />
+        <param name="world_tf" value="/world" />
+        <!--  odometry frame id-->
+        <param name="odom_tf" value="/odom" />
+        <param name="base_tf" value="/base_link" />
+        <param name="mcl_tf" value="/mcl" />
+        <param name="laser_tf" value="/velodyne" />
+
+        <param name="publish_sensor_link" value="true" />
+
+
+        <param name="max_range" value="130." />
+        <param name="min_range" value="1.0" />
+        <!-- MCL parameters -->
+        <param name="enable_localisation" value="true" />
+        <param name="resolution_local_factor" value="1.0" />
+        <param name="particle_count" value="5000" />
+        <param name="show_pose" value="true" />
+        <param name="fraction" value="1.0" />
+        <param name="force_SIR" value="true" />
+        <param name="z_filter_height" value="-10.0" />
+
+        <!-- this affects the motion model -->
+        <param name="dataset" value="custom" />
+        <param name="mm_tx1" value="15.0" />
+        <param name="mm_tx2" value="1.0" />
+        <param name="mm_ty1" value="1.0" />
+        <param name="mm_ty2" value="2.0" />
+        <param name="mm_tz1" value="0.0" />
+        <param name="mm_tz2" value="0.0" />
+        <param name="mm_rr1" value="0.0" />
+        <param name="mm_rr2" value="0.0" />
+        <param name="mm_rp1" value="0.0" />
+        <param name="mm_rp2" value="0.0" />
+        <param name="mm_ry1" value="1.0" />
+        <param name="mm_ry2" value="2.5" />
+        <param name="mm_off_tx" value="0.5" />
+        <param name="mm_off_ty" value="0.05" />
+        <param name="mm_off_tz" value="0.0" />
+        <param name="mm_off_rr" value="0.0" />
+        <param name="mm_off_rp" value="0.0" />
+        <param name="mm_off_ry" value="0.25" />
+
+        <!--first working parameters-->
+        <!-- <param name="mm_tx1" value="50.0" />
+        <param name="mm_tx2" value="2.0" />
+        <param name="mm_ty1" value="5.0" />
+        <param name="mm_ty2" value="5.0" />
+        <param name="mm_tz1" value="0.0" />
+        <param name="mm_tz2" value="0.0" />
+        <param name="mm_rr1" value="0.0" />
+        <param name="mm_rr2" value="0.0" />
+        <param name="mm_rp1" value="0.0" />
+        <param name="mm_rp2" value="0.0" />
+        <param name="mm_ry1" value="2.0" />
+        <param name="mm_ry2" value="5.0" />
+        <param name="mm_off_tx" value="0.5" />
+        <param name="mm_off_ty" value="0.1" />
+        <param name="mm_off_tz" value="0.0" />
+        <param name="mm_off_rr" value="0.0" />
+        <param name="mm_off_rp" value="0.0" />
+        <param name="mm_off_ry" value="0.25" /> -->
+
+
+    </node>
+
+
+    <node name="graph_map_publisher" pkg="graph_map" type="graph_map_publisher" output="screen">
+        <param name="map_rate" value="1" />
+        <param name="map_file" value="$(arg map_file_path)" />
+        <param name="map_frame" value="/world" />
+        <param name="map_parent_frame_id" value="/world" />
+        <param name="map_topic" value="/map" />
+    </node>
+
+    <!-- <group if="$(arg run_bag)">
+    <arg name="path" default="<path to bags>/first-set/gimbot" />
+    <arg name="file_1" default="parking-lot.bag" />
+  <node pkg="rosbag" type="play" name="player" output="screen" args="clock -r 1.0 -q $(arg path)$(arg file_1)"/>
+</group> -->
+
+</launch>

@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<launch>
+    <!-- ros_args.launch -->
+    <arg name="filename" />
+    <arg name="filepath" />
+    <arg name="comp" />
+    <arg name="cfilename" default=""/>
+    <arg name="cfilepath" default=""/>
+    <arg name="NDTOM_topic" default="ndt" />
+    <arg name="output_files" default="/home/daniel/metadata" />
+    <arg name="id" default="1" />
+
+    <!-- launch-prefix="gdb -ex run \-\-args" -->
+    <node pkg="graph_map_lamide" type="show_map_lamide" name="show_map_$(arg id)"
+        args="--file-name $(arg filename) --file-path $(arg filepath) --output-filepath $(arg output_files) --comp-file-name $(arg cfilename) --comp-file-path $(arg cfilepath) --compare $(arg comp)"
+        output="screen">
+        <remap from="/show_Map/NDTOmMap" to="show_map/$(arg NDTOM_topic)" />
+        <param name="check_for_broken_submaps" value="false" />
+        <!-- Coloring:
+        0: single
+        1: standard
+        2: cluster
+        3: update
+        4: occupancy
+        5: membership
+        6: dynamics -->
+        <param name="color" value="6" />
+    </node>
+    <node pkg="rviz" type="rviz" name="rviz"
+        args="-d <path to code>/src/lamide/graph_map_lamide/graph_map_lamide/rviz/showMap-rgb.rviz" />
+</launch>

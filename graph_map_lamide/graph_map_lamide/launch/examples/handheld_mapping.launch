@@ -1,0 +1,114 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="run_bag" default="false" />
+
+    <!-- Include visualization in rviz -->
+    <node pkg="rviz" type="rviz" name="rviz" args="-d $(find graph_map)/rviz/mapping_arla2012.rviz" />
+
+
+    <include file="$(find graph_map)/launch/VelodyneConvertMotionCompensation.launch">
+        <arg name="input_points_topic" value="/velodyne_packets" />
+        <arg name="output_points_topic" value="/velodyne_points" />
+        <arg name="robot_prefix" value="" />
+        <arg name="min_range" value="0.7" />
+        <arg name="disable_compensation" value="true" />
+        <arg name="sensor_pose_x" default="0" />
+        <arg name="sensor_pose_y" default="0" />
+        <arg name="sensor_pose_z" default="0" />
+        <arg name="sensor_pose_r" default="0" />
+        <arg name="sensor_pose_p" default="0" />
+        <arg name="sensor_pose_t" default="0" />
+    </include>
+
+
+    <node pkg="graph_map" type="graph_map_fuser_node" name="graph_node" output="screen">
+
+        <!-- Choose weather to initiate pose to pose_init_<x,y,t> or the data of /<gt_topic> -->
+
+
+        <!-- Select mapping technique to one of the methods listed in graph_map/include/graph_factory.h -->
+        <param name="map_type" value="ndt_map" />
+
+        <!-- Select registration technique to one of the methods listed in graph_map/include/graph_factory.h -->
+        <param name="registration_type" value="ndt_d2d_reg" />
+        <param name="resolutionLocalFactor" value="1.0" />
+
+        <!-- use local maps instead of a single map, this can improve map descriptiveness -->
+        <param name="use_submap" value="false" />
+        <param name="interchange_radius" value="4" />
+        <param name="compound_radius" value="2" />
+
+        <!-- choose to disable essential parts of the software -->
+        <param name="enable_registration" value="true" />
+        <param name="registration_2D" value="false" />
+        <!-- Use fine to course ndt_cells in registration -->
+        <param name="multi-res" value="true" />
+        <param name="enable_mapping" value="true" />
+
+
+        <!-- if laser_2d is true, a 2d scanner will be used for mapping-->
+        <param name="laser_2d" value="false" />
+        <!-- Topic of laser scanner -->
+        <param name="points_topic" value="/velodyne_points" />
+        <!-- if laser_2d is false, a velodyne configuration file should be privided -->
+        <param name="velodyne_config_file" value="$(find graph_map)/config/velo32.yaml" />
+
+        <param name="odometry_topic" value="/vmc_navserver/odom" />
+
+        <!-- Only one of the following can be true -->
+        <param name="use_odometry_message" value="false" />
+        <param name="use_tf_listener" value="false" />
+
+        <param name="odom_tf" value="" />
+        <param name="base_tf" value="" />
+        <param name="laser_frame_id" value="/velodyne" />
+
+
+        <!-- check if the registration pose output is similar to odometry prediction within max_translation_norm or max_rotation_norm -->
+        <param name="check_consistency" value="true" />
+        <param name="max_translation_norm" value="1.0" />
+        <param name="max_rotation_norm" value="0.78539816339" />
+
+        <!-- size of map -->
+        <param name="size_x_meters" value="250" />
+        <param name="size_y_meters" value="250" />
+        <param name="size_z_meters" value="50" />
+
+        <!-- Resolution of a map, usually between 0.4 and 1.2 -->
+
+        <param name="resolution" value="1.0" />
+        <!--<param name="laser_variance_z" value="0.02" /> -->
+
+        <!--range of sensor, min range can prevent self-mapping of the robot or operator of the lidar, max range can remove uncertain measurments -->
+        <param name="max_range" value="130." />
+        <param name="min_range" value="0.7" />
+
+        <!-- Specific sensor offset parameters with respect to the odometry frame -->
+        <param name="sensor_pose_x" value="0" />
+        <param name="sensor_pose_y" value="0" />
+        <param name="sensor_pose_z" value="0" />
+        <param name="sensor_pose_t" value="0" />
+        <param name="sensor_offset_t" value="0.0" />
+
+        <!-- Output directory where the map is stored -->
+        <!-- invoke rosservice call /graph_ -->
+        <param name="map_directory" value="$(find graph_map)/maps" />
+
+        <param name="visualize" value="true" />
+        <param name="disable_map_visualization" value="false" />
+
+        <!-- a minimum movement is required before fusing frames -->
+        <param name="use_keyframe" value="false" />
+        <param name="min_keyframe_dist" value="0.2" />
+        <param name="min_keyframe_rot_deg" value="1.0" />
+    </node>
+
+    <!-- start a rosbag -->
+    <group if="$(arg run_bag)">
+        <arg name="path" default="/mnt/storage/rosbag_storage/arla_bags/velodyne_mapping/" />
+        <arg name="file_1" default="2012-09-05-09-44-50_0.bagfix.bag" />
+        <node pkg="rosbag" type="play" name="player" output="screen" args="--clock -r 1.0 -q $(arg path)$(arg file_1)" />
+        <!--param name="use_sim_time" value="true" /-->
+    </group>
+
+</launch>

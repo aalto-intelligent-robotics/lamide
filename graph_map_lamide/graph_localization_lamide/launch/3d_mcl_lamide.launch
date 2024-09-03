@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<launch>
+
+    <!-- Start rosbag with launchfile-->
+    <arg name="run_bag" default="true" />
+    <!-- Absolute Path to map to be used for localization. The map needs to be built by graph_fuser package -->
+    <arg name="map_file_path" default="<path to maps>/partial.MAP" />
+    <arg name="robot_id" default="robot1" />
+
+    <!-- Include visualization in rviz -->
+    <include file="$(find graph_map)/launch/visualize_graph_fuser.launch">
+        <arg name="localization" value="true" />
+        <arg name="oru-lab" value="true" />
+    </include>
+    <!-- Run monte carlo localization -->
+    <node name="ndt_mcl_localization_graph" pkg="graph_localization" type="ndt_mcl_localization_graph" output="screen">
+
+        <!-- if laser_2d is true, a 2d scanner will be used for mapping-->
+        <param name="laser_2d" value="true" />
+        <!-- Topic of laser scanner -->
+        <param name="points_topic" value="/velodyne_points" />
+        <param name="PointCloud" value="true" />
+        <param name="Velodyne" value="false" />
+        <param name="input_cloud_topic" value="/velodyne_points" />
+
+        <!-- pass path to graph_map (.map)-->
+        <param name="map_file" value="$(arg map_file_path)" />
+        <param name="sensor_pose_x" value="0.86" />
+        <param name="sensor_pose_y" value="0.0" />
+        <param name="sensor_pose_z" value="2.0" />
+        <param name="sensor_pose_t" value="0.0" />
+        <param name="gt_topic" value="/$(arg robot_id)/kmo_navserver/state" />
+
+        <!-- Choose weather to initiate pose to pose_init_<x,y,t> or the data of /<gt_topic> -->
+        <param name="initPoseFromGT" value="false" />
+        <param name="pose_init_x" value="0" />
+        <param name="pose_init_y" value="0" />
+        <param name="pose_init_t" value="0" />
+        <param name="use_tf_listener" value="false" />
+        <!-- world frame id -->
+        <param name="root_tf" value="/world" />
+        <!--  odometry frame id-->
+        <param name="odom_tf" value="/odom" />
+        <param name="base_tf" value="/base_link" />
+        <!--param name="mcl_tf" value="mcl_pose_est" /-->
+
+
+        <!-- MCL parameters -->
+        <param name="particle_count" value="500" />
+        <param name="show_pose" value="true" />
+        <param name="fraction" value="1.0" />
+        <param name="force_SIR" value="true" />
+
+    </node>
+
+
+    <!--node name="graph_map_publisher" pkg="graph_map" type="graph_map_publisher" output="screen">
+  <param name="map_rate" value="1" />
+  <param name="map_file" value="$(arg map_file_path)"  />
+  <param name="map_frame" value="/maps/map_2d_laser" />
+  <param name="map_parent_frame_id" value="/world" />
+  <param name="map_topic" value="/maps/map_2d_laser" />
+</node-->
+
+    <group if="$(arg run_bag)">
+        <arg name="path" default="<path to bags>/" />
+        <arg name="file_1" default="all-tf.bag" />
+        <node pkg="rosbag" type="play" name="player" output="screen" args="--clock -r 1.0 -q $(arg path)$(arg file_1)" />
+    </group>
+
+</launch>

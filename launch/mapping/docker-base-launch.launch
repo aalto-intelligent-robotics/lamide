@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<launch>
+    <include file="$(find odom_convert)/launch/odom_to_tf_oxford.launch" />
+    <node pkg="tf" type="static_transform_publisher" name="v2bl_broadcaster"
+        args="0 0 0 0 -3.14 0 base_link velodyne_left 100" />
+    <!-- <node pkg="rviz" type="rviz" name="lamide_rviz"
+        args="-d <path to code>/src/lamide/rviz/lamide-fuser-lamide-oxford.rviz" /> -->
+</launch>

@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<launch>
+
+    <arg name="robot_prefix" default="robot5" />
+    <arg name="input_points_topic" default="/$(arg robot_prefix)/sensors/velodyne_packets" />
+    <arg name="output_points_topic" default="/$(arg robot_prefix)/sensors/velodyne_points_unwarped" />
+    <arg name="link" default="velodyne_link" />
+    <arg name="sensor_offset_topic" default="/sensor_default" />
+    <arg name="min_range" default="1.3" />
+    <arg name="odom_link" default="odom" />
+    <arg name="odom_child_link" default="base_footprint" />
+    <arg name="disable_compensation" default="false" />
+    <arg name="calibration" default="$(find graph_map)/config/velo32.yaml" />
+    <arg name="sensor_pose_x" default="1.10127" />
+    <arg name="sensor_pose_y" default="-0.0727501" />
+    <arg name="sensor_pose_z" default="1.75" />
+    <arg name="sensor_pose_r" default="0" />
+    <arg name="sensor_pose_p" default="0" />
+    <arg name="sensor_pose_t" default="1.59352" />
+
+
+    <!-- Run monte carlo localization -->
+    <!--include file="$(find ndt_calibration)/launch/visualize.launch" /-->
+    <node name="velodyne_converter" pkg="graph_map" type="velodyne_converter" output="log">
+
+        <!-- select one of the following types-->
+        <param name="disable_compensation" value="$(arg disable_compensation)" />
+        <param name="laser_tf" value="$(arg robot_prefix)/$(arg link)" />
+
+        <!-- Topic of laser scanner -->
+        <param name="input_points_topic" value="$(arg input_points_topic)" />
+        <param name="output_points_topic" value="$(arg output_points_topic)" />
+        <param name="output_points_link" value="$(arg robot_prefix)/$(arg link)" />
+        <param name="calibration" value="$(arg calibration)" />
+        <param name="sensor_offset_topic" value="$(arg sensor_offset_topic)" />
+
+        <param name="odom_link" value="$(arg robot_prefix)/$(arg odom_link)" />
+        <param name="odom_child_link" value="$(arg robot_prefix)/$(arg odom_child_link)" />
+
+        <param name="min_range" value="$(arg min_range)" />
+        <param name="max_range" value="130.0" />
+
+        <!-- pass path to graph_map (.map)-->
+        <param name="sensor_pose_x" value="$(arg sensor_pose_x)" />
+        <param name="sensor_pose_y" value="$(arg sensor_pose_y)" />
+        <param name="sensor_pose_z" value="$(arg sensor_pose_z)" />
+        <param name="sensor_pose_r" value="$(arg sensor_pose_r)" />
+        <param name="sensor_pose_p" value="$(arg sensor_pose_p)" />
+        <param name="sensor_pose_t" value="$(arg sensor_pose_t)" />
+    </node>
+
+
+</launch>

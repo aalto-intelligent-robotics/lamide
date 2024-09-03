@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<launch>
+    <include file="$(find dynamic_filter)/launch/dynamic_filter.launch" />
+    <include file="$(find graph_map_lamide)/launch/oxford_fuser_gt.launch" >
+        <arg name="ndt_om" value="true" />
+        <arg name="only_static" value="false" />
+        <arg name="map_directory" value="<path to maps>/newmaps/" />
+        <arg name="map_prefix" value="d8_semi" />
+        <arg name="points_topic" default="/velodyne_points_left_static" />
+        <arg name="sensor_pose_x" default="0.0" />
+        <arg name="sensor_pose_y" default="0.0" />
+        <arg name="sensor_pose_z" default="0.0" />
+        <arg name="sensor_pose_r" default="0.0" />
+        <arg name="sensor_pose_p" default="0.0" />
+        <arg name="sensor_pose_t" default="0.0" />
+    </include>
+</launch>

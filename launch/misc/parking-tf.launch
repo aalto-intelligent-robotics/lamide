@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<launch>
+    <include file="$(find velodyne_pointcloud_oru)/launch/VLP16_points.launch" />
+    <include file="$(find odom_convert)/launch/gimloc_to_world.launch" />
+    <include file="$(find odom_convert)/launch/gimbot_lidar.launch" />
+    <node pkg="rosbag" type="play" name="rosbag" args="--clock <path to bags>/first-set/gimbot/parking-tf.bag" />
+    <node pkg="rviz" type="rviz" name="rviz" args="-d <path to code>/src/lamide/rviz/lamide-default.rviz" />
+</launch>

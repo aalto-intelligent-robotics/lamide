@@ -1,0 +1,259 @@
+<?xml version="1.0"?>
+<launch>
+
+    <arg name="localisation_type_name" default="ndt_mcl" />
+
+    <!-- Start rosbag with launchfile-->
+    <arg name="run_bag" default="false" />
+    <!-- Absolute Path to map to be used for localization. The map needs to be built by graph_fuser
+    package -->
+    <arg name="map_file" default="ndt_map.MAP" />
+    <!-- !end with slash! -->
+    <arg name="map_path" default="<path to maps>/oxford-semantic-gt-static/" />
+    <arg name="comp_map_file" default="ndt_map.MAP" />
+    <arg name="comp_map_path" default="<path to maps>/oxford-semantic-gt-static/" />
+    <arg name="compare" default="false" />
+    <arg name="robot_id" default="robot1" />
+    <arg name="log_prefix" default="" />
+    <arg name="only_static" default="false" />
+    <arg name="filter_dynamic" default="false" />
+    <arg name="transforms_file"
+        default="<path to code>/src/lamide/launch/localization/tfs.cfg" />
+
+    <!-- new resampling -->
+    <arg name="mm_tx1" default="0.05" />
+    <arg name="mm_tx2" default="0.01" />
+    <arg name="mm_ty1" default="0.025" />
+    <arg name="mm_ty2" default="0.01" />
+    <arg name="mm_tz1" default="0.01" />
+    <arg name="mm_tz2" default="0.01" />
+    <arg name="mm_rr1" default="0.0" />
+    <arg name="mm_rr2" default="0.0" />
+    <arg name="mm_rp1" default="0.0" />
+    <arg name="mm_rp2" default="0.0" />
+    <arg name="mm_ry1" default="0.0001" />
+    <arg name="mm_ry2" default="0.01" />
+    <arg name="mm_off_tx" default="0.05" />
+    <arg name="mm_off_ty" default="0.025" />
+    <arg name="mm_off_tz" default="0.01" />
+    <arg name="mm_off_rr" default="0.01" />
+    <arg name="mm_off_rp" default="0.01" />
+    <arg name="mm_off_ry" default="0.01" />
+
+    <arg name="distribution_error" default="true" />
+    <arg name="input_cloud_topic" default="/velodyne_points_left" />
+
+    <arg name="sensor_pose_x" default="0.1034480" />
+    <arg name="sensor_pose_y" default="-0.4607700" />
+    <arg name="sensor_pose_z" default="0.0819426" />
+    <!-- <arg name="sensor_pose_z" default="0.2819426" /> -->
+    <arg name="sensor_pose_r" default="-0.0050003" />
+    <arg name="sensor_pose_p" default="-0.0040004" />
+    <!-- <arg name="sensor_pose_p" default="0.0080004" /> -->
+    <arg name="sensor_pose_t" default="-3.1337067" />
+
+    <arg name="lifelong" default="true" />
+
+    <arg name="cluster_update" default="true" />
+
+    <!-- launch-prefix="gdb -ex run /-/-args" -->
+    <!-- launch-prefix="valgrind /-/-tool=massif /-/-massif-out-file=<path to valgrind>/loc.out" -->
+    <!-- Run monte carlo localization -->
+    <!-- note output: screen -removed -->
+    <node name="ndt_mcl_localization_graph_lamide" pkg="graph_localization_lamide"
+        type="ndt_mcl_localization_graph_lamide" output="screen"
+        >
+
+        <!-- ! ndt-om occupancy update values -->
+        <param name="positive_update_static" value="0.6" />
+        <param name="negative_update_static" value="0.4" />
+        <param name="eta_static" value="0.2" />
+        <param name="positive_update_dynamic" value="0.6" />
+        <param name="negative_update_dynamic" value="0.4" />
+        <param name="eta_dynamic" value="0.2" />
+        <param name="w_own" value="1.0" />
+        <param name="w_cluster" value="1.0" />
+        <!-- <param name="max_occupancy" value="100.0" />
+        <param name="sensor_noise" value="0.06" />
+        <param name="maxNumPoints" value="10000" /> -->
+
+        <!-- !! this decides the used localizer class ndt_mcl/ndt_mcl_lamide -->
+        <param name="localisation_type_name" value="$(arg localisation_type_name)" />
+
+        <!-- ! lifelong -->
+        <param name="lifelong" value="$(arg lifelong)" />
+        <param name="cluster_update" value="$(arg cluster_update)" />
+        <param name="lifelong_pf_size_th" value="0.5" />
+        <param name="lifelong_max_occupancy" value="255.0" />
+        <param name="lifelong_sensor_noise" value="0.06" />
+        <param name="lifelong_maxNumPoints" value="10000" />
+        <param name="lifelong_max_z" value="20" />
+
+
+        <param name="only_static" value="$(arg only_static)" />
+        <param name="filter_dynamic" value="$(arg filter_dynamic)" />
+        <param name="lost_threshold" value="200" />
+        <param name="max_lost" value="200" />
+        <param name="error_dim" value="2" />
+        <param name="weights_path"
+            value="<path to code>/src/lamide/graph_map_lamide/graph_localization_lamide/cfg/lamide_weights.cfg" />
+        <!-- controls display: true/false -->
+        <param name="display_local_map" value="true" />
+        <!-- controls coloring by error -->
+        <param name="display_error_map" value="false" />
+        <param name="distribution_error" value="$(arg distribution_error)" />
+        <param name="restrict_to_2d_solution" value="false" />
+
+        <!-- if laser_2d is true, a 2d scanner will be used for mapping-->
+        <param name="laser_2d" value="false" />
+        <!-- Topic of laser scanner -->
+        <param name="points_topic" value="/velodyne_points" />
+        <param name="PointCloud" value="true" />
+        <param name="Velodyne" value="false" />
+        <param name="input_cloud_topic" value="$(arg input_cloud_topic)" />
+
+        <!-- pass path to graph_map (.map)-->
+        <param name="map_file" value="$(arg map_file)" />
+        <param name="map_path" value="$(arg map_path)" />
+        <param name="comp_map_file" value="$(arg comp_map_file)" />
+        <param name="comp_map_path" value="$(arg comp_map_path)" />
+        <param name="compare" value="$(arg compare)" />
+        <param name="transforms_file" value="$(arg transforms_file)" />
+
+        <!-- !important -->
+        <!-- !map changing -->
+        <param name="max_map_distance" value="200" />
+        <param name="map_switching_method" value="overlap" />
+        <param name="map_change_hysteresis" value="10" />
+        <!-- required by overlap because stupid design -->
+        <param name="interchange_radius" value="25" />
+
+
+        <!-- <param name="map_switching_method" value="node_position" /> -->
+        <!-- left_in_radar =
+        0.1034480  -0.4607700   0.2819426  -0.0050003   0.0080004  -3.1337067 -->
+
+        <!-- left -->
+        <param name="sensor_pose_x" value="$(arg sensor_pose_x)" />
+        <param name="sensor_pose_y" value="$(arg sensor_pose_y)" />
+        <param name="sensor_pose_z" value="$(arg sensor_pose_z)" />
+        <param name="sensor_pose_r" value="$(arg sensor_pose_r)" />
+        <param name="sensor_pose_p" value="$(arg sensor_pose_p)" />
+        <param name="sensor_pose_t" value="$(arg sensor_pose_t)" />
+
+        <!-- right_in_radar =
+        0.0927445   0.4367600   0.2795447   0.0029997   0.0080001  -3.1357050 -->
+        <!-- right -->
+        <param name="sensor_offset_t" value="0.0" />
+        <param name="gt_topic" value="/gt" />
+
+        <!-- Choose weather to initiate pose to pose_init_<x,y,t> or the data of /<gt_topic> -->
+        <param name="initPoseFromGT" value="true" />
+        <param name="pose_init_x" value="0" />
+        <param name="pose_init_y" value="0" />
+        <param name="pose_init_t" value="0" />
+        <param name="use_tf_listener" value="true" />
+        <!-- world frame id -->
+        <param name="root_tf" value="/map" />
+        <param name="world_tf" value="/world" />
+        <!--  odometry frame id-->
+        <param name="odom_tf" value="/odom" />
+        <param name="base_tf" value="/base_link" />
+        <param name="mcl_tf" value="/mcl" />
+        <param name="laser_tf" value="/velodyne" />
+
+        <!-- if true, odom is taken as is. If false, a diff is calculated -->
+        <!-- !! this is very important to align with publisher -->
+        <param name="relative_movement" value="false" />
+        <param name="odom_twist" value="false" />
+        <param name="odom_topic" value="/odom" />
+        <param name="odom_type" value="ins" />
+
+        <!-- note logging -->
+        <param name="log_prefix" value="$(arg log_prefix)" />
+        <param name="hostname" value="$(env HOSTNAME)" />
+
+        <param name="publish_sensor_link" value="true" />
+        <param name="pose_estimate_topic" value="/ndt_mcl_pose" />
+
+        <param name="max_range" value="130." />
+        <param name="min_range" value="1.0" />
+
+        <!-- MCL parameters -->
+        <param name="enable_localisation" value="true" />
+        <param name="calculate_histogram" value="false" />
+        <param name="match_histogram" value="false" />
+        <param name="map_unloading" value="true" />
+        <param name="histogram_ratio" value="-1" />
+        <param name="resolution_local_factor" value="1" />
+        <param name="fraction" value="1.0" />
+
+        <param name="particle_count" value="1000" />
+        <!-- this is used mostly -->
+        <!-- <param name="ratio_particles_initialize" value="10.0" /> -->
+        <!-- fixme: this is for the last few with initialization problems -->
+        <param name="ratio_particles_initialize" value="20.0" />
+        <!-- !!SIR -->
+        <!-- types: 0 = force, 1 = effective num of particles, 2 = variance -->
+        <param name="SIR_type" value="2" />
+        <param name="force_SIR" value="false" />
+        <!-- this is good -->
+        <!-- <param name="SIR_max_iters_wo_resampling" value="30" /> -->
+        <param name="SIR_max_iters_wo_resampling" value="100" />
+        <param name="SIR_varP_threshold" value="0.003" />
+        <param name="min_ratio_eff_particles" value="0.5" />
+
+
+        <param name="z_filter_height" value="-10.0" />
+        <param name="show_pose" value="true" />
+        <param name="calculate_histogram" value="false" />
+        <!-- this affects the motion model -->
+        <!-- good params -->
+        <param name="dataset" value="custom" />
+        <param name="mm_tx1" value="$(arg mm_tx1)" />
+        <param name="mm_tx2" value="$(arg mm_tx2)" />
+        <param name="mm_ty1" value="$(arg mm_ty1)" />
+        <param name="mm_ty2" value="$(arg mm_ty2)" />
+        <param name="mm_tz1" value="$(arg mm_tz1)" />
+        <param name="mm_tz2" value="$(arg mm_tz2)" />
+        <param name="mm_rr1" value="$(arg mm_rr1)" />
+        <param name="mm_rr2" value="$(arg mm_rr2)" />
+        <param name="mm_rp1" value="$(arg mm_rp1)" />
+        <param name="mm_rp2" value="$(arg mm_rp2)" />
+        <param name="mm_ry1" value="$(arg mm_ry1)" />
+        <param name="mm_ry2" value="$(arg mm_ry2)" />
+        <param name="mm_off_tx" value="$(arg mm_off_tx)" />
+        <param name="mm_off_ty" value="$(arg mm_off_ty)" />
+        <param name="mm_off_tz" value="$(arg mm_off_tz)" />
+        <param name="mm_off_rr" value="$(arg mm_off_rr)" />
+        <param name="mm_off_rp" value="$(arg mm_off_rp)" />
+        <param name="mm_off_ry" value="$(arg mm_off_ry)" />
+
+
+        <!-- ! only for debug -->
+        <param name="init_range_x" value="1.0" />
+        <param name="init_range_y" value="1.0" />
+        <param name="init_range_z" value="0.5" />
+        <param name="init_range_rr" value="0.0" />
+        <param name="init_range_rp" value="0.0" />
+        <param name="init_range_rz" value="6.283185307" />
+        <param name="init_particles" value="100" />
+
+
+        <param name="visualize" value="true" />
+        <param name="verbose" value="true" />
+        <param name="simple_visualization" value="false" />
+        <!-- Coloring:
+        0: single
+        1: standard
+        2: cluster
+        3: update
+        4: occupancy
+        5: membership
+        6: dynamics -->
+        <param name="visualization_colors" value="6" />
+        <param name="local_colors" value="0" />
+    </node>
+
+
+</launch>

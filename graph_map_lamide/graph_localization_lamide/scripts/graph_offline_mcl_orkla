@@ -1,0 +1,9 @@
+roslaunch graph_map visualize_graph_fuser.launch localization:=true arla-2012:=true &
+bag_folder=/mnt/disk0/bags/orkla_bags/test
+output_folder=/mnt/disk0/bags/orkla_bags/corrections
+rosrun graph_localization graph_localization_offline   --step-control  --visualize --visualize-map --simple-visualization --output-dir-name $output_folder  --subsample-level 1.0 --z-filter-height 1.7 --filter-fov --keyframe-min-distance 0.05 --keyframe-min-rot-deg 2  --key-frame-update --min-range 1.5 --lidar-topic /robot3/sensors/velodyne_packets --bag-directory $bag_folder    --odom-parent-link robot3/odom --odom-gt-parent-link robot3/odom  --tf-base-link robot3/base_link --tf-gt-link robot3/base_link --tf-world-frame /world --forceSIR --map-switching-method closest_observation --n-particles 900 --resolution-local-factor 1.5 --localisation-algorithm-name mcl_ndt --skip-frame 1 --base-name mcl-ndt --map-file-path "$(rospack find graph_map)/maps/ndt_map.MAP"  --data-set orkla-velodyne --velodyne-config-file "$(rospack find graph_map)/config/velo32.yaml" # --save-results
+
+#/home/dlao/Documents/ILIAD_remote/rosbags/Orkla/2019-06\ Campaign\ 2
+# --tf-base-link robot3/base_link --tf-gt-link robor3/base_link_gt
+
+#"/home/dlao/Documents/ILIAD_remote/rosbags/Orkla/2019-06 Campaign 2/2019-06-13_processed"

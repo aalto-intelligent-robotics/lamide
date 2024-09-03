@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<launch>
+    <!-- ICRA maps
+    FS1LU - OM
+    UYMSB - cluster
+    -->
+    <!--
+    d1 maps ITSC
+    SC9W8 OM
+    O3UXM Semi
+    7QBT0 Static
+    -->
+    <include file="$(find graph_localization_lamide)/launch/oxford_loc.launch" >
+        <arg name="localisation_type_name" value="ndt_mcl" />
+        <arg name="map_path" value="<path to maps>/experiment2/" />
+        <arg name="map_file" value="d1_om_FS1LU_ndt_map.MAP" />
+        <arg name="log_prefix" value="log-wait/d1_om_d9_static" />
+        <arg name="only_static" value="true" />
+        <arg name="request_scans" value="true" />
+        <arg name="scan_service" value="/oxford_publisher/publish" />
+    </include>
+</launch>

@@ -1,0 +1,9 @@
+dataset=coop-2013
+dir=/home/$USER/.ros/maps
+prefix_files=offcoop-2013_gt=0_submap=0_sizexy=400_Z=12_intrchR=7_compR=0_res=0.4_maxSensd=130_keyF=1_d=0.5_deg=5_dl=0_xyzir=0_mpsu=0_mnpfg=6kmnp0
+roslaunch ndt_offline visualize_graph_fuser.launch $dataset:=true &
+rosrun ndt_calibration ndt_calib --gt_file $dir/${prefix_files}_gt.txt --est_sensorpose_file $dir/${prefix_files}_sensorpose_est.txt --bag_file ../bag/coop_bags/mapping/coop_set1.bag     --x 0.96041  --y 0.344245 --ez 0.124563 --sensor_time_offset -0.119454  --cx --cy cz --cex --cey --cez --ct  --resolution 1.0 --score_type 3  --max_translation 1 --min_rotation 0.3 --world_frame /world --pose_frame /state_base_link --base_name_pcd /home/$USER/ros/mapping_ws/src/perception/ndt_offline/scripts/clouds/
+
+#--ct
+
+

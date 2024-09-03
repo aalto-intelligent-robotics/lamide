@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<launch>
+    <!--
+    d8 maps
+    7JL7S OM
+    XYVLJ Semi
+    XGO28 Static
+    -->
+    <include file="$(find graph_localization_lamide)/launch/oxford_loc.launch" >
+        <arg name="localisation_type_name" value="ndt_mcl" />
+        <arg name="map_path" value="<path to maps>/icra-localization/" />
+        <arg name="map_file" value="d8_om_7JL7S_ndt_map.MAP" />
+        <arg name="log_prefix" value="log-norm/d8_om_d3_baseline" />
+        <arg name="only_static" value="false" />
+        <arg name="request_scans" value="false" />
+        <arg name="scan_service" value="/oxford_publisher/publish" />
+    </include>
+</launch>

@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<launch>
+
+    <!-- Start rosbag with launchfile-->
+    <arg name="run_bag" default="false" />
+    <!-- Absolute Path to map to be used for localization. The map needs to be built by graph_fuser package -->
+    <arg name="map_file_path" default="$(find graph_map)/maps/ndt_map.MAP" />
+    <arg name="robot_prefix" default="robot5" />
+    <arg name="rviz_enabled" default="true" />
+    <arg name="root_link_id" default="map_laser2d" />
+    <!-- Include visualization in rviz -->
+    <group if="$(arg rviz_enabled)">
+        <include file="$(find graph_map)/launch/visualize_graph_fuser.launch">
+            <arg name="localization" value="true" />
+            <arg name="oru-lab" value="true" />
+        </include>
+    </group>
+    <!-- Run monte carlo localization -->
+
+
+    <!--node name="occupancy_map_server" pkg="map_server" type="map_server" args=" $(find graph_map)/maps/occupancy_map.yaml" output="screen"/-->
+    <!--frame_id map_velodyne-->
+
+    <!--group if="$(arg rviz_enabled)">
+  <node name="graph_map_publisher" pkg="graph_map" type="graph_map_publisher" output="screen">
+    <param name="map_rate" value="1" />
+    <param name="map_file" value="$(arg map_file_path)"  />
+    <param name="map_frame" value="/maps/map_laser2d" />
+    <param name="map_parent_frame_id" value="$(arg root_link_id)"/>
+    <param name="map_topic" value="/maps/map_velodyne" />
+  </node>
+</group-->
+
+    <!--node name="occupancy_map_server" pkg="map_server" type="map_server" args=" $(find graph_map)/maps/ncfm.yaml" output="screen">
+  <remap from="/map" to="/maps/map_laser2d"/>
+  <param name="~frame_id" value="map_laser2d"/ </node>-->
+
+    <!--node pkg="tf" type="static_transform_publisher" name="velodyne_map_static_broadcaster" args="0 0 0 0 0 0 world map_velodyne 100"/-->
+    <!--node pkg="tf" type="static_transform_publisher" name="occupancy_map_static_broadcaster" args="0 0 0 0 0 0 world map 100"/-->
+</launch>

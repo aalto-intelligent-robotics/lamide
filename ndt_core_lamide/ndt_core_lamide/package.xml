@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>ndt_core_lamide</name>
+  <version>2.3.1</version>
+  <description>The ndt_core package</description>
+
+  <maintainer email="tomasz.kucner@oru.se">Tomasz Kucner</maintainer>
+  <maintainer email="henrik.andreasson@oru.se">Henrik Andreasson</maintainer>
+  <maintainer email="todor.stoyanov@oru.se">Todor Stoyanov</maintainer>
+  <maintainer email="martin.magnusson@oru.se">Martin Magnusson</maintainer>
+
+  <license>CC BY-SA 4.0</license>
+
+  <author>Henrik Andreasson</author>
+  <author>Todor Stoyanov</author>
+  <author>Jari Saarinen</author>
+  <author>Tomasz Kucner</author>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <exec_depend>ndt_generic_lamide</exec_depend>
+  <exec_depend>ndt_map_lamide</exec_depend>
+  <exec_depend>ndt_registration_lamide</exec_depend>
+  <exec_depend>ndt_rviz</exec_depend>
+  <exec_depend>ndt_visualisation_lamide</exec_depend>
+
+  <export>
+  <metapackage />
+  </export>
+</package>

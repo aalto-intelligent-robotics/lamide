@@ -1,0 +1,118 @@
+<?xml version="1.0"?>
+<launch>
+
+    <!-- Start rosbag with launchfile-->
+    <arg name="run_bag" default="false" />
+    <arg name="publish_map" default="false" />
+    <!-- Absolute Path to map to be used for localization. The map needs to be built by graph_fuser package -->
+    <arg name="map_file_path" default="$(find graph_map)/maps/ndt_map.MAP" />
+    <arg name="robot_id" default="3" />
+    <arg name="rviz_enabled" default="true" />
+    <arg name="root_id" default="/map_laser2d" />
+    <arg name="robot_prefix" default="robot$(arg robot_id)" />
+    <arg name="odometry_parent_link" default="odom" />
+    <arg name="odometry_child_link" default="base_link" />
+
+
+    <!--group ns="$(arg robot_prefix)"-->
+    <include file="$(find graph_map)/launch/VelodyneConvertMotionCompensation.launch">
+        <arg name="robot_prefix" default="" />
+        <arg name="input_points_topic" value="$(arg robot_prefix)/sensors/velodyne_packets" />
+        <arg name="output_points_topic" value="$(arg robot_prefix)/sensors/velodyne_points_unwarped" />
+        <arg name="link" value="$(arg robot_prefix)/velodyne_link" />
+        <arg name="odom_link" value="$(arg odometry_parent_link)" />
+        <arg name="odom_child_link" value="$(arg odometry_child_link)" />
+        <arg name="disable_compensation" value="false" />
+    </include>
+    <!--/group-->
+
+    <!-- Include visualization in rviz -->
+    <group if="$(arg rviz_enabled)">
+        <include file="$(find graph_map)/launch/visualize_graph_fuser.launch">
+            <arg name="localization" value="true" />
+            <arg name="oru-lab" value="true" />
+        </include>
+    </group>
+    <!-- Run monte carlo localization -->
+    <group ns="$(arg robot_prefix)">
+        <node name="ndt_mcl_localization_graph" pkg="graph_localization" type="ndt_mcl_localization_graph" output="screen">
+
+            <!-- select one of the following types-->
+            <param name="Laser_2d" value="false" />
+            <param name="Velodyne" value="false" />
+            <param name="PointCloud" value="true" />
+            <param name="dataset" value="orkla-velodyne" />
+
+            <param name="laser_tf" value="$(arg robot_prefix)/velodyne_link" />
+            <param name="publish_sensor_link" value="true" />
+            <param name="input_cloud_topic" value="/$(arg robot_prefix)/sensors/velodyne_points_unwarped" />
+            <param name="pose_estimate_topic" value="/$(arg robot_prefix)/mcl_pose_estimate" />
+
+            <!-- Topic of laser scanner -->
+            <param name="calibration" value="$(find graph_map)/config/velo32.yaml" />
+            <!-- pass path to graph_map (.map)-->
+            <param name="map_file" value="$(arg map_file_path)" />
+
+            <param name="sensor_pose_x" value="1.1187" />
+            <param name="sensor_pose_y" value="0.1354" />
+            <param name="sensor_pose_z" value="0.95" />
+            <param name="sensor_pose_r" value="0" />
+            <param name="sensor_pose_p" value="0" />
+            <param name="sensor_pose_t" value="1.594682713" />
+
+            <param name="gt_topic" value="/$(arg robot_prefix)/kmo_navserver/state" />
+            <param name="initial_pose_topic" value="/$(arg robot_prefix)/initialpose" />
+
+            <!-- Choose weather to initiate pose to pose_init_<x,y,t> or the data of /<gt_topic> -->
+            <param name="initPoseFromGT" value="false" />
+            <param name="pose_init_x" value="0" />
+            <param name="pose_init_y" value="0" />
+            <param name="pose_init_t" value="0" />
+
+            <!-- world frame id -->
+
+
+            <param name="root_tf" value="$(arg root_id)" />
+            <!--  odometry frame id-->
+            <param name="odom_tf" value="$(arg odometry_parent_link)" />
+            <param name="base_tf" value="$(arg odometry_child_link)" />
+            <!--param name="mcl_tf" value="mcl_pose_est" /-->
+
+
+            <!-- MCL parameters -->
+            <param name="enable_localisation" value="true" />
+            <param name="resolution_local_factor" value="1.3" />
+            <param name="particle_count" value="500" />
+            <param name="show_pose" value="true" />
+            <param name="fraction" value="1.0" />
+            <param name="force_SIR" value="true" />
+            <param name="z_filter_height" value="1.5" />
+        </node>
+    </group>
+
+    <!--node name="occupancy_map_server" pkg="map_server" type="map_server" args=" $(find graph_map)/maps/ncfm.yaml" output="screen" if="$(arg publish_map)">
+  <remap from="/map" to="/maps/map_laser2d"/>
+  <param name="~frame_id" value="map_laser2d"/>
+</node-->
+
+    <group if="$(arg rviz_enabled)">
+        <node name="graph_map_publisher" pkg="graph_map" type="graph_map_publisher" output="screen">
+            <param name="map_rate" value="1" />
+            <param name="map_file" value="$(arg map_file_path)" />
+            <param name="map_frame" value="/maps/map_laser2d" />
+            <param name="map_parent_frame_id" value="$(arg root_id)" />
+            <param name="map_topic" value="/maps/map_laser2d" />
+        </node>
+    </group>
+
+    <group if="$(arg run_bag)">
+        <arg name="path" default="$(find graph_map)/data/" />
+        <arg name="file_1" default="2018-05-18-09-55-16.bag" />
+        <node pkg="rosbag" type="play" name="player" output="screen" args="--clock -r 1.0 -q $(arg path)$(arg file_1)" />
+    </group>
+
+
+    <!-- node pkg="tf" type="static_transform_publisher" name="velodyne_map_static_broadcaster" args="0 0 0 0 0 0 world map_velodyne 100" / -->
+    <!-- node pkg="tf" type="static_transform_publisher" name="occupancy_map_static_broadcaster" args="0 0 0 0 0 0 world map 100" / -->
+
+</launch>

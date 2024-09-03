@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>velodyne_pointcloud_oru</name>
+  <version>1.5.6</version>
+  <description>
+    Copy of velodyne_pointcloud - Point cloud conversions for Velodyne 3D LIDARs.
+  </description>
+  <maintainer email="daniel.adolfsson@oru.se">Daniel Adolfsson</maintainer>
+  
+  <license>BSD</license>
+  
+  <url type="repository">https://github.com/dan11003/velodyne_pointcloud_oru</url>
+  
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <build_depend>roslint</build_depend>
+  <build_depend>velodyne_driver</build_depend>
+  <build_depend>velodyne_msgs</build_depend>
+  <depend>angles</depend>
+  <depend>nodelet</depend>
+  <depend>roscpp</depend>
+  <depend>roslib</depend>
+  <depend>sensor_msgs</depend>
+  <depend>tf</depend>
+
+
+  <depend>yaml-cpp</depend>
+  <depend>dynamic_reconfigure</depend>
+  <depend>diagnostic_updater</depend>
+  <depend>eigen</depend>
+
+  <!--<exec_depend>velodyne</exec_depend>-->
+  <exec_depend>velodyne_driver</exec_depend>
+  <exec_depend>velodyne_msgs</exec_depend>
+
+  <test_depend>rosunit</test_depend>
+  <test_depend>roslaunch</test_depend>
+  <test_depend>rostest</test_depend>
+  <test_depend>tf2_ros</test_depend>
+
+  <export>
+    <nodelet plugin="${prefix}/nodelets.xml"/>
+  </export>
+</package>

@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<package>
+  <name>ndt_rviz_lamide</name>
+  <version>2.3.1</version>
+  <description>The ndt_rviz_lamide package</description>
+
+  <maintainer email="tomasz.kucner@oru.se">Tomasz Kucner</maintainer>
+  <maintainer email="todor.stoyanov@oru.se">Todor Stoyanov</maintainer>
+  <author>Tomasz Kucner</author>
+
+  <license>CC BY-SA 4.0</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>rviz</build_depend>
+  <build_depend>cmake_modules</build_depend>
+  <!-- Dependencies for the message generation -->
+  <build_depend>ndt_map_lamide</build_depend>
+  <build_depend>message_generation</build_depend>
+  <build_depend>eigen_conversions</build_depend>
+  <build_depend>tf_conversions</build_depend>
+
+  <run_depend>tf_conversions</run_depend>
+  <run_depend>eigen_conversions</run_depend>
+  <run_depend>ndt_map_lamide</run_depend>
+  <run_depend>message_runtime</run_depend>
+  <run_depend>rviz</run_depend>
+
+  <export>
+    <rviz plugin="${prefix}/plugin_description.xml"/>
+  </export>
+
+</package>

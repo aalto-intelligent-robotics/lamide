@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<launch>
+    <include file="$(find kitti_publisher)/launch/oxford_publisher_dual.launch">
+        <arg name="rate" value="10" />
+    </include>
+    <include file="$(find odom_convert)/launch/odom_to_world_cumulative.launch" />
+    <node pkg="tf" type="static_transform_publisher" name="b2ll_broadcaster" args="-0.60072 -0.34077 -0.26837 -0.0053948 -0.041998 -3.1337 base_link velodyne_left 100" />
+    <node pkg="rviz" type="rviz" name="lamide_rviz" args="-d <path to code>/src/lamide/rviz/oxford.rviz" />
+</launch>

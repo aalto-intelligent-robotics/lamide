@@ -1,0 +1,139 @@
+<?xml version="1.0"?>
+<launch>
+
+    <!-- Start rosbag with launchfile-->
+    <arg name="run_bag" default="false" />
+    <!-- Absolute Path to map to be used for localization. The map needs to be built by graph_fuser package -->
+    <arg name="map_file_path" default="<path to maps>/kitti-semantic/ndt_map.MAP" />
+    <arg name="robot_id" default="robot1" />
+
+    <!-- Include visualization in rviz -->
+    <!-- <include file="$(find graph_map)/launch/visualize_graph_fuser.launch" >
+  <arg name="localization" value="true" />
+  <arg name="oru-lab" value="true" />
+</include> -->
+
+    <!-- launch-prefix="gdb -ex run /-/-args" -->
+    <!-- Run monte carlo localization -->
+    <node name="ndt_mcl_localization_graph_lamide" pkg="graph_localization_lamide" type="ndt_mcl_localization_graph_lamide" output="screen">
+
+        <!-- localization type -->
+        <!-- lamide -->
+        <!-- <param name="localisation_type_name" value="mcl_ndt_lamide" /> -->
+        <!-- default -->
+        <param name="localisation_type_name" value="ndt_mcl" />
+
+        <!-- local map display -->
+        <param name="display_local_map" value="true" />
+
+        <!-- if laser_2d is true, a 2d scanner will be used for mapping-->
+        <param name="laser_2d" value="false" />
+        <!-- Topic of laser scanner -->
+        <param name="points_topic" value="/velodyne_points" />
+        <param name="PointCloud" value="true" />
+        <param name="Velodyne" value="false" />
+        <param name="input_cloud_topic" value="/velodyne_points" />
+
+        <!-- pass path to graph_map (.map)-->
+        <param name="map_file" value="$(arg map_file_path)" />
+        <!-- oxford left -0.60072 -0.34077 -0.26837 -0.0053948 -0.041998 -3.1337 -->
+        <param name="sensor_pose_x" value="0.0" />
+        <param name="sensor_pose_y" value="0.0" />
+        <param name="sensor_pose_z" value="0.0" />
+        <param name="sensor_pose_r" value="0.0" />
+        <param name="sensor_pose_p" value="0.0" />
+        <param name="sensor_pose_t" value="0.0" />
+        <param name="sensor_offset_t" value="0.0" />
+        <param name="gt_topic" value="/$(arg robot_id)/kmo_navserver/state" />
+
+        <!-- Choose weather to initiate pose to pose_init_<x,y,t> or the data of /<gt_topic> -->
+        <param name="initPoseFromGT" value="false" />
+        <param name="pose_init_x" value="0" />
+        <param name="pose_init_y" value="0" />
+        <param name="pose_init_t" value="0" />
+        <param name="use_tf_listener" value="true" />
+        <!-- world frame id -->
+        <param name="root_tf" value="/map" />
+        <param name="world_tf" value="/world" />
+        <!--  odometry frame id-->
+        <param name="odom_tf" value="/odom" />
+        <param name="base_tf" value="/base_link" />
+        <param name="mcl_tf" value="/mcl" />
+        <param name="laser_tf" value="/velodyne" />
+
+        <param name="publish_sensor_link" value="true" />
+        <param name="pose_estimate_topic" value="/ndt_mcl_pose" />
+
+
+        <param name="max_range" value="130." />
+        <param name="min_range" value="1.0" />
+        <!-- MCL parameters -->
+        <param name="enable_localisation" value="true" />
+        <param name="resolution_local_factor" value="1.0" />
+        <param name="particle_count" value="5000" />
+        <param name="show_pose" value="true" />
+        <param name="fraction" value="1.0" />
+        <param name="force_SIR" value="true" />
+        <param name="z_filter_height" value="-10.0" />
+
+        <!-- this affects the motion model -->
+        <param name="dataset" value="custom" />
+        <param name="mm_tx1" value="15.0" />
+        <param name="mm_tx2" value="5.0" />
+        <param name="mm_ty1" value="5.0" />
+        <param name="mm_ty2" value="10.0" />
+        <param name="mm_tz1" value="0.0" />
+        <param name="mm_tz2" value="0.0" />
+        <param name="mm_rr1" value="0.0" />
+        <param name="mm_rr2" value="0.0" />
+        <param name="mm_rp1" value="0.0" />
+        <param name="mm_rp2" value="0.0" />
+        <param name="mm_ry1" value="2.0" />
+        <param name="mm_ry2" value="4.5" />
+        <param name="mm_off_tx" value="1.0" />
+        <param name="mm_off_ty" value="0.5" />
+        <param name="mm_off_tz" value="0.0" />
+        <param name="mm_off_rr" value="0.0" />
+        <param name="mm_off_rp" value="0.0" />
+        <param name="mm_off_ry" value="0.5" />
+
+        <!--first working parameters-->
+        <!-- <param name="mm_tx1" value="50.0" />
+        <param name="mm_tx2" value="2.0" />
+        <param name="mm_ty1" value="5.0" />
+        <param name="mm_ty2" value="5.0" />
+        <param name="mm_tz1" value="0.0" />
+        <param name="mm_tz2" value="0.0" />
+        <param name="mm_rr1" value="0.0" />
+        <param name="mm_rr2" value="0.0" />
+        <param name="mm_rp1" value="0.0" />
+        <param name="mm_rp2" value="0.0" />
+        <param name="mm_ry1" value="2.0" />
+        <param name="mm_ry2" value="5.0" />
+        <param name="mm_off_tx" value="0.5" />
+        <param name="mm_off_ty" value="0.1" />
+        <param name="mm_off_tz" value="0.0" />
+        <param name="mm_off_rr" value="0.0" />
+        <param name="mm_off_rp" value="0.0" />
+        <param name="mm_off_ry" value="0.25" /> -->
+        <param name="visualize" value="true" />
+        <param name="simple_visualization" value="false" />
+    </node>
+
+
+    <node name="graph_map_lamide_publisher" pkg="graph_map_lamide" type="graph_map_lamide_publisher" output="screen">
+        <param name="map_rate" value="1" />
+        <param name="map_file" value="$(arg map_file_path)" />
+        <param name="map_frame" value="/world" />
+        <param name="map_parent_frame_id" value="/world" />
+        <param name="map_topic" value="/map" />
+        <param name="simple_plot" value="false" />
+    </node>
+
+    <!-- <group if="$(arg run_bag)">
+    <arg name="path" default="<path to bags>/first-set/gimbot" />
+    <arg name="file_1" default="parking-lot.bag" />
+  <node pkg="rosbag" type="play" name="player" output="screen" args="clock -r 1.0 -q $(arg path)$(arg file_1)"/>
+</group> -->
+
+</launch>

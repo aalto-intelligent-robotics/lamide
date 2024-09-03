@@ -1,0 +1,7 @@
+data_set=volvo_2017_12_01
+roslaunch graph_map visualize_graph_fuser.launch mapping:=true $data_set:=true &
+rosrun graph_map graph_mapping_offline --save-map --gt-mapping  --tf-base-link /odom3d --tf-gt-link /EKF --map-switching-method node_position_esg  --interchange-radius 30  --keyframe-min-distance 0.05 --keyframe-min-rot-deg 0.3 --resolution 0.4 --registration3d --resolution-local-factor 1.0  --min-range 3.0 --max-range 130 --base-name off --dir-name /mnt/storage/volvo/finished/data/volvo_2017_12_01_S4_fixed/mapping  --lidar-topic /velodyne_packets --velodyne-frame-id /velodyne --map-type-name ndt_map  --velodyne-config-file "$(rospack find graph_map)/config/64e_utexas.yaml" --output-dir-name /home/daniel/.ros/maps --map-size-xy 200 --map-size-z 15.0 --skip-frame 1 --data-set $data_set --visualize #
+# no-odometry
+# --soft-constraints --lambda-sc 10
+#--check-consistency  --consistency-max-dist 0.2 --consistency-max-rot 0.1  --compound-radius 15
+

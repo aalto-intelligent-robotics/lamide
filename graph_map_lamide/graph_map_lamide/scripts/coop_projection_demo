@@ -1,0 +1,12 @@
+roslaunch graph_map visualize_graph_fuser.launch mapping:=true coop-2013:=true &
+rosrun graph_map graph_mapping_offline --visualize --disable-mapping --disable-submaps --keyframe-min-distance 0.1 --keyframe-min-rot-deg 100 --sensor-time-offset 0.00 --tf-base-link odom_base_link --tf-gt-link state_base_link  --min-range 1.6 --max-range 130 --dir-name $BAG_LOCATION/coop_bags/mapping/velodyne/ --lidar-topic /velodyne_packets --velodyne-frame-id /velodyne  --velodyne-config-file "$(rospack find graph_map)/config/velo32.yaml" --data-set coop-2013 --gt-mapping --disable-registration #
+
+# Other usable options
+# --min-range 1.6 --max-range 130 (adjust the miniumum and maximum range)
+# --dir-name (Directory to where the bag files are stored. Note that the directory must only contain a set of .bag files)
+# --step-control  (allows stepping through over frames using '5','6','7','8' & '9')
+# --visualize (enables visualization)
+# --keyframe-min-distance 0.1 --keyframe-min-rot-deg 100 a minimum of 0.1m or 100deg is required before a new scan is projected, use --disable-keyframe-update or set values to 0 to disable
+# --save-used-merged-clouds saves all cloud to cloud_<nr>.pcd (in world frame)
+# --sensor-time-offset 0.00 (can be used to synchronize the odometry and lidar frame to compensate for lag)
+# --data-set coop-2013 (this parameter is used to retrieve transformation between ground truth odometry and lidar frame)

@@ -1,0 +1,3 @@
+rosrun graph_localisation test_localisation &
+roslaunch ndt_offline visualize_graph_fuser.launch lidaronly:=true
+

@@ -1,0 +1,13 @@
+dataset=volvo_2017_12_01
+roslaunch graph_map visualize_graph_fuser.launch mapping:=true $dataset:=true &
+
+rosrun graph_map graph_mapping_offline  --itrs 30 --lambda-sc 20 --registration3d --soft-constraints --consistency-max-dist 0.3 --consistency-max-rot 1  --interchange-radius 20 --compound-radius 0  --sensor-time-offset 0.00 --tf-base-link /EKF --tf-gt-link /EKF  --resolution 1.5   --resolution-local-factor 1.3  --map-switching-method node_position   --min-range 3 --max-range 130 --base-name off --dir-name $BAG_LOCATION/volvo_2017_12_01/mapping  --lidar-topic /velodyne_packets --velodyne-frame-id /velodyne --map-type-name ndt_map  --velodyne-config-file "$(rospack find graph_map)/config/64e_utexas.yaml" --output-dir-name $HOME/.ros/maps   --map-size-xy 200 --map-size-z 10.0 --skip-frame 10 --keyframe-min-distance 0.1 --keyframe-min-rot-deg 2   --data-set $dataset   #--save-map     --generate-eval-files disable-keyframe-update --step-control  --save-used-merged-clouds
+
+#--soft-constraints
+--soft-constraints
+# node_position=0,mean_observation=1,closest_observation=2, grid=3,node_position_esg=4,mean_observation_esg=5
+#--sx 0.00001 --sy 0.0000001 --sz 0.0000001 --sez 0.1
+# COMMANDS TO SAVE DATA: --save-graph-cloud --store-points --save-map --save-used-merged-clouds
+# COMMANDS FOR REGISTRATION --multu-res --soft-constraints --lambda-sc 1
+# STEPPING THOUGH APPLICATION --step-control
+# VISUALIZATION --visualize --skip-frame 1

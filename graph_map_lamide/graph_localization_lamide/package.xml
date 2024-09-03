@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<package>
+    <name>graph_localization_lamide</name>
+    <version>2.0.0</version>
+    <description>The graph_localization_lamide package</description>
+
+
+    <maintainer email="daniel.adolfsson@oru.se">Daniel Adolfsson</maintainer>
+    <license>CC BY-SA 4.0</license>
+    <author>Daniel Adolfsson</author>
+    <author>Henrik Andreasson</author>
+
+    <buildtool_depend>catkin</buildtool_depend>
+    <build_depend>cmake_modules</build_depend>
+    <build_depend>libpcl-all-dev</build_depend>
+    <build_depend>roscpp</build_depend>
+    <build_depend> pcl_conversions</build_depend>
+    <build_depend>pcl_ros</build_depend>
+    <build_depend>roscpp</build_depend>
+    <build_depend>sensor_msgs</build_depend>
+    <build_depend>laser_geometry</build_depend>
+    <build_depend>ndt_map_lamide</build_depend>
+    <build_depend>graph_map_lamide</build_depend>
+    <build_depend>ndt_registration_lamide</build_depend>
+    <build_depend>eigen_conversions</build_depend>
+    <build_depend>tf_conversions</build_depend>
+    <build_depend>tf</build_depend>
+    <build_depend>genmsg</build_depend>
+    <build_depend>geometry_msgs</build_depend>
+    <build_depend>eigen_conversions</build_depend>
+    <build_depend>ndt_generic_lamide</build_depend>
+    <build_depend>ndt_localization_lamide</build_depend>
+    <build_depend>ndt_offline_lamide</build_depend>
+    <build_depend>velodyne_pointcloud_oru</build_depend>
+
+    <run_depend>libpcl-all-dev</run_depend>
+    <run_depend> pcl_conversions</run_depend>
+    <run_depend>pcl_ros</run_depend>
+    <run_depend>roscpp</run_depend>
+    <run_depend>sensor_msgs</run_depend>
+    <run_depend>laser_geometry</run_depend>
+    <run_depend>cmake_modules</run_depend>
+    <run_depend>roscpp</run_depend>
+    <run_depend>ndt_map_lamide</run_depend>
+    <run_depend>graph_map_lamide</run_depend>
+    <!--run_depend>ndt_mcl_lamide</run_depend-->
+
+    <run_depend>ndt_localization_lamide</run_depend>
+    <run_depend>ndt_registration_lamide</run_depend>
+    <run_depend>libpcl-all-dev</run_depend>
+    <run_depend>eigen_conversions</run_depend>
+    <run_depend>tf_conversions</run_depend>
+    <run_depend>tf</run_depend>
+    <run_depend>genmsg</run_depend>
+    <run_depend>geometry_msgs</run_depend>
+    <run_depend>ndt_generic_lamide</run_depend>
+    <run_depend>ndt_offline_lamide</run_depend>
+    <run_depend>velodyne_pointcloud_oru</run_depend>
+
+
+    <export>
+        <cpp lflags="-L${prefix}/lib" cflags="-I${prefix}/include" />
+    </export>
+</package>

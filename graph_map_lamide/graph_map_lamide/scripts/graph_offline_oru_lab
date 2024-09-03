@@ -1,0 +1,12 @@
+roslaunch graph_map visualize_graph_fuser.launch mapping:=true oru-lab:=true &
+rosrun graph_map graph_mapping_offline --save-graph-cloud --store-points --min-range 1.7 --max-range 30  --multi-res --save-map  --disable-submaps  --tf-gt-link base_link --tf-base-link odom_base_link  --check-consistency --consistency-max-dist 0.2 --consistency-max-rot 0.1 --resolution 0.7   --resolution-local-factor 1.0  --map-switching-method node_position  --base-name off --dir-name /mnt/storage/rosbag_storage/oru_bags/lab --lidar-topic /robot1/kmo_navserver/laserscan1 --map-type-name ndt_map  --velodyne-config-file ../config/velo32.yaml --output-dir-name /home/daniel/.ros/maps --map-size-xy 50 --map-size-z 4.0 --skip-frame 1 --keyframe-min-distance 0.03 --keyframe-min-rot-deg 0.5   --data-set oru-lab-laserscan1  --visualize     # --save-used-clouds --generate-eval-files
+# node_position=0,mean_observation=1,closest_observation=2, grid=3,node_position_esg=4,mean_observation_esg=5
+#--registration3d
+#--multi-res
+#--soft-constraints
+# --step-control
+#--disable-submaps
+#--soft-constraints
+#--disable-submaps
+#Tcov
+#--soft-constraints

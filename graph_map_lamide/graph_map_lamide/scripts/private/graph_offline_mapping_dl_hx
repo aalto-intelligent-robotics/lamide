@@ -1,0 +1,16 @@
+dataset=volvo_2017_12_01
+roslaunch graph_map visualize_graph_fuser.launch mapping:=true $dataset:=true &
+rosrun graph_map graph_mapping_offline --keep-min-nb-points   --use-pointtype-xyzir --itrs 30 --soft-constraints --lambda-sc 400   --registration3d  --check-consistency --consistency-max-dist 0.3 --consistency-max-rot 2  --interchange-radius 20 --compound-radius 0  --sensor-time-offset 0.00 --tf-base-link /EKF --tf-gt-link /EKF  --resolutions 1.1 1.1 1.1 --resolution-local-factor 1.5  --map-switching-method node_position_esg --min-range 3 --max-range 130 --base-name off --dir-name $BAG_LOCATION/volvo_2017_12_01/mapping  --lidar-topic /velodyne_packets --velodyne-frame-id /velodyne --map-type-name ndt_dl_map  --velodyne-config-file "$(rospack find ndt_fuser)/launch/64E_calibration.yaml" --output-dir-name $HOME/.ros/maps   --map-size-xy 180 --map-size-z 10.0 --skip-frame 1 --keyframe-min-distance 0.1 --keyframe-min-rot-deg 2   --data-set $dataset   --registration-type-name ndt_dl_reg  --save-map #      --generate-eval-files disable-keyframe-update --step-control  --save-used-merged-clouds
+
+#--save-map     --generate-eval-files disable-keyframe-update --step-control  --save-used-merged-clouds
+#--soft-constraints
+# node_position=0,mean_observation=1,closest_observation=2, grid=3,node_position_esg=4,mean_observation_esg=5
+#--sx 0.00001 --sy 0.0000001 --sz 0.0000001 --sez 0.1
+#--disable-submaps
+# COMMANDS TO SAVE DATA: --save-graph-cloud --store-points --save-map --save-used-merged-clouds
+# COMMANDS FOR REGISTRATION --multu-res --soft-constraints --lambda-sc 1
+# STEPPING THOUGH APPLICATION --step-control
+# VISUALIZATION --visualize --skip-frame 1
+# --disable-submap node_position=0,mean_observation=1,closest_observation=2, grid=3,node_position_esg=4,mean_observation_esg=5
+# use ground truth data --gt-mapping --tf-gt-link <insert link id>
+

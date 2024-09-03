@@ -1,0 +1,184 @@
+Panels:
+  - Class: rviz/Displays
+    Help Height: 75
+    Name: Displays
+    Property Tree Widget:
+      Expanded:
+        - /Global Options1
+        - /Map1
+        - /PointCloud22
+        - /PointCloud22/Autocompute Value Bounds1
+        - /Odometry1
+        - /Odometry1/Shape1
+      Splitter Ratio: 0.5
+    Tree Height: 846
+  - Class: rviz/Views
+    Expanded:
+      - /Current View1
+    Name: Views
+    Splitter Ratio: 0.5
+Toolbars:
+  toolButtonStyle: 2
+Visualization Manager:
+  Class: ""
+  Displays:
+    - Alpha: 1
+      Autocompute Intensity Bounds: true
+      Autocompute Value Bounds:
+        Max Value: 10
+        Min Value: -10
+        Value: true
+      Axis: Z
+      Channel Name: intensity
+      Class: rviz/PointCloud2
+      Color: 255; 255; 255
+      Color Transformer: Intensity
+      Decay Time: 0
+      Enabled: true
+      Invert Rainbow: false
+      Max Color: 255; 255; 255
+      Max Intensity: 4096
+      Min Color: 0; 0; 0
+      Min Intensity: 0
+      Name: PointCloud2
+      Position Transformer: XYZ
+      Queue Size: 10
+      Selectable: true
+      Size (Pixels): 3
+      Size (m): 0.00999999978
+      Style: Flat Squares
+      Topic: /fused_cloud
+      Unreliable: false
+      Use Fixed Frame: true
+      Use rainbow: true
+      Value: true
+    - Alpha: 1
+      Class: ndt_rviz/NDT
+      Color: 204; 51; 204
+      Enabled: true
+      History Length: 1
+      Name: NDT
+      Topic: /graph_node/NDTOmMap
+      Unreliable: false
+      Value: true
+    - Alpha: 0.699999988
+      Class: rviz/Map
+      Color Scheme: map
+      Draw Behind: false
+      Enabled: true
+      Name: Map
+      Topic: /projected_map
+      Unreliable: false
+      Use Timestamp: false
+      Value: true
+    - Alpha: 0.0500000007
+      Autocompute Intensity Bounds: true
+      Autocompute Value Bounds:
+        Max Value: 6.31182098
+        Min Value: -0.215546608
+        Value: false
+      Axis: Z
+      Channel Name: intensity
+      Class: rviz/PointCloud2
+      Color: 255; 255; 255
+      Color Transformer: AxisColor
+      Decay Time: 5
+      Enabled: true
+      Invert Rainbow: false
+      Max Color: 255; 255; 255
+      Max Intensity: 4096
+      Min Color: 0; 0; 0
+      Min Intensity: 0
+      Name: PointCloud2
+      Position Transformer: XYZ
+      Queue Size: 10
+      Selectable: true
+      Size (Pixels): 3
+      Size (m): 0.00999999978
+      Style: Points
+      Topic: /fused_cloud
+      Unreliable: false
+      Use Fixed Frame: true
+      Use rainbow: true
+      Value: true
+    - Angle Tolerance: 0.100000001
+      Class: rviz/Odometry
+      Covariance:
+        Orientation:
+          Alpha: 0.5
+          Color: 255; 255; 127
+          Color Style: Unique
+          Frame: Local
+          Offset: 1
+          Scale: 1
+          Value: true
+        Position:
+          Alpha: 0.300000012
+          Color: 204; 51; 204
+          Scale: 1
+          Value: true
+        Value: true
+      Enabled: true
+      Keep: 100
+      Name: Odometry
+      Position Tolerance: 0.100000001
+      Shape:
+        Alpha: 1
+        Axes Length: 1
+        Axes Radius: 0.100000001
+        Color: 255; 25; 0
+        Head Length: 0.100000001
+        Head Radius: 0.100000001
+        Shaft Length: 0.100000001
+        Shaft Radius: 0.0500000007
+        Value: Arrow
+      Topic: /graph_node/ndt_pose_est
+      Unreliable: false
+      Value: true
+  Enabled: true
+  Global Options:
+    Background Color: 48; 48; 48
+    Default Light: true
+    Fixed Frame: world
+    Frame Rate: 30
+  Name: root
+  Tools:
+    - Class: rviz/MoveCamera
+    - Class: rviz/Interact
+      Hide Inactive Objects: true
+    - Class: rviz/Select
+    - Class: rviz/SetInitialPose
+      Topic: initialpose
+    - Class: rviz/SetGoal
+      Topic: goal
+  Value: true
+  Views:
+    Current:
+      Angle: -4.7100029
+      Class: rviz/TopDownOrtho
+      Enable Stereo Rendering:
+        Stereo Eye Separation: 0.0599999987
+        Stereo Focal Distance: 1
+        Swap Stereo Eyes: false
+        Value: false
+      Invert Z Axis: false
+      Name: Current View
+      Near Clip Distance: 0.00999999978
+      Scale: 32.2534714
+      Target Frame: <Fixed Frame>
+      Value: TopDownOrtho (rviz)
+      X: 14.3514709
+      Y: 6.73418808
+    Saved: ~
+Window Geometry:
+  Displays:
+    collapsed: false
+  Height: 1056
+  Hide Left Dock: false
+  Hide Right Dock: false
+  QMainWindow State: 000000ff00000000fd00000002000000000000016a000003dafc0200000001fb000000100044006900730070006c0061007900730100000028000003da000000d700ffffff000000010000015c000003dafc0200000001fb0000000a005600690065007700730100000028000003da000000ad00ffffff0000046d000003da00000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  Views:
+    collapsed: false
+  Width: 1855
+  X: 65
+  Y: 24

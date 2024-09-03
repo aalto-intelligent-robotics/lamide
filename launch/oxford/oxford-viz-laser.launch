@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<launch>
+    <param name="/use_sim_time" value="false" />
+
+    <include file="$(find odom_convert)/launch/base_to_world.launch">
+        <arg name="use_bag_time" value="false" />
+    </include>
+    <!-- left_in_radar =
+        0.1034480  -0.4607700   0.2819426  -0.0050003   0.0080004  -3.1337067 -->
+    <!-- <node pkg="tf" type="static_transform_publisher" name="b2ll_broadcaster" args="-0.60072 -0.34077 -0.26837 -3.1337 -0.041998 -0.0053948 base_link laser_link 100" /> -->
+    <node pkg="tf" type="static_transform_publisher" name="b2ll_broadcaster" args="0.1034480  -0.4607700   0.2819426  -3.1337067  0.0080004  -0.0050003  base_link laser_link 100" />
+    <!-- right_in_radar =
+        0.0927445   0.4367600   0.2795447   0.0029997   0.0080001  -3.1357050 -->
+    <!-- <node pkg="tf" type="static_transform_publisher" name="b2lr_broadcaster" args="-0.61153 0.55676 -0.27023 -3.1357 -0.041999 0.0027052 base_link velodyne_right 100" /> -->
+    <!-- <node pkg="tf" type="static_transform_publisher" name="b2lr_broadcaster" args="0.0927445   0.4367600   0.2795447  -3.1357050  0.0080001  0.0029997  base_link velodyne_right 100" /> -->
+    <node pkg="rviz" type="rviz" name="lamide_rviz" args="-d <path to code>/src/lamide/rviz/oxford.rviz" />
+</launch>

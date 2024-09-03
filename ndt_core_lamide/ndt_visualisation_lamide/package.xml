@@ -1,0 +1,43 @@
+<package>
+  <name>ndt_visualisation_lamide</name>
+  <version>2.3.1</version>
+  <description>Contains classes for creating an ndt visualization window. Initial implementation on top of mrpt.</description>
+
+  <maintainer email="henrik.andreasson@oru.se">Henrik Andreasson</maintainer>
+  <maintainer email="todor.stoyanov@oru.se">Todor Stoyanov</maintainer>
+
+  <license>CC BY-SA 4.0</license>
+
+  <url type="website">http://ros.org/wiki/ndt_visualization</url>
+
+  <author>Henrik Andreasson</author>
+  <author>Todor Stoyanov</author>
+
+  <!-- Dependencies which this package needs to build itself. -->
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <!-- Dependencies needed to compile this package. -->
+  <build_depend>cmake_modules</build_depend>
+  <build_depend>pcl_ros</build_depend>
+  <build_depend>libpcl-all-dev</build_depend>
+  <build_depend>ndt_map_lamide</build_depend>
+  <build_depend>glut</build_depend>
+  <build_depend>opengl</build_depend>
+  <!--build_depend>freeglut3-dev</build_depend-->
+  <build_depend>libxmu-dev</build_depend>
+  <build_depend>libxi-dev</build_depend>
+
+  <!-- Dependencies needed after this package is compiled. -->
+  <run_depend>pcl_ros</run_depend>
+  <run_depend>libpcl-all-dev</run_depend>
+  <run_depend>ndt_map_lamide</run_depend>
+  <run_depend>glut</run_depend>
+  <run_depend>opengl</run_depend>
+  <run_depend>message_runtime</run_depend>
+  <!--run_depend>freeglut3-dev</run_depend-->
+
+<!-- export>
+    <cpp lflags="-L${prefix}/lib -lndt_visualisation " cflags="-I${prefix}/include"/>
+</export -->
+
+</package>

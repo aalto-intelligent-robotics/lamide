@@ -1,0 +1,11 @@
+dataset=volvo_2017_12_01
+dir=/home/$USER/.ros/maps
+prefix_files=offlinevolvo_2017_12_01_gt=0_submap=0_sizexy=300_Z=17_intrchR=10_compR=10_res=0.6_maxSensd=130_keyF=1_d=0.5_deg=15_dl=0_xyzir=0_mpsu=0_mnpfg=6kmnp0
+roslaunch ndt_offline visualize_graph_fuser.launch $dataset:=true &
+rosrun ndt_calibration ndt_calib --gt_file $dir/${prefix_files}_gt.txt --est_sensorpose_file $dir/${prefix_files}_sensorpose_est.txt --bag_file /mnt/sdb1/volvo/finished/data/volvo_2017_12_01_S4_fixed/final/output_s4.bag    --x 0.250054 --y -0.010547494 --z 3.77621 --ex -0.00697922 --ey -0.00933762 --ez -3.11258 --cy --cx --cez --ct --resolution 1.5 --sensor_time_offset -0.15 --score_type 3  --max_translation 7 --min_rotation 0.2 --world_frame /world --pose_frame /EKF --base_name_pcd /home/$USER/ros/mapping_ws/src/perception/ndt_offline/scripts/clouds/  #--no_visualize
+
+
+#--cy --cz --ct
+#--cez --cey --cex
+
+

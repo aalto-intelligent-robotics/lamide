@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<launch>
+
+    <arg name="robot_prefix" default="robot4" />
+    <arg name="input_points_topic" default="/velodyne_packages" />
+    <arg name="output_points_topic" default="/velodyne_points" />
+    <arg name="output_laser_link" default="$(arg robot_prefix)/velodyne_fused" />
+
+
+    <!--include file="$(find ndt_calibration)/launch/visualize.launch" /-->
+    <node name="motion_compensation" pkg="graph_map" type="motion_compensation" output="screen">
+
+        <!-- select one of the following types-->
+        <param name="disable_compensation" value="false" />
+        <param name="use_pointtype_xyzir" value="false" />
+
+        <param name="laser_tf" value="/velodyne" />
+
+        <!-- Topic of laser scanner -->
+        <param name="input_points_topic" value="$(arg input_points_topic)" />
+        <param name="output_points_topic" value="$(arg output_points_topic)" />
+        <param name="output_points_link" value="$(arg output_laser_link)" />
+        <param name="calibration" value="$(find graph_map)/config/VLP16db.yaml" />
+        <param name="sensor_offset_topic" value="$(arg robot_prefix)/sensor_offset" />
+
+        <param name="odom_link" value="$(arg robot_prefix)/odom" />
+        <param name="odom_child_link" value="$(arg robot_prefix)/base_footprint" />
+
+        <param name="min_range" value="1.0" />
+        <param name="max_range" value="130.0" />
+
+        <!-- pass path to graph_map (.map)-->
+
+        <param name="sensor_pose_x" value="0.808" />
+        <param name="sensor_pose_y" value="-0.285" />
+        <param name="sensor_pose_z" value="0.95" />
+        <param name="sensor_pose_r" value="0" />
+        <param name="sensor_pose_p" value="0" />
+        <param name="sensor_pose_t" value="-0.028" />
+
+    </node>
+
+
+</launch>

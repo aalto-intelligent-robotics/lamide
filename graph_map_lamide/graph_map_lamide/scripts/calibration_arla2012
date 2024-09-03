@@ -1,0 +1,14 @@
+dataset=arla-2012
+dir=/home/$USER/.ros/maps
+prefix_files=offarla-2012_gt=0_submap=0_sizexy=400_Z=12_intrchR=7_compR=0_res=0.35_maxSensd=130_keyF=1_d=0.5_deg=5_dl=0_xyzir=0_mpsu=0_mnpfg=6kmnp0
+roslaunch ndt_offline visualize_graph_fuser.launch $dataset:=true &
+rosrun ndt_calibration ndt_calib --gt_file $dir/${prefix_files}_gt.txt --est_sensorpose_file $dir/${prefix_files}_sensorpose_est.txt --bag_file ../bag/arla_bags/mapping/2012-09-05-09-44-50_0.bagfix.bag   --x 1.17851 --y -0.311331  --z 1.8 --ex 0.00305591 --ey -0.000544106 --ez -1.59583 --cy --cx --cz --cex --cey --cez --ct --resolution 1.1 --sensor_time_offset -0.0197245 --score_type 3  --max_translation 2.5 --min_rotation 0.4 --world_frame /world --pose_frame /state_base_link --base_name_pcd /home/$USER/ros/mapping_ws/src/perception/ndt_offline/scripts/clouds/  #--no_visualize
+
+#transl[0]=1.17920618535632;
+#transl[1]= -0.285884882359476;
+#transl[2]=2.0;
+#euler[0]=0;
+#euler[1]=0;
+#euler[2]=-1.58804135060281;//-1.625
+
+

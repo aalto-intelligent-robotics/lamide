@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<launch>
+    <param name="/use_sim_time" value="true" />
+    <arg name="map_file_path" default="<path to maps>/parking-lot/v1/ndt_map.MAP" />
+
+
+    <node name="graph_map_publisher" pkg="graph_map" type="graph_map_publisher" output="screen" launch-prefix="gdb -ex run --args">
+        <param name="map_rate" value="1" />
+        <param name="map_file" value="$(arg map_file_path)" />
+        <param name="map_frame" value="/map" />
+        <param name="map_parent_frame_id" value="/world" />
+        <param name="map_topic" value="/map" />
+    </node>
+
+
+</launch>

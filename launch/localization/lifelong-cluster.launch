@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<launch>
+    <!-- ICRA maps
+    FS1LU - OM
+    UYMSB - cluster
+    -->
+    <!--
+    d1 maps ITSC
+    SC9W8 OM
+    O3UXM Semi
+    7QBT0 Static
+    -->
+    <include file="$(find graph_localization_lamide)/launch/oxford_lifelong.launch">
+        <arg name="localisation_type_name" value="ndt_mcl" />
+        <arg name="map_path" value="<path to maps>/icra-qualitative/" />
+        <arg name="map_file" value="d1_om_5HB72_ndt_map.MAP" />
+        <arg name="log_prefix" value="log/lifelong" />
+        <arg name="only_static" value="false" />
+        <arg name="lifelong" value="true" />
+        <arg name="cluster_update" value="true" />
+
+        <arg name="compare" value="false" />
+    </include>
+</launch>

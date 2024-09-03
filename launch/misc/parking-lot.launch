@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<launch>
+    <param name="/use_sim_time" value="true" />
+    <include file="$(find velodyne_pointcloud_oru)/launch/VLP16_points.launch" />
+    <include file="$(find odom_convert)/launch/base_to_world.launch" />
+    <include file="$(find odom_convert)/launch/gimbot_lidar.launch" />
+    <node pkg="tf" type="static_transform_publisher" name="link1_broadcaster" args="0 0 0 0 0 0 1 base_link odom 100" />
+    <node pkg="rosbag" type="play" name="rosbag" args="--clock -s 8 -u 75 <path to bags>/first-set/gimbot/parking-lot.bag" />
+    <node pkg="rviz" type="rviz" name="rviz" args="-d <path to code>/src/lamide/rviz/lamide-default.rviz" />
+</launch>

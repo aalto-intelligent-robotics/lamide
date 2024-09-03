@@ -1,0 +1,58 @@
+<package>
+  <name>ndt_map_lamide</name>
+  <version>2.3.1</version>
+  <description>Contains the definitions of the 3D Normal Distributions Transform data structures,
+     used for mapping, registration, etc.</description>
+
+  <maintainer email="todor.stoyanov@oru.se">Todor Stoyanov</maintainer>
+  <maintainer email="henrik.andreasson@oru.se">Henrik Andreasson</maintainer>
+  <maintainer email="martin.magnusson@oru.se">Martin Magnusson</maintainer>
+  <maintainer email="tomasz.kucner@oru.se">Tomasz Kucner</maintainer>
+
+  <license>CC BY-SA 4.0</license>
+
+  <url type="website">http://ros.org/wiki/ndt_map</url>
+
+  <author>Todor Stoyanov</author>
+  <author>Jari Saarinen</author>
+  <author>Henrik Andreasson</author>
+
+  <!-- Dependencies which this package needs to build itself. -->
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <!-- Dependencies needed to compile this package. -->
+  <build_depend>roscpp</build_depend>
+  <build_depend>cmake_modules</build_depend>
+  <build_depend>pcl_ros</build_depend>
+  <build_depend>pcl_conversions</build_depend>
+  <build_depend>cv_bridge</build_depend>
+  <build_depend>message_generation</build_depend>
+  <build_depend>nav_msgs</build_depend>
+  <build_depend>std_msgs</build_depend>
+  <build_depend>ndt_generic_lamide</build_depend>
+  <build_depend>velodyne_pointcloud_oru</build_depend>
+
+  <!-- Dependencies needed after this package is compiled. -->
+  <run_depend>roscpp</run_depend>
+  <run_depend>pcl_ros</run_depend>
+  <run_depend>pcl_conversions</run_depend>
+  <run_depend>cv_bridge</run_depend>
+  <run_depend>message_runtime</run_depend>
+  <run_depend>nav_msgs</run_depend>
+  <run_depend>std_msgs</run_depend>
+  <run_depend>ndt_generic_lamide</run_depend>
+  <run_depend>std_msgs</run_depend>
+  <run_depend>velodyne_pointcloud_oru</run_depend>
+
+  <!-- Dependencies needed only for running tests. -->
+  <!-- <test_depend>pcl</test_depend> -->
+  <!-- <test_depend>pcl_ros</test_depend> -->
+  <!-- <test_depend>pointcloud_vrml</test_depend> -->
+  <!-- <test_depend>opencv2</test_depend> -->
+  <!-- <test_depend>cv_bridge</test_depend> -->
+
+<!--export>
+    <cpp lflags="-L${prefix}/lib" cflags="-I${prefix}/include"/>
+</export-->
+
+</package>

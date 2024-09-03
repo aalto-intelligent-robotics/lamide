@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<launch>
+    <include file="$(find graph_map_lamide)/launch/oxford_fuser_gt.launch">
+        <arg name="ndt_om" value="true" />
+        <arg name="only_static" value="false" />
+        <arg name="map_directory" value="<path to maps>/icra-qualitative/" />
+        <arg name="map_prefix" value="d6_om" />
+        <arg name="cluster_update" value="false" />
+        <arg name="request_scans" value="true" />
+        <arg name="scan_service" value="/oxford_publisher/publish" />
+    </include>
+</launch>

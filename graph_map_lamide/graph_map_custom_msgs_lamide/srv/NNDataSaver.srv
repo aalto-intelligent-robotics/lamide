@@ -1,0 +1,4 @@
+sensor_msgs/PointCloud2 vels
+nav_msgs/Odometry pose
+---
+std_msgs/Bool status

@@ -1,0 +1,187 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="run_bag" default="false" />
+    <arg name="namespace_prefix" default="robot1" />
+
+    <arg name="ndt_om" default="true" />
+    <arg name="only_static" default="false" />
+    <arg name="map_directory" default="<path to maps>/oxford-semantic-gt" />
+    <arg name="map_prefix" default="" />
+
+    <arg name="points_topic" default="/velodyne_points_left" />
+
+    <arg name="sensor_pose_x" default="0.1034480" />
+    <arg name="sensor_pose_y" default="-0.4607700" />
+    <arg name="sensor_pose_z" default="0.2819426" />
+    <arg name="sensor_pose_r" default="-0.0050003" />
+    <arg name="sensor_pose_p" default="0.0080004" />
+    <arg name="sensor_pose_t" default="-3.1337067" />
+
+    <!-- start mapping node -->
+    <!-- launch-prefix="gdb -ex run /-/-args" -->
+    <!-- launch-prefix="valgrind /-/-tool=massif
+    /-/-massif-out-file=<path to valgrind>/fuser.out" -->
+    <!-- <node pkg="graph_map_lamide" type="graph_map_lamide_fuser_node" name="graph_node_lamide"
+    output="screen" launch-prefix="valgrind tool=massif
+    massif-out-file=<path to valgrind>/fuser.out"> -->
+    <!-- <node pkg="graph_map_lamide" type="graph_map_lamide_fuser_node" name="graph_node_lamide"
+    output="screen" launch-prefix="valgrind leak-check=yes"> -->
+    <node pkg="graph_map_lamide" type="graph_map_lamide_fuser_node" name="graph_node_lamide"
+        output="screen">
+
+        <!-- ! ndt-om occupancy update values -->
+        <param name="positive_update_static" value="0.6" />
+        <param name="negative_update_static" value="0.4" />
+        <param name="eta_static" value="0.2" />
+        <param name="positive_update_dynamic" value="0.55" />
+        <param name="negative_update_dynamic" value="0.3" />
+        <param name="eta_dynamic" value="0.8" />
+        <param name="max_occupancy" value="10.0" />
+        <param name="sensor_noise" value="0.06" />
+        <param name="maxNumPoints" value="1000" />
+
+        <!-- Choose weather to initiate pose to pose_init_<x,y,t> or the data of /<gt_topic> -->
+        <param name="initPoseFromGT" value="true" />
+        <param name="pose_init_x" value="0" />
+        <param name="pose_init_y" value="0" />
+        <param name="pose_init_t" value="0" />
+        <param name="world_link_id" value="map" />
+
+        <!-- position:
+      x: 249.863675693
+      y: 68.6525009442
+      z: 1.83083605766
+    orientation:
+      x: 0.0215665732178
+      y: 0.0300472594805
+      z: -0.994897398574
+      w: 0.0938680532897 -->
+
+        <!-- Select mapping technique to one of the methods listed in
+        graph_map/include/graph_factory.h -->
+        <param name="map_type" value="ndt_map" />
+        <!-- save as jff -->
+        <param name="file_format_map" value=".MAP" />
+
+        <!-- Select registration technique to one of the methods listed in
+        graph_map/include/graph_factory.h -->
+        <param name="registration_type" value="ndt_d2d_reg_lamide" />
+        <param name="ndt_om" value="$(arg ndt_om)" />
+        <param name="only_static" value="$(arg only_static)" />
+
+        <!-- use local maps instead of a single map, this can improve map descriptiveness -->
+        <param name="use_submap" value="true" />
+        <param name="interchange_radius" value="50" />
+        <param name="compound_radius" value="20" />
+        <param name="map_switching_method" value="node_position_esg" />
+
+        <!-- size of map -->
+        <param name="size_x_meters" value="200" />
+        <param name="size_y_meters" value="200" />
+        <param name="size_z_meters" value="20" />
+
+        <!-- choose to disable essential parts of the software -->
+        <param name="enable_registration" value="true" />
+        <param name="registration_2D" value="false" />
+        <!-- Use fine to course ndt_cells in registration -->
+        <param name="multi-res" value="false" />
+        <param name="enable_mapping" value="true" />
+
+        <!-- if laser_2d is true, a 2d scanner will be used for mapping-->
+        <param name="laser_2d" value="false" />
+
+        <!-- Topic of laser scanner -->
+        <param name="points_topic" value="$(arg points_topic)" />
+        <param name="output_pointcloud_topic_name" value="/fused_cloud" />
+
+        <param name="odometry_topic" value="/odom" />
+        <param name="use_odometry_message" value="false" />
+        <param name="use_tf_listener" value="true" />
+
+        <!-- if true, odom is taken as is. If false, a diff is calculated -->
+        <param name="relative_movement" value="false" />
+
+        <param name="odom_tf" value="/odom" />
+        <param name="base_tf" value="/base_link" />
+        <param name="gt_topic" value="/gt" />
+        <!-- !this is for debug -->
+        <param name="use_odom_as_gt" value="false" />
+
+        <!-- check if the registration pose output is similar to odometry prediction within
+        max_translation_norm or max_rotation_norm, otherwise reject -->
+        <param name="check_consistency" value="true" />
+        <param name="max_translation_norm" value="3.0" />
+        <param name="max_rotation_norm" value="0.5" />
+
+
+        <!-- Resolution of a map, usually between 0.4 and 1.2 -->
+        <param name="resolution" value="0.6" />
+        <param name="n_neighbours" value="1" />
+
+        <!--<param name="laser_variance_z" value="0.02" /> -->
+
+        <!--range of sensor, min range can prevent self-mapping of the robot or operator of the lidar, max range can remove uncertain measurments -->
+        <param name="max_range" value="150." />
+        <param name="min_range" value="2.0" />
+
+        <!-- Specific sensor offset parameters with respect to the odometry frame -->
+        <!-- left_in_radar =
+        0.1034480  -0.4607700   0.2819426  -0.0050003   0.0080004  -3.1337067 -->
+
+        <!-- left -->
+        <param name="sensor_pose_x" value="$(arg sensor_pose_x)" />
+        <param name="sensor_pose_y" value="$(arg sensor_pose_y)" />
+        <param name="sensor_pose_z" value="$(arg sensor_pose_z)" />
+        <param name="sensor_pose_r" value="$(arg sensor_pose_r)" />
+        <param name="sensor_pose_p" value="$(arg sensor_pose_p)" />
+        <param name="sensor_pose_t" value="$(arg sensor_pose_t)" />
+
+        <!-- right_in_radar =
+        0.0927445   0.4367600   0.2795447   0.0029997   0.0080001  -3.1357050 -->
+        <!-- right -->
+        <!-- <param name="sensor_pose_x" value="0.0927445" />
+        <param name="sensor_pose_y" value="0.4367600" />
+        <param name="sensor_pose_z" value="0.2795447" />
+        <param name="sensor_pose_r" value="0.0029997" />
+        <param name="sensor_pose_p" value="0.0080001" />
+        <param name="sensor_pose_t" value="-3.1357050" /> -->
+
+        <!-- Output directory where the map is stored -->
+        <!-- invoke rosservice call /graph_ -->
+        <param name="map_directory" value="$(arg map_directory)" />
+        <param name="map_prefix" value="$(arg map_prefix)" />
+
+        <!-- !! -->
+        <param name="visualize" value="true" />
+        <param name="T_map" value="1.0" />
+
+        <!-- a minimum movement is required before fusing frames -->
+        <param name="use_keyframe" value="true" />
+        <param name="min_keyframe_dist" value="0.1" />
+        <param name="min_keyframe_rot_deg" value="1.0" />
+    </node>
+
+
+    <node pkg="octomap_server" type="octomap_server_node" name="octomap_server">
+        <remap from="cloud_in" to="/fused_cloud" />
+        <param name="frame_id" value="/map" />
+
+        <param name="resolution" value="0.1" />
+        <param name="sensor_model/max_range" value="100.0" />
+        <param name="pointcloud_max_z" value="5" />
+        <param name="pointcloud_min_z" value="0" />
+        <param name="occupancy_min_z" value="0.0" />
+        <param name="occupancy_max_z" value="2" />
+
+    </node>
+
+    <!-- start a rosbag -->
+    <group if="$(arg run_bag)">
+        <arg name="path" default="<path to bags>/" />
+        <arg name="file_1" default="all-tf.bag" />
+        <node pkg="rosbag" type="play" name="player" output="screen"
+            args="--clock -r 0.1 -q $(arg path)$(arg file_1)" />
+    </group>
+
+
+</launch>

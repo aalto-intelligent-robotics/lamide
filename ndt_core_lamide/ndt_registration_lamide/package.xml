@@ -1,0 +1,45 @@
+<package>
+  <name>ndt_registration_lamide</name>
+  <version>2.3.1</version>
+  <description>Contains a new implementation of 3D NDT registration.
+    Used to find the relative positions of two point clouds.</description>
+  <maintainer email="todor.stoyanov@oru.se">Todor Stoyanov</maintainer>
+  <maintainer email="henrik.andreasson@oru.se">Henrik Andreasson</maintainer>
+  <maintainer email="martin.magnusson@oru.se">Martin Magnusson</maintainer>
+
+  <license>CC BY-SA 4.0</license>
+
+  <url type="website">http://ros.org/wiki/ndt_registration</url>
+
+  <author>Todor Stoyanov</author>
+  <author>Jari Saarinen</author>
+  <author>Henrik Andreasson</author>
+
+  <!-- Dependencies which this package needs to build itself. -->
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <!-- Dependencies needed to compile this package. -->
+  <build_depend>cmake_modules</build_depend>
+
+  <build_depend>ndt_generic_lamide</build_depend>
+  <build_depend>ndt_map_lamide</build_depend>
+  <build_depend>pcl_ros</build_depend>
+  <build_depend>libpcl-all-dev</build_depend>
+  <build_depend>tf</build_depend>
+  <build_depend>tf_conversions</build_depend>
+  <build_depend>velodyne_pointcloud_oru</build_depend>
+
+  <!-- Dependencies needed after this package is compiled. -->
+  <run_depend>velodyne_pointcloud_oru</run_depend>
+  <run_depend>ndt_generic_lamide</run_depend>
+  <run_depend>ndt_map_lamide</run_depend>
+  <run_depend>pcl_ros</run_depend>
+  <run_depend>libpcl-all-dev</run_depend>
+  <run_depend>tf</run_depend>
+  <run_depend>tf_conversions</run_depend>
+
+<!--<export>
+    <cpp lflags="-lgsl -lgslcblas -L${prefix}/lib" cflags="-I${prefix}/include -fopenmp"/>
+</export>
+-->
+</package>

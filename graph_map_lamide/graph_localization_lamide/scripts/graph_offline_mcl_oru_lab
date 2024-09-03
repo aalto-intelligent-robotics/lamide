@@ -1,0 +1,6 @@
+roslaunch graph_map visualize_graph_fuser.launch localization:=true oru-lab:=true &
+rosrun graph_localization graph_localization_offline  --forceSIR --lidar-topic /robot1/kmo_navserver/laserscan1 --localisation-algorithm-name mcl_ndt  --tf-gt-link base_link --tf-base-link odom_base_link   --skip-frame 50  --base-name mcl-ndt --bag-file-path /mnt/data_disc/bag/oru_lab/2018-05-18-09-55-16.bag  --map-file-path "$(rospack find graph_map)/maps/ndt_map.MAP" --data-set oru-lab  --velodyne-config-file "$(rospack find graph_map)/config/64e_utexas.yaml"  --n-particles 250 --visualize #--save-results
+#/home/$USER/.ros/maps/offoru-lab-laserscan1_gt=0_submap=0_sizexy=50_Z=4_intrchR=10_compR=10_res=0.7_maxSensd=30_keyF=1_d=0.03_deg=0.5_alpha=0_dl=0_xyzir=0_mpsu=0_mnpfg=6kmnp0.map
+
+
+

@@ -1,0 +1,18 @@
+roslaunch graph_map visualize_graph_fuser.launch mapping:=true arla-2012:=true &
+bag_location=$BAG_LOCATION/orkla/2019_06_17
+rosrun graph_map graph_mapping_offline  --registration3d --save-used-merged-clouds --tf-base-link robot3/base_link --tf-gt-link robot3/base_link_gt  --odom-parent-link robot3/odom --odom-gt-parent-link robot3/odom_gt --visualize-map --visualize --disable-submaps --itrs 30 --consistency-max-dist 0.2 --consistency-max-rot 0.1 --interchange-radius 8 --compound-radius 0  --sensor-time-offset 0.000 --tf-world-frame /world   --resolution 0.55 --resolution-local-factor 1.1 --map-switching-method node_position_esg --min-range 1.2 --max-range 130 --base-name off --dir-name $bag_location --lidar-topic /robot3/sensors/velodyne_packets --velodyne-frame-id /velodyne --map-type-name ndt_map  --velodyne-config-file "$(rospack find graph_map)/config/velo32.yaml" --output-dir-name /home/$USER/.ros/maps   --map-size-xy 300 --map-size-z 22.0 --skip-frame 1 --keyframe-min-distance 0.2 --keyframe-min-rot-deg 100   --data-set orkla-velodyne --save-map  #        --generate-eval-files --step-control  --save-used-merged-clouds --multi-res
+
+#--gt-mapping --disable-registration
+#--store-points
+# node_position=0,mean_observation=1,closest_observation=2, grid=3,node_position_esg=4,mean_observation_esg=5
+#--registration3d
+#--save-graph-cloud --store-points
+#--gt-mapping
+#--multi-res
+#--soft-constraints
+# --step-control
+#--disable-submaps
+#--soft-constraints
+#--disable-submaps
+#Tcov
+#--soft-constraints

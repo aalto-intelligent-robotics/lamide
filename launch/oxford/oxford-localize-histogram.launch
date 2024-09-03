@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<launch>
+    <!-- tf and utils -->
+    <param name="use_sim_time" value="false" />
+    <include file="$(find odom_convert)/launch/odom_to_tf_oxford.launch" />
+    <node pkg="tf" type="static_transform_publisher" name="m2w_broadcaster" args="0 0 0 0 0 0 1 world map 100" />
+
+    <!-- rviz -->
+    <node pkg="rviz" type="rviz" name="lamide_rviz" args="-d <path to code>/src/lamide/rviz/MCL-D2D-Error.rviz" />
+
+    <!-- localization -->
+    <include file="$(find graph_localization_lamide)/launch/oxford_loc_histogram.launch" >
+        <arg name="map_path" value="<path to maps>/experiment1/om/" />
+        <arg name="map_file" value="TRLD4_ndt_map.MAP" />
+        <arg name="log_prefix" default="TRLD4_d2" />
+        <arg name="mm_tx1" value="1.5" />
+        <arg name="mm_tx2" value="0.75" />
+        <arg name="mm_ty1" value="0.5" />
+        <arg name="mm_ty2" value="1.0" />
+        <arg name="mm_tz1" value="0.0" />
+        <arg name="mm_tz2" value="0.0" />
+        <arg name="mm_rr1" value="0.0" />
+        <arg name="mm_rr2" value="0.0" />
+        <arg name="mm_rp1" value="0.0" />
+        <arg name="mm_rp2" value="0.0" />
+        <arg name="mm_ry1" value="0.5" />
+        <arg name="mm_ry2" value="1.0" />
+        <arg name="mm_off_tx" value="0.4" />
+        <arg name="mm_off_ty" value="0.2" />
+        <arg name="mm_off_tz" value="0.0" />
+        <arg name="mm_off_rr" value="0.0" />
+        <arg name="mm_off_rp" value="0.0" />
+        <arg name="mm_off_ry" value="0.1" />
+    </include>
+</launch>

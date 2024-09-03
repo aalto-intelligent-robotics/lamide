@@ -1,0 +1,30 @@
+<library path="lib/libndt_rviz_lamide">
+    <class name="ndt_rviz_lamide/NDT" type="perception_oru::NDTDisplay" base_class_type="rviz::Display">
+        <description>
+            Displays elipsoids representing ndt map.
+        </description>
+        <message_type>ndt_map_lamide/NDTMapMsg</message_type>
+    </class>
+
+    <class name="ndt_rviz_lamide/NDTRGB" type="perception_oru::NDTRGBDisplay" base_class_type="rviz::Display">
+        <description>
+            Displays elipsoids representing ndt map with RGB color and semantic label.
+        </description>
+        <message_type>ndt_map_lamide/NDTMapRGBMsg</message_type>
+    </class>
+
+    <class name="ndt_rviz_lamide/NDTLine" type="perception_oru::NDTLineDisplay" base_class_type="rviz::Display">
+        <description>
+            Displays lines representing ndt map.
+        </description>
+        <message_type>ndt_map_lamide/NDTMapMsg</message_type>
+    </class>
+
+    <class name="ndt_rviz_lamide/NDTVectorMap" type="perception_oru::ndt_rviz::NDTVectorMapDisplay" base_class_type="rviz::Display">
+        <description>
+            Displays vectors of ndt maps.
+        </description>
+        <message_type>ndt_map_lamide/NDTVectorMapMsg</message_type>
+    </class>
+
+</library>

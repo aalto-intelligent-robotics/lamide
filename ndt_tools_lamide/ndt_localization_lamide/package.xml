@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<package>
+  <name>ndt_localization_lamide</name>
+  <version>2.0.3</version>
+  <description>The ndt_localization package</description>
+
+  <maintainer email="tomasz.kucner@oru.se">Tomasz Kucner</maintainer>
+  <maintainer email="todor.stoyanov@oru.se">Todor Stoyanov</maintainer>
+
+  <author>Tomasz Kucner</author>
+
+  <license>CC BY-SA 4.0</license>
+
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>ndt_map_lamide</build_depend>
+  <build_depend>roscpp</build_depend>
+  <build_depend>sensor_msgs</build_depend>
+  <build_depend>geometry_msgs</build_depend>
+  <build_depend>libpcl-all-dev</build_depend>
+  <build_depend>laser_geometry</build_depend>
+  <build_depend>message_filters</build_depend>
+  <build_depend>velodyne_pointcloud_oru</build_depend>
+  <build_depend>tf_conversions</build_depend>
+  <build_depend>ndt_generic_lamide</build_depend>
+  <run_depend>message_filters</run_depend>
+  <run_depend>laser_geometry</run_depend>
+  <run_depend>libpcl-all-dev</run_depend>
+  <run_depend>geometry_msgs</run_depend>
+  <run_depend>sensor_msgs</run_depend>
+  <run_depend>roscpp</run_depend>
+  <run_depend>ndt_map_lamide</run_depend>
+  <run_depend>velodyne_pointcloud_oru</run_depend>
+  <run_depend>tf_conversions</run_depend>
+  <run_depend>ndt_generic_lamide</run_depend>
+  <!-- The export tag contains other, unspecified, tags -->
+  <export>
+    <!-- You can specify that this package is a metapackage here: -->
+    <!-- <metapackage/> -->
+
+    <!-- Other tools can request additional information be placed here -->
+
+  </export>
+</package>

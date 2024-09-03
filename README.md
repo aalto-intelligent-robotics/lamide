@@ -13,11 +13,23 @@ We propose a method to estimate the latent variables by clustering based on sema
 
 ## Installation
 
-TODO
+Docker compose file provided in folder `docker`
+```bash
+docker compose up -d --build && docker attach lamide
+cd <to catkin ws>
+catkin build
+```
+
+Velodyne driver version 1.3.0 is required to be build in the catkin workspace.
 
 ## Replicating the experiments
 
-TODO
+```bash
+cd launch/scripts/docker/
+./run-all-cluster-loc-experiments-cluster.sh
+./run-all-cluster-loc-experiments-om.sh
+./run-all-cluster-map-experiments.sh
+```
 
 ## Citation
 

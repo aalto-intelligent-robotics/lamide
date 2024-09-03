@@ -1,0 +1,171 @@
+<?xml version="1.0"?>
+<launch>
+
+    <!-- Start rosbag with launchfile-->
+    <arg name="run_bag" default="false" />
+    <!-- Absolute Path to map to be used for localization. The map needs to be built by graph_fuser package -->
+    <arg name="map_file" default="ndt_map.MAP" />
+    <!-- !end with slash! -->
+    <arg name="map_path" default="<path to maps>/oxford-semantic-gt/" />
+    <arg name="robot_id" default="robot1" />
+    <arg name="log_prefix" default="" />
+    <arg name="only_static" default="false" />
+
+    <arg name="mm_tx1" default="1.0" />
+    <arg name="mm_tx2" default="0.5" />
+    <arg name="mm_ty1" default="0.5" />
+    <arg name="mm_ty2" default="1.0" />
+    <arg name="mm_tz1" default="0.05" />
+    <arg name="mm_tz2" default="0.05" />
+    <arg name="mm_rr1" default="0.0" />
+    <arg name="mm_rr2" default="0.0" />
+    <arg name="mm_rp1" default="0.0" />
+    <arg name="mm_rp2" default="0.0" />
+    <arg name="mm_ry1" default="0.5" />
+    <arg name="mm_ry2" default="1.0" />
+    <arg name="mm_off_tx" default="0.2" />
+    <arg name="mm_off_ty" default="0.2" />
+    <arg name="mm_off_tz" default="0.05" />
+    <arg name="mm_off_rr" default="0.0" />
+    <arg name="mm_off_rp" default="0.0" />
+    <arg name="mm_off_ry" default="0.1" />
+
+
+    <!-- launch-prefix="gdb -ex run /-/-args" -->
+    <!-- launch-prefix="valgrind /-/-tool=massif /-/-massif-out-file=<path to valgrind>/loc.out" -->
+    <!-- Run monte carlo localization -->
+    <node name="ndt_mcl_localization_graph_lamide" pkg="graph_localization_lamide" type="ndt_mcl_localization_graph_lamide" output="screen">
+
+        <!-- !! this decides the used localizer class ndt_mcl/ndt_mcl_lamide -->
+        <param name="localisation_type_name" value="ndt_mcl" />
+        <param name="only_static" value="$(arg only_static)" />
+        <param name="lost_threshold" value="4" />
+        <param name="error_dim" value="2" />
+        <param name="use_z" value="false" />
+        <param name="display_local_map" value="false" />
+        <param name="display_error_map" value="true" />
+
+        <!-- if laser_2d is true, a 2d scanner will be used for mapping-->
+        <param name="laser_2d" value="false" />
+        <!-- Topic of laser scanner -->
+        <param name="points_topic" value="/velodyne_points" />
+        <param name="PointCloud" value="true" />
+        <param name="Velodyne" value="false" />
+        <param name="input_cloud_topic" value="/velodyne_points_left" />
+
+        <!-- pass path to graph_map (.map)-->
+        <param name="map_file" value="$(arg map_file)" />
+        <param name="map_path" value="$(arg map_path)" />
+        <!-- left_in_radar =
+        0.1034480  -0.4607700   0.2819426  -0.0050003   0.0080004  -3.1337067 -->
+
+        <!-- left -->
+        <param name="sensor_pose_x" value="0.1034480" />
+        <param name="sensor_pose_y" value="-0.4607700" />
+        <param name="sensor_pose_z" value="0.2819426" />
+        <param name="sensor_pose_r" value="-0.0050003" />
+        <param name="sensor_pose_p" value="0.0080004" />
+        <param name="sensor_pose_t" value="-3.1337067" />
+
+        <!-- right_in_radar =
+        0.0927445   0.4367600   0.2795447   0.0029997   0.0080001  -3.1357050 -->
+        <!-- right -->
+        <!-- <param name="sensor_pose_x" value="0.0927445" />
+        <param name="sensor_pose_y" value="0.4367600" />
+        <param name="sensor_pose_z" value="0.2795447" />
+        <param name="sensor_pose_r" value="0.0029997" />
+        <param name="sensor_pose_p" value="0.0080001" />
+        <param name="sensor_pose_t" value="-3.1357050" /> -->
+        <param name="sensor_offset_t" value="0.0" />
+        <param name="gt_topic" value="/gt" />
+
+        <!-- Choose weather to initiate pose to pose_init_<x,y,t> or the data of /<gt_topic> -->
+        <param name="initPoseFromGT" value="true" />
+        <param name="pose_init_x" value="0" />
+        <param name="pose_init_y" value="0" />
+        <param name="pose_init_t" value="0" />
+        <param name="use_tf_listener" value="true" />
+        <!-- world frame id -->
+        <param name="root_tf" value="/map" />
+        <param name="world_tf" value="/world" />
+        <!--  odometry frame id-->
+        <param name="odom_tf" value="/odom" />
+        <param name="base_tf" value="/base_link" />
+        <param name="mcl_tf" value="/mcl" />
+        <param name="laser_tf" value="/velodyne" />
+
+        <!-- if true, odom is taken as is. If false, a diff is calculated -->
+        <!-- !! this is very important to align with publisher -->
+        <param name="relative_movement" value="false" />
+
+        <!-- note logging -->
+        <param name="log_prefix" value="$(arg log_prefix)" />
+
+        <param name="publish_sensor_link" value="true" />
+        <param name="pose_estimate_topic" value="/ndt_mcl_pose" />
+
+        <param name="max_range" value="130." />
+        <param name="min_range" value="1.0" />
+
+        <!-- MCL parameters -->
+        <param name="enable_localisation" value="true" />
+        <param name="particle_count" value="5000" />
+        <param name="resolution_local_factor" value="1.0" />
+        <param name="show_pose" value="true" />
+        <param name="fraction" value="1.0" />
+        <param name="force_SIR" value="true" />
+        <param name="z_filter_height" value="-10.0" />
+
+        <!-- this affects the motion model -->
+        <!-- good params -->
+        <param name="dataset" value="custom" />
+        <param name="mm_tx1" value="$(arg mm_tx1)" />
+        <param name="mm_tx2" value="$(arg mm_tx2)" />
+        <param name="mm_ty1" value="$(arg mm_ty1)" />
+        <param name="mm_ty2" value="$(arg mm_ty2)" />
+        <param name="mm_tz1" value="$(arg mm_tz1)" />
+        <param name="mm_tz2" value="$(arg mm_tz2)" />
+        <param name="mm_rr1" value="$(arg mm_rr1)" />
+        <param name="mm_rr2" value="$(arg mm_rr2)" />
+        <param name="mm_rp1" value="$(arg mm_rp1)" />
+        <param name="mm_rp2" value="$(arg mm_rp2)" />
+        <param name="mm_ry1" value="$(arg mm_ry1)" />
+        <param name="mm_ry2" value="$(arg mm_ry2)" />
+        <param name="mm_off_tx" value="$(arg mm_off_tx)" />
+        <param name="mm_off_ty" value="$(arg mm_off_ty)" />
+        <param name="mm_off_tz" value="$(arg mm_off_tz)" />
+        <param name="mm_off_rr" value="$(arg mm_off_rr)" />
+        <param name="mm_off_rp" value="$(arg mm_off_rp)" />
+        <param name="mm_off_ry" value="$(arg mm_off_ry)" />
+
+
+        <!-- !! only for histogram calculation -->
+        <param name="calculate_histogram" value="true" />
+        <param name="match_histogram" value="true" />
+        <param name="histogram_ratio" value="10" />
+        <param name="enable_localisation" value="false" />
+        <param name="particle_count" value="1" />
+
+
+        <param name="visualize" value="true" />
+        <param name="simple_visualization" value="false" />
+    </node>
+
+
+    <node name="graph_map_lamide_publisher" pkg="graph_map_lamide" type="graph_map_lamide_publisher" output="screen">
+        <param name="map_rate" value="1" />
+        <param name="map_file" value="$(arg map_file)" />
+        <param name="map_path" value="$(arg map_path)" />
+        <param name="map_frame" value="/world" />
+        <param name="map_parent_frame_id" value="/world" />
+        <param name="map_topic" value="/map" />
+        <param name="simple_plot" value="false" />
+    </node>
+
+    <!-- <group if="$(arg run_bag)">
+    <arg name="path" default="<path to bags>/first-set/gimbot" />
+    <arg name="file_1" default="parking-lot.bag" />
+  <node pkg="rosbag" type="play" name="player" output="screen" args="clock -r 1.0 -q $(arg path)$(arg file_1)"/>
+</group> -->
+
+</launch>

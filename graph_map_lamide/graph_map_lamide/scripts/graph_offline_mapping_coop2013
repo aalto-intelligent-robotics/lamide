@@ -1,0 +1,15 @@
+roslaunch graph_map visualize_graph_fuser.launch mapping:=true arla-2012:=true &
+rosrun graph_map graph_mapping_offline --filter-cloud --z-min 0  --z-max 4.0  --visualize --gt-mapping --disable-registration --itrs 50  --check-consistency --consistency-max-dist 0.2 --consistency-max-rot 0.1 --interchange-radius 5 --compound-radius 0  --sensor-time-offset 0.00 --tf-base-link odom_base_link --tf-gt-link state_base_link  --resolution 0.7   --resolution-local-factor 1.0 --map-switching-method node_position_esg --min-range 1.6 --max-range 130 --base-name off --dir-name $BAG_LOCATION/coop_bags/localisation --lidar-topic /velodyne_packets --velodyne-frame-id /velodyne --map-type-name ndt_map  --velodyne-config-file "$(rospack find graph_map)/config/velo32.yaml" --output-dir-name /home/daniel/.ros/maps   --map-size-xy 100   --map-size-z 15.0 --skip-frame 1 --keyframe-min-distance 0.1 --keyframe-min-rot-deg 1   --data-set coop-2013   --save-used-merged-clouds #--save-map # --save-map      --generate-eval-files --disable-keyframe-update --step-control   --multi-res
+#--gt-mapping --disable-registration
+# node_position=0,mean_observation=1,closest_observation=2, grid=3,node_position_esg=4,mean_observation_esg=5
+#--registration3d
+#--save-graph-cloud --store-points
+#--gt-mapping
+#--multi-res
+#--soft-constraints
+# --step-control
+#--disable-submaps
+#--soft-constraints
+#--disable-submaps
+#Tcov
+#--soft-constraints

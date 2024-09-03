@@ -1,0 +1,19 @@
+#roslaunch graph_map visualize_graph_fuser.launch mapping:=true arla-2012:=true &
+rosrun graph_map graph_mapping_offline  --disable-registration --visualize --visualize-map --registration3d --itrs 30 --consistency-max-dist 0.2 --consistency-max-rot 0.1 --interchange-radius 8 --compound-radius 0  --sensor-time-offset 0.000 --resolution 0.7 --resolution-local-factor 1.0 --map-switching-method node_position_esg --min-range 2.5 --max-range 130 --base-name off --dir-name $BAG_LOCATION/arla_bags/mapping --lidar-topic /velodyne_packets --velodyne-frame-id /velodyne --map-type-name ndt_map  --velodyne-config-file "$(rospack find graph_map)/config/velo32.yaml" --output-dir-name /home/$USER/.ros/   --map-size-xy 300 --map-size-z 15.0 --skip-frame 1 --keyframe-min-distance 0.0 --keyframe-min-rot-deg 0 --disable-keyframe-update --data-set arla-2012 --store-points --odom-parent-link /world --odom-gt-parent-link /world --tf-base-link /odom_base_link --tf-gt-link /state_base_link --save-raw-clouds --generate-eval-files
+#--save-used-merged-clouds
+# --save-map      --generate-eval-files --step-control  --save-used-merged-clouds --multi-res
+#--disable-unwarp --disable-keyframe-update --step-control
+#--gt-mapping --disable-registration
+#--store-points
+# node_position=0,mean_observation=1,closest_observation=2, grid=3,node_position_esg=4,mean_observation_esg=5
+#--registration3d
+#--save-graph-cloud --store-points
+#--gt-mapping
+#--multi-res
+#--soft-constraints
+# --step-control
+#--disable-submaps
+#--soft-constraints
+#--disable-submaps
+#Tcov
+#--soft-constraints

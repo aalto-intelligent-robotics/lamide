@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+<launch>
+    <!-- http://docs.ros.org/kinetic/api/robot_localization/html/index.html -->
+
+    <arg name="prefix" default="robot3" />
+    <arg name="odom_frame" default="$(arg prefix)/odom" />
+    <arg name="base_frame" default="$(arg prefix)/base_footprint" />
+    <arg name="odom_topic" default="$(arg prefix)/control/odom" />
+    <arg name="imu_topic" default="$(arg prefix)/sensors/imu/data " />
+    <arg name="odometry_output_topic" default="$(arg prefix)/control/odom_imu_filtered" />
+
+    <node pkg="rviz" type="rviz" name="rviz" args="-d $(find robust_mapping)/rviz/mapping.rviz" />
+
+    <node pkg="tf_workshop" type="tf_dynamic_publisher" name="tf_dynamic_publisher" output="screen">
+        <param name="sensor_pose_x" value="0" />
+        <param name="sensor_pose_y" value="0" />
+        <param name="sensor_pose_z" value="0" />
+        <param name="sensor_pose_ex" value="0" />
+        <param name="sensor_pose_ey" value="0" />
+        <param name="sensor_pose_ez" value="0" />
+        <param name="parent_link" value="$(arg prefix)/base_footprint" />
+        <param name="child_link" value="imu" />
+        <param name="topic" value="/$(arg prefix)/sensors/imu/data" />
+    </node>
+
+    <!-- ekf_loc1 fuses only continuous data (imu and odometry). Publish the tf from odom_frame to base_footprint -->
+    <node pkg="robot_localization" type="ekf_localization_node" name="ekf_loc_odom" clear_params="true" output="screen">
+        <remap from="/odometry/filtered" to="$(arg odometry_output_topic)" />
+
+        <param name="frequency" value="50" />
+        <param name="sensor_timeout" value="0.1" />
+        <param name="two_d_mode" type="bool" value="false" />
+        <param name="odom_frame" value="$(arg odom_frame)" />
+
+        <param name="base_link_frame" value="$(arg base_frame)" />
+        <!-- if robot_localization is performing local fusing, ie is calculating the odometry, :
+        world_frame MUST BE set to the same value as odom_frame
+        map_frame MUST NOT BE set
+      -->
+        <param name="world_frame" value="$(arg odom_frame)" />
+
+        <param name="odom0" value="$(arg odom_topic)" /> <!-- previously: /odom -->
+        <param name="imu0" value="$(arg imu_topic)" /> <!-- previously: /imu/data -->
+
+        <rosparam param="odom0_config">[true, true, false,
+                                false, false, false,
+                                false, false, false,
+                                false, false, false,
+                                false, false, false]</rosparam>
+
+        <!-- Be careful when setting the z-orientation value to true because you are going to fuse orientation data
+  coming from an attitude estimatior which is more likely to use a (slow-response) compass -->
+        <rosparam param="imu0_config">[false, false, false,
+                               false, false, true,
+                               false, false, false,
+                               false, false, false,
+                               false, false, false]</rosparam>
+
+        <!-- if two or more sources provide absolute pose (position + orientation), the _differential parametet MUST BE TRUE for ALL of them except for ONE -->
+        <param name="odom0_differential" value="false" />
+        <param name="imu0_differential" value="false" />
+
+        <!-- if the _relative parameter is set to TRUE, the initial state is the origin for both position and orientation -->
+        <param name="odom0_relative" value="true" />
+        <!-- Set to false when fusing an absolute orientation estimation (e.g. coming from an attitude
+        estimator which using a magnetic compass)-->
+        <param name="imu0_relative" value="false" />
+
+        <param name="imu0_remove_gravitational_acceleration" type="bool" value="false" />
+        <param name="print_diagnostics" value="true" />
+        <param name="publish_tf" value="false" />
+    </node>
+
+</launch>

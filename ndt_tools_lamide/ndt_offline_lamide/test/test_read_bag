@@ -1,0 +1,7 @@
+#rosrun ndt_offline test_reader --interpolation-link-id odom_base_link --bag-file /mnt/storage/rosbag_storage/oru_bags/oru_field/april19_scan3.bag --lidar-topic /velodyne_packets --velodyne-config-file "$(rospack find graph_map)/config/velo32.yaml" --odom-type NO_ODOM
+#state_base_link
+
+rosrun ndt_offline test_reader --odom-type WHEEL_ODOM --interpolation-link-id odom_base_link --bag-file /mnt/storage/rosbag_storage/arla_bags/velodyne_mapping/2012-09-05-09-44-50_0.bagfix.bag --lidar-topic /velodyne_packets --velodyne-config-file "$(rospack find graph_map)/config/velo32.yaml"
+
+#rosrun ndt_offline test_reader --odom-type WHEEL_ODOM --interpolation-link-id odom_base_link --bag-file /mnt/storage/rosbag_storage/oru_bags/lab/2018-05-18-09-55-16.bag --lidar-topic /robot1/kmo_navserver/laserscan1 # --velodyne-config-file "$(rospack find graph_map)/config/velo32.yaml"
+

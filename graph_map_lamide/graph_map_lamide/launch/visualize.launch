@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<launch>
+
+
+    <!-- Include visualization in rviz -->
+    <include file="$(find graph_map)/launch/visualize_graph_fuser.launch">
+        <arg name="mapping" value="true" />
+        Command 'rosbag' from package 'python-rosbag' (universe)
+        <arg name="coop-2013" value="true" />
+    </include>
+
+
+    <node pkg="tf" type="static_transform_publisher" name="velodyne_map_static_broadcaster" args="0 0 0 0 0 0 world map_velodyne 100" />
+
+</launch>

@@ -1,0 +1,293 @@
+#include <ndt_generic_lamide/io.h>
+
+namespace ndt_generic {
+
+bool LocateRosBagFilePaths(const std::string &folder_name,std::vector<std::string> &scanfiles){
+  DIR *dir;
+  struct dirent *ent;
+  if ((dir = opendir (folder_name.c_str())) != NULL) {
+    while ((ent = readdir (dir)) != NULL) {
+      if(ent->d_name[0] == '.') continue;
+      char tmpcname[400];
+      snprintf(tmpcname,399,"%s/%s",folder_name.c_str(),ent->d_name);
+      std::string tmpfname = tmpcname;
+      scanfiles.push_back(tmpfname);
+    }
+    closedir (dir);
+  } else {
+    std::cerr<<"Could not parse dir name\n";
+    return false;
+  }
+  sort(scanfiles.begin(),scanfiles.end());
+  {
+    std::cout << "files to be loaded : " << std::endl;
+    for (size_t i = 0; i < scanfiles.size(); i++) {
+      std::cout << " " << scanfiles[i] <<"\n"<< std::flush;
+    }
+    std::cout << std::endl;
+  }
+  return true;
+}
+
+
+void StepControl::Step(int counter) {
+
+  if (counter >= next) {
+    PrintCommands();
+    char c;
+    std::cin.clear();
+    // std::getline(std::cin,c,'\n');
+    std::cin >> c;
+
+    if (c >= '5' || c <= '8') {
+      double exp = c - '5';
+      next = counter + pow(10.0, exp);
+
+      //std::cout << "next=" << next << std::endl;
+    }
+    if (c == '9')
+      next = UINT32_MAX;
+    if (c == 'v')
+      visualize = !visualize;
+  }
+}
+
+CreateEvalFiles::CreateEvalFiles(const std::string &output_dir_name,
+                                 const std::string &base_name, bool enable)
+    : output_dir_name_(output_dir_name), base_name_(base_name),
+      enable_(enable) {
+
+  if (output_dir_name_.length() > 0 &&
+      output_dir_name_[output_dir_name_.length() - 1] !=
+          '/') // if doesnt end with '/' add '/'
+    output_dir_name_ += '/';
+
+  if (enable_) {
+    std::cout << "output directory:" << output_dir_name_ << std::endl;
+    std::cout << "base_name:" << base_name << std::endl;
+    CreateOutputFiles();
+  } else
+    std::cout << "Evaluation output disabled" << std::endl;
+}
+
+void CreateEvalFiles::Write(const ros::Time frame_time,
+                            const Eigen::Affine3d &Tgtbase,
+                            const Eigen::Affine3d &Todombase,
+                            const Eigen::Affine3d &Tfuserpose,
+                            const Eigen::Affine3d &Tfuser_sensorpose) {
+  if (!enable_)
+    return;
+
+  gt_file << frame_time << " " << transformToEvalString(Tgtbase)<<endl;
+  odom_file << frame_time << " " << transformToEvalString(Todombase)<<endl;
+  est_file << frame_time << " " << transformToEvalString(Tfuserpose)<<endl;
+  sensorpose_est_file << frame_time << " "<< transformToEvalString(Tfuser_sensorpose)<<endl;
+  gt_file.flush();
+  odom_file.flush();
+  est_file.flush();
+  sensorpose_est_file.flush();
+}
+
+void CreateEvalFiles::Close() {
+  if (!enable_)
+    return;
+  gt_file.close();
+  odom_file.close();
+  est_file.close();
+  // sensorpose_est_file.close();
+}
+
+void CreateEvalFiles::CreateOutputFiles() {
+  if (!enable_)
+    return;
+  std::cout << "create output files" << std::endl;
+  std::string filename;
+  {
+    filename = output_dir_name_ + base_name_ + std::string("_gt.txt");
+    gt_file.open(filename.c_str());
+  }
+  {
+    filename = output_dir_name_ + base_name_ + std::string("_odom.txt");
+    odom_file.open(filename.c_str());
+  }
+  {
+    filename = output_dir_name_ + base_name_ + std::string("_est.txt");
+    est_file.open(filename.c_str());
+  }
+  {
+    filename =
+        output_dir_name_ + base_name_ + std::string("_sensorpose_est.txt");
+    sensorpose_est_file.open(filename.c_str());
+  }
+  if (!gt_file.is_open() || !est_file.is_open() || !odom_file.is_open() ||
+      !sensorpose_est_file.is_open()) {
+    std::cout << "Error creating evaluation output files at path:" << std::endl;
+    std::cout << filename << std::endl;
+    exit(0);
+  } else {
+    std::cout << "Created output evaluation files at path: "
+              << output_dir_name_ + base_name_ << std::endl;
+    return;
+  }
+}
+
+std::string ToString(Eigen::Vector3i var) {
+  std::stringstream ss;
+  ss << var(0) << "," << var(1) << "," << var(2);
+  return ss.str();
+}
+void extract_file_names(const std::string &path, const std::string &ext,
+                        std::vector<std::string> &files) {
+  // If we have a file instead, just add it.
+  if (boost::filesystem::is_regular_file(path)) {
+    files.push_back(path);
+    return;
+  }
+
+  boost::filesystem::path _path(path);
+  boost::filesystem::recursive_directory_iterator end;
+
+  for (boost::filesystem::recursive_directory_iterator i(_path); i != end;
+       ++i) {
+    const boost::filesystem::path cp = (*i);
+    if (!ext.empty() && cp.extension() != ext)
+      continue;
+    std::string file_name = cp.string();
+    if (!file_name.empty()) {
+      files.push_back(file_name);
+    }
+  }
+  std::sort(files.begin(), files.end());
+}
+
+// Load the evaluation files that are generated by the fuser, <timestamp> x y x
+// qx qy qz qw.
+std::vector<Eigen::Affine3d>
+loadAffineFromEvalFile(const std::string &fileName) {
+  std::vector<Eigen::Affine3d> ret;
+  std::string line;
+  std::ifstream myfile(fileName.c_str());
+  if (myfile.is_open()) {
+    while (getline(myfile, line)) {
+      double time, x, y, z, qx, qy, qz, qw;
+      std::istringstream ss(line);
+      ss >> time >> x >> y >> z >> qx >> qy >> qz >> qw;
+      ret.push_back(Eigen::Translation3d(x, y, z) *
+                    Eigen::Quaterniond(qw, qx, qy, qz));
+    }
+    myfile.close();
+  } else {
+    std::cout << "Unable to open file : " << fileName << std::endl;
+  }
+
+  return ret;
+}
+
+// Load timestamps from the evaluation files that are generated by the fuser...
+std::vector<double> loadTimeStampFromEvalFile(const std::string &fileName) {
+  std::vector<double> ret;
+  std::string line;
+  std::ifstream myfile(fileName.c_str());
+  if (myfile.is_open()) {
+    while (getline(myfile, line)) {
+      double time, x, y, z, qx, qy, qz, qw;
+      std::istringstream ss(line);
+      ss >> time >> x >> y >> z >> qx >> qy >> qz >> qw;
+      ret.push_back(time);
+    }
+    myfile.close();
+  } else
+    std::cout << "Unable to open file : " << fileName << std::endl;
+  ;
+
+  return ret;
+}
+
+// Useful to load a set of files
+void loadCloud(const std::string &base_name_pcd, int counter,
+               pcl::PointCloud<pcl::PointXYZL> &cloud) {
+  std::string pcd_file =
+      base_name_pcd + ndt_generic::toString(counter) + std::string(".pcd");
+  std::cout << "loading : " << pcd_file << std::endl;
+  pcl::io::loadPCDFile<pcl::PointXYZL>(pcd_file, cloud);
+  std::cout << "loaded clouds of size=" << cloud.size() << std::endl;
+}
+
+void saveAffine3dRPY(const std::string &filename, const Eigen::Affine3d &T) {
+  std::ofstream ofs;
+  ofs.open(filename.c_str());
+  if (!ofs.is_open())
+    return;
+  ofs << ndt_generic::affine3dToStringRPY(T) << std::endl;
+  ofs.close();
+}
+
+// Save the evaluation files that are generated by the fuser, <timestamp> x y x
+// qx qy qz qw.
+// Timesamps are set to the index.
+void saveAffineToEvalFile(const std::string &filename,
+                          const std::vector<Eigen::Affine3d> &Ts) {
+  std::ofstream ofs;
+  ofs.open(filename.c_str());
+  if (!ofs.is_open())
+    return;
+  for (int i = 0; i < Ts.size(); i++) {
+    ofs << i << " " << ndt_generic::transformToEvalString(Ts[i])<<std::endl;
+  }
+  ofs.close();
+}
+
+void saveAffineVecToFile(const std::string &filename, std::vector<double> &stamps,
+                          std::vector<Eigen::Affine3d, Eigen::aligned_allocator<Eigen::Affine3d> > &vec) {
+  std::ofstream ofs;
+  ofs.open(filename.c_str());
+  if (!ofs.is_open())
+    return;
+  for (int i = 0; i < vec.size(); i++)
+    ofs <<std::fixed <<std::setprecision(6)<<stamps[i]<<" "<<ndt_generic::transformToEvalString(vec[i])<<endl;
+
+  ofs.close();
+}
+
+std::vector<double> loadDoubleVecTextFile(const std::string &fileName) {
+
+  std::vector<double> vec;
+  std::ifstream ifs;
+  ifs.open(fileName.c_str());
+  if (!ifs.is_open()) {
+    std::cerr << __FILE__ << ":" << __LINE__
+              << " cannot open file : " << fileName << std::endl;
+  }
+
+  while (!ifs.eof()) {
+    std::string line;
+    getline(ifs, line);
+
+    double val;
+    if (sscanf(line.c_str(), "%lf", &val) == 1) {
+      vec.push_back(val);
+    }
+  }
+  return vec;
+}
+
+void saveDoubleVecTextFile(const std::vector<double> &vec,
+                           const std::string &fileName) {
+  std::stringstream st;
+  st << fileName;
+  std::string file_name = st.str();
+  std::ofstream ofs(file_name.c_str());
+
+  for (unsigned int i = 0; i < vec.size(); i++) {
+    ofs << vec[i] << std::endl;
+  }
+  ofs.close();
+}
+
+std::string removeExtension(const std::string &filename) {
+  size_t lastdot = filename.find_last_of(".");
+  if (lastdot == std::string::npos)
+    return filename;
+  return filename.substr(0, lastdot);
+}
+}

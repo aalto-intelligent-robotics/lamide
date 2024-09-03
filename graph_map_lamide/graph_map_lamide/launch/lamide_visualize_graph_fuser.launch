@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="localization" default="false" />
+    <arg name="mapping" default="false" />
+    <arg name="default" default="false" />
+    <arg name="arla-2012" default="false" />
+    <arg name="oru-lab" default="false" />
+    <arg name="oru-field" default="false" />
+    <arg name="coop-2013" default="false" />
+    <arg name="oru-basement" default="false" />
+    <arg name="kitti" default="false" />
+    <arg name="excavator_laps" default="false" />
+    <arg name="volvo_2017_12_01" default="false" />
+    <arg name="michigan" default="false" />
+    <arg name="lidaronly" default="false" />
+    <arg name="odometry-ncfm2018" default="false" />
+    <arg name="orkla_citi2" default="false" />
+
+    <group if="$(arg mapping)">
+        <!--node pkg="rviz" type="rviz" name="rviz" args="-d $(find graph_map)/rviaz/mapping_oru.rviz" /-->
+        <!--Use costomized rviz configuration files -->
+        <group if="$(arg oru-lab)">
+            <node pkg="rviz" type="rviz" name="rviz" args="-d $(find graph_map)/rviz/lamide_kitti.rviz" />
+        </group>
+
+
+        <group if="$(arg lidaronly)"></group>
+        <group if="$(arg kitti)"></group>
+        <group if="$(arg excavator_laps)"></group>
+        <group if="$(arg oru-field)"></group>
+        <group if="$(arg arla-2012)"></group>
+        <group if="$(arg oru-basement)"></group>
+    </group>
+
+    <group if="$(arg localization)">
+
+        <!--Use costomized rviz configuration files -->
+
+        <group if="$(arg oru-lab)">
+            <node pkg="rviz" type="rviz" name="rviz" args="-d $(find graph_localization)/rviz/localization_oru_lab.rviz" />
+        </group>
+
+        <group if="$(arg orkla_citi2)">
+            <node pkg="rviz" type="rviz" name="rviz" args="-d $(find graph_localization)/rviz/orkla_citi2.rviz" />
+        </group>
+
+
+        <group if="$(arg volvo_2017_12_01)">
+            <node pkg="rviz" type="rviz" name="rviz" args="-d $(find graph_localization)/rviz/private/localization_volvo.rviz" />
+        </group>
+
+        <group if="$(arg arla-2012)">
+            <node pkg="rviz" type="rviz" name="rviz" args="-d $(find graph_localization)/rviz/localization_arla.rviz" />
+        </group>
+        <group if="$(arg michigan)">
+            <node pkg="rviz" type="rviz" name="rviz" args="-d $(find graph_localization)/rviz/private/localization_michigan.rviz" />
+        </group>
+
+        <group if="$(arg coop-2013)"></group>
+        <group if="$(arg lidaronly)"></group>
+        <group if="$(arg kitti)"></group>
+        <group if="$(arg excavator_laps)"></group>
+        <group if="$(arg oru-field)"></group>
+
+        <group if="$(arg oru-basement)"></group>
+    </group>
+
+    <group if="$(arg default)">
+        <node pkg="rviz" type="rviz" name="rviz" args="-d $(find graph_mapping)/rviz/showMap.rviz" />
+    </group>
+    <group if="$(arg odometry-ncfm2018)">
+        <node pkg="rviz" type="rviz" name="rviz" args="-d $(find graph_map)/rviz/odometry_visualization.rviz" />
+    </group>
+
+</launch>
