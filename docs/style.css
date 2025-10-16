@@ -1,0 +1,179 @@
+/* --- Design tokens --- */
+:root {
+    --bg: #ffffff;
+    --fg: #111827;
+    --muted: #4b5563;
+    --accent: #2563eb;
+    --accent-darker: #2563eb;
+    --accent-contrast: #ffffff;
+    --surface: #e4e7eb;
+    --ring: rgba(37, 99, 235, 0.35);
+    --radius: 14px;
+    --space: clamp(12px, 2.5vw, 28px);
+    --maxw: 68ch;
+    --hover-contrast: #ffffff;
+    --hover: #02246d;
+}
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg: #0b0f13;
+        --fg: #e5e7eb;
+        --muted: #9ca3af;
+        --accent: #60a5fa;
+        --accent-darker: #2563eb;
+        --accent-contrast: #0b0f13;
+        --surface: #111827;
+        --ring: rgba(96, 165, 250, 0.4);
+        --hover-contrast: #2563eb;
+        --hover: #dae9fc;
+    }
+}
+
+/* --- Larger viewports: relax max width, keep readability --- */
+@media (min-width: 768px) {
+    :root {
+        --maxw: 85ch;
+    }
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation: none !important;
+        transition: none !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* --- CSS Reset-ish, mobile-first foundation --- */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    -webkit-text-size-adjust: 100%;
+}
+body {
+    margin: 0;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
+        Arial, "Noto Sans", "Liberation Sans", sans-serif;
+    line-height: 1.6;
+    font-size: clamp(16px, 1.2vw + 12px, 18px);
+    color: var(--fg);
+    background: var(--bg);
+}
+
+/* --- Headings ---  */
+h1 {
+    text-align: center;
+    margin: 0 0 var(--space);
+    line-height: 1.15;
+    font-size: clamp(1.6rem, 3.5vw + 0.5rem, 2.6rem);
+    letter-spacing: -0.01em;
+}
+
+h2 {
+    margin: calc(var(--space) * 1.25) 0 var(--space) 0;
+    font-size: clamp(1.25rem, 1.2vw + 1rem, 1.6rem);
+}
+
+/* --- Layout --- */
+.center {
+    width: min(100% - 2*var(--space), var(--maxw));
+    margin-inline: auto;
+    padding: calc(var(--space) * 1.25) 0 var(--space);
+}
+
+/* --- Media --- */
+.imagebox {
+    margin: 0 0 var(--space);
+}
+
+.header-img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--radius);
+    background: var(--surface);
+}
+
+/* --- Buttons --- */
+.buttonbox {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: var(--space);
+}
+a.button {
+    transition: all .1s ease;
+    display: inline-block;
+    outline: none;
+    cursor: pointer;
+    font-weight: 600;
+    border-radius: 3px;
+    padding: 12px 24px;
+    border: 0;
+    color: #fff;
+    background: var(--accent-darker);
+    line-height: 1.15;
+    font-size: 16px;
+    text-decoration: none;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.28), 0 1px 2px rgba(0, 0, 0, 0.22);
+}
+a.button:hover {
+    transition: all .1s ease;
+    background: var(--hover);
+    color: var(--hover-contrast);
+}
+
+/* --- Text blocks --- */
+.authorboxbox {
+    margin-bottom: 40px;
+    font-size: 0.95em;
+    color: var(--muted);
+    margin-bottom: var(--space);
+}
+.abstract{
+    text-align: justify;
+    text-justify: inter-word;
+    padding: 1rem;
+    border-radius: var(--radius);
+    background: var(--surface);
+}
+.authorbox,
+.abstract,
+p {
+    color: var(--fg);
+}
+
+.title{
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+.break{
+    height: 20px;
+}
+a{
+    text-decoration: none;
+    color: var(--accent);
+}
+.link:hover{
+    color: var(--hover);
+}
+
+
+/* Code block (bibtex) */
+code.language-bibtex {
+    display: block;
+    padding: 1rem;
+    overflow-x: auto;
+    border-radius: var(--radius);
+    background: var(--surface);
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+    font-size: 0.9em;
+}

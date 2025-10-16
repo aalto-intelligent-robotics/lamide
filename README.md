@@ -36,14 +36,13 @@ cd launch/scripts/docker/
 If you find this work useful, please consider citing:
 
 ```bibtex
-@misc{pekkanen_2024_object_oriented_mapping,
+@inproceedings{pekkanen_2024_object_oriented_mapping,
   title = {Object-Oriented Grid Mapping in Dynamic Environments},
+  booktitle = {Proceedings of the IEEE International Conference on Multisensor Fusion and Integration (MFI)},
   author = {Pekkanen, Matti and Verdoja, Francesco and Kyrki, Ville},
-  publisher = {arXiv},
+  month = {Sep.},
   year = {2024},
-  url = {https://arxiv.org/abs/2309.08324},
-  doi = {10.48550/ARXIV.2309.08324},
-  copyright = {Creative Commons Attribution Non Commercial No Derivatives 4.0 International}
+  address = {Pilsen, Czechia}
 }
 ```
 

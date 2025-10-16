@@ -1,0 +1,130 @@
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <title>Object-Oriented Grid Mapping in Dynamic Environments</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<html lang="en">
+    <body>
+        <h1 class="title">Object-Oriented Grid Mapping in Dynamic Environments</h1>
+        <div class="center">
+            <iframe width="100%" height="37%" src="https://www.youtube.com/embed/x0cWt4Sy6W4">
+            </iframe>
+            <div class="break"></div>
+            <div class="buttonbox">
+                <a href="https://github.com/aalto-intelligent-robotics/quash" class="button">code</a> <a href="https://arxiv.org/search/cs?searchtype=author&query=Pekkanen,+M" class="button">paper</a>
+            </div>
+            <div class="break"></div>
+            <div class="authorbox">
+                <b>Authors:</b>
+                <a class="link" href="https://research.aalto.fi/en/persons/matti-pekkanen">Matti Pekkanen</a> <a
+                    class="link" href="mailto:matti.pekkanen@aalto.fi">(matti.pekkanen@aalto.fi)</a>,
+                <a class="link" href="https://research.aalto.fi/en/persons/francesco-verdoja">Francesco Verdoja</a>, and
+                <a class="link" href="https://research.aalto.fi/en/persons/ville-kyrki">Ville Kyrki</a>
+                <br />
+                <b>Affiliation:</b> School of Electrical Engineering, Aalto University, Finland
+            </div>
+            <div class="break"></div>
+            <p class="abstract">
+                Grid maps, especially occupancy grid maps, are ubiquitous in many mobile robot applications. To simplify the process of
+                learning the map, grid maps subdivide the world into a grid of cells whose occupancies are independently estimated using
+                measurements in the perceptual field of the particular cell. However, the world consists of objects that span multiple
+                cells, which means that measurements falling onto a cell provide evidence of the occupancy of other cells belonging to
+                the same object. Current models do not capture this correlation and, therefore, do not use object-level information for
+                estimating the state of the environment.
+                In this work, we present a way to generalize the update of grid maps, relaxing the assumption of independence. We
+                propose modeling the relationship between the measurements and the occupancy of each cell as a set of latent variables
+                and jointly estimate those variables and the posterior of the map.
+                We propose a method to estimate the latent variables by clustering based on semantic labels and an extension to the
+                Normal Distributions Transform Occupancy Map (NDT-OM) to facilitate the proposed map update method. We perform
+                comprehensive map creation and localization experiments with real-world data sets and show that the proposed method
+                creates better maps in highly dynamic environments compared to state-of-the-art methods. Finally, we demonstrate the ability of
+                the proposed method to remove occluded objects from the map in a lifelong map update scenario.
+            </p>
+            <h2>Citation</h2>
+            <p>
+                If you find this work useful, please consider citing:
+            </p>
+            <code class="language-bibtex">
+                @inproceedings{pekkanen_2024_object_oriented_mapping,<br/>
+                &emsp;&emsp;&emsp;&emsp;title = {Object-Oriented Grid Mapping in Dynamic Environments},<br/>
+                &emsp;&emsp;&emsp;&emsp;booktitle = {Proceedings of the IEEE International Conference on Multisensor Fusion and Integration (MFI)},<br/>
+                &emsp;&emsp;&emsp;&emsp;author = {Pekkanen, Matti and Verdoja, Francesco and Kyrki, Ville},<br/>
+                &emsp;&emsp;&emsp;&emsp;month = {Sep.},<br/>
+                &emsp;&emsp;&emsp;&emsp;year = {2024},<br/>
+                &emsp;&emsp;&emsp;&emsp;address = {Pilsen, Czechia}<br/>
+                }
+            </code>
+            <h2>Acknowledgements</h2>
+            <p>
+                This work builds upon the following software:
+                <ul>
+                    <li><a href="https://gitsvn-nt.oru.se/software/graph\_map\_public.git">Graph map</a> by Daniel Adolfsson, and Henrik Andreasson</li>
+                    <li><a href="https://github.com/dan11003/velodyne\_pointcloud\_oru.git">Velodyne pointcloud</a> by Daniel Adolfsson</li>
+                    <li><a href="https://gitsvn-nt.oru.se/software/ndt\_core\_public.git">NDT Core</a> by Henrik Andreasson, Todor Stoyanov, Daniel Canelhas, Martin Magnusson, Jari Saarinen, Tomasz Kucner, Malcolm Mielle, Chittaranjan Swaminathan, and Daniel Adolfsson</li>
+                    <li><a href="https://gitsvn-nt.oru.se/software/ndt\_tools\_public.git">NDT Tools</a> by Henrik Andreasson, Todor Stoyanov, Daniel
+                    Canelhas, Martin Magnusson, Jari Saarinen, Tomasz Kucner, Malcolm Mielle, Chittaranjan Swaminathan, and Daniel Adolfsson</li>
+                </ul>
+
+                NDT repositories contain a vast number of contributions, and exhaustive list of citations is not presented here. When
+                using the NDT software, please find the appropriate contributions, and cite appropriately.
+            </p>
+            <code class="language-bibtex">
+                @article{magnusson2007scan,<br/>
+                &emsp;&emsp;&emsp;&emsp;title={Scan registration for autonomous mining vehicles using 3D-NDT},<br/>
+                &emsp;&emsp;&emsp;&emsp;author={Magnusson, Martin and Lilienthal, Achim and Duckett, Tom},<br/>
+                &emsp;&emsp;&emsp;&emsp;journal={Journal of Field Robotics},<br/>
+                &emsp;&emsp;&emsp;&emsp;volume={24},<br/>
+                &emsp;&emsp;&emsp;&emsp;number={10},<br/>
+                &emsp;&emsp;&emsp;&emsp;pages={803--827},<br/>
+                &emsp;&emsp;&emsp;&emsp;year={2007},<br/>
+                &emsp;&emsp;&emsp;&emsp;publisher={Wiley Online Library}<br/>
+                }
+                <br/><br />
+                @article{stoyanov2012fast,<br/>
+                &emsp;&emsp;&emsp;&emsp;title={Fast and accurate scan registration through minimization of the distance between compact 3D NDT representations},<br/>
+                &emsp;&emsp;&emsp;&emsp;author={Stoyanov, Todor and Magnusson, Martin and Andreasson, Henrik and Lilienthal, Achim J},<br/>
+                &emsp;&emsp;&emsp;&emsp;journal={The International Journal of Robotics Research},<br/>
+                &emsp;&emsp;&emsp;&emsp;volume={31},<br/>
+                &emsp;&emsp;&emsp;&emsp;number={12},<br/>
+                &emsp;&emsp;&emsp;&emsp;pages={1377--1393},<br/>
+                &emsp;&emsp;&emsp;&emsp;year={2012},<br/>
+                &emsp;&emsp;&emsp;&emsp;publisher={Sage Publications Sage UK: London, England}<br/>
+                }
+                <br /><br />
+                @inproceedings{saarinen2013normal,<br/>
+                &emsp;&emsp;&emsp;&emsp;title={Normal distributions transform occupancy maps: Application to large-scale online 3D mapping},<br/>
+                &emsp;&emsp;&emsp;&emsp;author={Saarinen, Jari and Andreasson, Henrik and Stoyanov, Todor and Ala-Luhtala, Juha and Lilienthal, Achim J},<br/>
+                &emsp;&emsp;&emsp;&emsp;booktitle={2013 IEEE international conference on robotics and automation},<br/>
+                &emsp;&emsp;&emsp;&emsp;pages={2233--2238},<br/>
+                &emsp;&emsp;&emsp;&emsp;year={2013},<br/>
+                &emsp;&emsp;&emsp;&emsp;organization={IEEE}<br/>
+                }
+                <br /><br />
+                @inproceedings{stoyanov2013normal,<br/>
+                &emsp;&emsp;&emsp;&emsp;title={Normal distributions transform occupancy map fusion: Simultaneous mapping and tracking in large scale dynamic<br/>
+                &emsp;&emsp;&emsp;&emsp;environments},<br/>
+                &emsp;&emsp;&emsp;&emsp;author={Stoyanov, Todor and Saarinen, Jari and Andreasson, Henrik and Lilienthal, Achim J},<br/>
+                &emsp;&emsp;&emsp;&emsp;booktitle={2013 IEEE/RSJ International Conference on Intelligent Robots and Systems},<br/>
+                &emsp;&emsp;&emsp;&emsp;pages={4702--4708},<br/>
+                &emsp;&emsp;&emsp;&emsp;year={2013},<br/>
+                &emsp;&emsp;&emsp;&emsp;organization={IEEE}<br/>
+                }
+                <br /><br />
+                @inproceedings{saarinen2013normal,<br/>
+                &emsp;&emsp;&emsp;&emsp;title={Normal distributions transform Monte-Carlo localization (NDT-MCL)},<br/>
+                &emsp;&emsp;&emsp;&emsp;author={Saarinen, Jari and Andreasson, Henrik and Stoyanov, Todor and Lilienthal, Achim J},<br/>
+                &emsp;&emsp;&emsp;&emsp;booktitle={2013 IEEE/RSJ international conference on intelligent robots and systems},<br/>
+                &emsp;&emsp;&emsp;&emsp;pages={382--389},<br/>
+                &emsp;&emsp;&emsp;&emsp;year={2013},<br/>
+                &emsp;&emsp;&emsp;&emsp;organization={IEEE}<br/>
+                }
+            </code>
+            <p>
+                This work was supported by Business Finland, decision 9249/31/2021. We gratefully acknowledge the support of NVIDIA
+                Corporation with the donation of the Titan Xp GPU used for this research.
+            </p>
+        </div>
+    </body>
+</html>
